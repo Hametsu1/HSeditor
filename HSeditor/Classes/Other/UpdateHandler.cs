@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,38 +22,43 @@ namespace HSeditor.Classes.Other
 
         async void Init()
         {
-            this.mgr = await UpdateManager.GitHubUpdateManager(@"https://github.com/Hametsu1/HSeditor");
-            Console.WriteLine();
-        }
-
-        public async void CheckForUpdate()
-        {
-            UpdateInfo updateInfo = await mgr.CheckForUpdate();
-
             try
             {
-                this.Version = updateInfo.CurrentlyInstalledVersion.Version.ToString();
+                this.mgr = await UpdateManager.GitHubUpdateManager(@"https://github.com/Hametsu1/HSeditor");
             }
-            catch { this.Version = "0.0.0"; }
-            MainWindow.INSTANCE.Title = new string($"HSeditor - Name: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.ID} | Version: {this.Version}");
+            catch { }
 
-            if (updateInfo.ReleasesToApply.Any())
+        }
+
+        [Conditional("RELEASE")]
+        public async void CheckForUpdate()
+        {
+            try
             {
-                MessageBox mb = new MessageBox($"Update available! ({updateInfo.FutureReleaseEntry.Version})", "Do you want to install it now?", "Yes", false, "", true);
-                mb.ShowDialog();
+                UpdateInfo updateInfo = await mgr.CheckForUpdate();
 
-                if (!mb.Cancel)
+
+                this.Version = updateInfo.CurrentlyInstalledVersion == null ? "0.0.0" : updateInfo.CurrentlyInstalledVersion.Version.ToString();
+                MainWindow.INSTANCE.Title = new string($"HSeditor - Name: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {MainWindow.INSTANCE.SaveFileHandler.SelectedFile.ID} | Version: {this.Version}");
+
+                if (updateInfo.ReleasesToApply.Any())
                 {
-                    mb = new MessageBox($"Update is being installed!", "This may take a couple of seconds.", "OK", false, "", false, true);
-                    mb.Show();
-                    await mgr.UpdateApp();
-                    mb.Close();
-                    MessageBox mb2 = new MessageBox("Update installed!", "Update was successfully installed..", "OK");
-                    mb2.ShowDialog();
-                    UpdateManager.RestartApp("HSeditor.exe");
+                    MessageBox mb = new MessageBox($"Update available! ({updateInfo.FutureReleaseEntry.Version})", "Do you want to install it now?", "Yes", false, "", true);
+                    mb.ShowDialog();
+
+                    if (!mb.Cancel)
+                    {
+                        mb = new MessageBox($"Update is being installed!", "This may take a couple of seconds.", "OK", false, "", false, true);
+                        mb.Show();
+                        await mgr.UpdateApp();
+                        mb.Close();
+                        MessageBox mb2 = new MessageBox("Update installed!", "Update was successfully installed..", "OK");
+                        mb2.ShowDialog();
+                        UpdateManager.RestartApp("HSeditor.exe");
+                    }
                 }
             }
-
+            catch { }
         }
     }
 }
