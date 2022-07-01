@@ -43,16 +43,16 @@ namespace HSeditor.Classes.Other
 
                 if (updateInfo.ReleasesToApply.Any())
                 {
-                    MessageBox mb = new MessageBox($"Update available! ({updateInfo.FutureReleaseEntry.Version})", "Do you want to install it now?", "Yes", true, "No");
+                    UpdatePreview mb = new UpdatePreview(this.Version, updateInfo.FutureReleaseEntry.Version.ToString());
                     mb.ShowDialog();
 
                     if (!mb.Cancel)
                     {
-                        mb = new MessageBox($"Update is being installed!", "This may take a couple of seconds.", "OK", false, "", true);
-                        mb.Show();
+                        MessageBox mb2 = new MessageBox($"Update is being installed!", "This may take a couple of seconds.", "OK", false, "", true);
+                        mb2.Show();
                         await mgr.UpdateApp();
-                        mb.Close();
-                        MessageBox mb2 = new MessageBox("Update installed!", "Update was successfully installed..", "OK");
+                        mb2.Close();
+                        mb2 = new MessageBox("Update installed!", "Update was successfully installed.", "OK");
                         mb2.ShowDialog();
                         UpdateManager.RestartApp("HSeditor.exe");
                     }
