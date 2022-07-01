@@ -22,6 +22,7 @@ namespace HSeditor.Classes.Other
         async void Init()
         {
             this.mgr = await UpdateManager.GitHubUpdateManager(@"https://github.com/Hametsu1/HSeditor");
+            Console.WriteLine();
         }
 
         public async void CheckForUpdate()
