@@ -19,7 +19,6 @@
                     <Grid x:Name="gridDescription" Margin="0,0,0,20">
                         <TextBlock x:Name="textBlockDescription" Text="Description" MaxWidth="350"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBlock>
                     </Grid>
-                    <TextBox x:Name="textBoxItemName" Visibility="Collapsed" Height="30" Padding="5,0,0,0" Margin="0,0,0,8" MaxLength="20" Style="{DynamicResource TextBoxMain}" PreviewKeyDown="textBoxItemName_PreviewKeyDown"/>
                 </StackPanel>
             </Border>
             <Button x:Name="buttonOK" HorizontalAlignment="Right" Style="{DynamicResource ButtonMain}" VerticalAlignment="Bottom"  Content="OK"  Width="80" Height="24" Click="buttonOK_Click" Cursor="Hand"></Button>

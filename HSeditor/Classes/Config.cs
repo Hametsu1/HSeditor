@@ -61,10 +61,11 @@ namespace HSeditor
 
         public void AddFavorite(Item Item)
         {
-            MessageBox mb = new MessageBox("Enter a name:", "", "OK", true, Item.Name, true);
+            AddFavorite mb = new AddFavorite(Item.Name);
             mb.ShowDialog();
-            if (mb.TextBox == null) return;
-            string name = mb.TextBox;
+            if (mb.Cancel) return;
+
+            string name = mb.textBlockName.Text;
             Item = Item.DeepCopy();
             Item.Favorite = true;
             Item.DisplayName = name;
