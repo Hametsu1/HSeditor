@@ -81,8 +81,7 @@ namespace HSeditor
             this.Sprite = equivalent.Sprite;
             this.Stats = equivalent.Stats == null ? null : equivalent.Stats.DeepCopy();
             this.Runeword = equivalent.Runeword;
-            if (this.Name.Contains("Veil of M"))
-                Console.WriteLine();
+
             if (this.Stats != null)
                 this.Stats.Calculate(this);
         }
