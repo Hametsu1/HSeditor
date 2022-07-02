@@ -9,7 +9,7 @@
     <Window.Background>
         <SolidColorBrush Color="White" Opacity="0"></SolidColorBrush>
     </Window.Background>
-    <Border BorderBrush="#FF483D85" BorderThickness="4" Background="#FF212329" CornerRadius="3" Padding="10" MinWidth="400">
+    <Border BorderBrush="#FF483D85" BorderThickness="4" Background="#FF212329" CornerRadius="3" Padding="10" MinWidth="340">
         <Grid>
             <Border Padding="10,10,10,30">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,0,0,5">
@@ -22,7 +22,7 @@
                             <TextBlock x:Name="tbLatest" Text="1.0.0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="14" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#99AAB5"></TextBlock>
                         </StackPanel>
                     </StackPanel>
-                    <Grid x:Name="gridDescription" Margin="0,0,0,20">
+                    <Grid x:Name="gridDescription" Margin="0,0,0,5">
                         <TextBlock VerticalAlignment="Bottom"  Text="A new version of the HSeditor is out.&#x0a;Do you want to install it now?" MaxWidth="315"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="15" FontFamily="Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBlock>
                     </Grid>
                 </StackPanel>
