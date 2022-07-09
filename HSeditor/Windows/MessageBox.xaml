@@ -14,10 +14,10 @@
             <Border Padding="10,10,10,30">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                     <Grid Margin="0,0,0,5">
-                        <TextBlock x:Name="labelTitle" Text="Title" HorizontalAlignment="Left" FontSize="18" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
+                        <TextBlock x:Name="labelTitle" Text="Title" HorizontalAlignment="Left" FontSize="18" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
                     </Grid>
                     <Grid x:Name="gridDescription" Margin="0,0,0,20">
-                        <TextBlock x:Name="textBlockDescription" Text="Description" MaxWidth="350"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBlock>
+                        <TextBlock x:Name="textBlockDescription" Text="Description" MaxWidth="350"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBlock>
                     </Grid>
                 </StackPanel>
             </Border>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Squirrel;
 
 namespace HSeditor.Classes.Other
@@ -48,12 +49,9 @@ namespace HSeditor.Classes.Other
 
                     if (!mb.Cancel)
                     {
-                        MessageBox mb2 = new MessageBox($"Update is being installed!", "This may take a couple of seconds.", "OK", false, "", true);
-                        mb2.Show();
-                        await mgr.UpdateApp();
-                        mb2.Close();
-                        mb2 = new MessageBox("Update installed!", "Update was successfully installed.", "OK");
-                        mb2.ShowDialog();
+                        DownloadProgress dp = new DownloadProgress();
+                        dp.Show();
+                        await mgr.UpdateApp(dp.UpdateProgress);
                         UpdateManager.RestartApp("HSeditor.exe");
                     }
                 }

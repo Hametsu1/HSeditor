@@ -11,6 +11,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="bin\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <None Remove="bin\**" />
+	  <Page Remove="bin\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="editor.ico" />
 		<None Remove="Resources\All Slots.png" />
 		<None Remove="Resources\All Weapons.png" />
@@ -53,6 +60,7 @@
 		<None Remove="Resources\Spell.png" />
 		<None Remove="Resources\SplashScreen.png" />
 		<None Remove="Resources\stats.ini" />
+		<None Remove="Resources\TestItem.png" />
 		<None Remove="Resources\Weapon.png" />
 		<None Remove="Resources\Wind.png" />
 	</ItemGroup>
@@ -62,7 +70,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ini-parser" Version="2.5.2" />
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.2" />
 		<PackageReference Include="MySqlConnector" Version="2.1.8" />
 		<PackageReference Include="NuGet.CommandLine" Version="6.2.1">
@@ -184,6 +191,9 @@
 		<EmbeddedResource Include="Resources\shopX.ini" />
 		<EmbeddedResource Include="Resources\stats.ini" />
 		<Resource Include="Resources\SplashScreen.png" />
+		<Resource Include="Resources\TestItem.png">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Resources\Weapon.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>

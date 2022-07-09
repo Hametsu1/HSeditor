@@ -1,5 +1,4 @@
-﻿using HSeditor.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,23 +14,27 @@ using System.Windows.Shapes;
 
 namespace HSeditor
 {
-    /// <summary>
-    /// Interaktionslogik für SaveBuild.xaml
-    /// </summary>
-    public partial class SaveBuild : Window
+    public partial class UpdatePreview : Window
     {
         public bool Cancel = true;
-        public SaveBuild(Class Class)
+        public UpdatePreview(string CurrentVersion, string LatestVersion)
         {
             this.Owner = MainWindow.INSTANCE;
             InitializeComponent();
+            this.tbCurrent.Text = CurrentVersion;
+            this.tbLatest.Text = LatestVersion;
             MainWindow.INSTANCE.popupGrid.Opacity = 0.5;
-            textBoxBuildName.Text = Class.Name;
         }
+
 
         private void buttonOK_Click(object sender, RoutedEventArgs e)
         {
             Cancel = false;
+            this.Exit();
+        }
+
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
+        {
             this.Exit();
         }
 
@@ -41,9 +44,6 @@ namespace HSeditor
             this.Close();
         }
 
-        private void buttonCancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.Exit();
-        }
+
     }
 }

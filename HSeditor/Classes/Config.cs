@@ -1,7 +1,6 @@
 ﻿using HSeditor.Classes.Other;
 using HSeditor.Classes.SaveFiles;
-using IniParser;
-using IniParser.Model;
+using HSeditor.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

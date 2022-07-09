@@ -1,9 +1,7 @@
 ﻿using HSeditor.Classes.Item_Stats;
 using HSeditor.Classes.Other;
+using HSeditor.Model;
 using HSeditor.SaveFiles;
-using IniParser;
-using IniParser.Model;
-//using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;

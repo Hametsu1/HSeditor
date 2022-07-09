@@ -1,9 +1,8 @@
 ﻿using HSeditor.Classes.Items;
 using HSeditor.Classes.Merc;
 using HSeditor.Classes.SaveFiles;
+using HSeditor.Model;
 using HSeditor.SaveFiles;
-using IniParser;
-using IniParser.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -80,12 +79,20 @@ namespace HSeditor.Classes.Other
             this.OfflineBuilds.Clear();
             foreach (var file in new DirectoryInfo(this.path).GetFiles("*.build"))
             {
-                var parser = new FileIniDataParser();
-                IniData data = parser.ReadFile(file.FullName);
-                Build build = new Build(data["build_info"]["name"] == null ? System.IO.Path.GetFileNameWithoutExtension(file.FullName) : data["build_info"]["name"], data["build_info"]["description"] == null ? "This is a local build" : data["build_info"]["description"], "Local", file.FullName);
-
-                build.SaveFile = new SaveFile(this.GetHeroInfo(data), this.GetInventory(data), this.GetMercenaries(data), this.GetRelics(data));
-                this.OfflineBuilds.Add(build);
+                try
+                {
+                    var parser = new FileIniDataParser();
+                    IniData data = parser.ReadFile(file.FullName);
+                    Build build = new Build(data["build_info"]["name"] == null ? System.IO.Path.GetFileNameWithoutExtension(file.FullName) : data["build_info"]["name"], data["build_info"]["description"] == null ? "This is a local build" : data["build_info"]["description"], "Local", file.FullName);
+                    HeroInfo heroInfo = this.GetHeroInfo(data);
+                    Inventory inventory = this.GetInventory(data);
+                    Mercenaries mercenaries = this.GetMercenaries(data);
+                    ObservableCollection<Relic> relics = this.GetRelics(data);
+                    if (inventory == null || heroInfo == null || mercenaries == null || relics == null) continue;
+                    build.SaveFile = new SaveFile(heroInfo, inventory, mercenaries, relics);
+                    this.OfflineBuilds.Add(build);
+                }
+                catch { }
             }
         }
 
@@ -141,35 +148,43 @@ namespace HSeditor.Classes.Other
             StreamReader reader = new StreamReader(stream);
             var parser = new FileIniDataParser();
             IniData data = parser.ReadData(reader);
-
-            return new SaveFile(this.GetHeroInfo(data), this.GetInventory(data), this.GetMercenaries(data), this.GetRelics(data));
+            HeroInfo heroInfo = this.GetHeroInfo(data);
+            Inventory inventory = this.GetInventory(data);
+            Mercenaries mercenaries = this.GetMercenaries(data);
+            ObservableCollection<Relic> relics = this.GetRelics(data);
+            if (inventory == null || heroInfo == null || mercenaries == null || relics == null) return null;
+            return new SaveFile(heroInfo, inventory, mercenaries, relics);
         }
 
         private HeroInfo GetHeroInfo(IniData data)
         {
-            Class Class = MainWindow.INSTANCE.ClassHandler.GetClassFromID(Int32.Parse(data["hero_info"]["class"]));
-            List<HeroTalent> HeroTalents = MainWindow.INSTANCE.TalentHandler.GetHeroTalentList();
-            List<ActiveTalent> ActiveTalents = MainWindow.INSTANCE.TalentHandler.GetEmptyActiveTalents();
-            foreach (KeyData key in data.Sections["hero_info"])
+            try
             {
-                if (key.KeyName.Contains("hero_talent"))
+                Class Class = MainWindow.INSTANCE.ClassHandler.GetClassFromID(Int32.Parse(data["hero_info"]["class"]));
+                List<HeroTalent> HeroTalents = MainWindow.INSTANCE.TalentHandler.GetHeroTalentList();
+                List<ActiveTalent> ActiveTalents = MainWindow.INSTANCE.TalentHandler.GetEmptyActiveTalents();
+                foreach (KeyData key in data.Sections["hero_info"])
                 {
-                    foreach (HeroTalent talent in HeroTalents)
-                        if (talent.ID == Convert.ToInt32(key.KeyName.Remove(0, 12)) && talent.SubID + 1 == Convert.ToInt32(Util.Util.FormatString(key.Value)))
-                            talent.Selected = true;
-                }
-                if (key.KeyName.StartsWith("talent_") && !key.KeyName.Contains("reset"))
-                    Class.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = Util.Util.FormatString(key.Value);
+                    if (key.KeyName.Contains("hero_talent"))
+                    {
+                        foreach (HeroTalent talent in HeroTalents)
+                            if (talent.ID == Convert.ToInt32(key.KeyName.Remove(0, 12)) && talent.SubID + 1 == Convert.ToInt32(Util.Util.FormatString(key.Value)))
+                                talent.Selected = true;
+                    }
+                    if (key.KeyName.StartsWith("talent_") && !key.KeyName.Contains("reset"))
+                        Class.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = Util.Util.FormatString(key.Value);
 
-                if (key.KeyName.StartsWith("active_talent_"))
-                {
-                    if (Convert.ToInt32(key.Value) == 0) continue;
-                    int id = Int32.Parse(key.KeyName.Replace("active_talent_", String.Empty));
-                    ActiveTalents[id].Talent = Class.Talents.GetActiveTalents()[Convert.ToInt32(key.Value) - 1];
+                    if (key.KeyName.StartsWith("active_talent_"))
+                    {
+                        if (Convert.ToInt32(key.Value) == 0) continue;
+                        int id = Int32.Parse(key.KeyName.Replace("active_talent_", String.Empty));
+                        ActiveTalents[id].Talent = Class.Talents.GetActiveTalents()[Convert.ToInt32(key.Value) - 1];
+                    }
                 }
+
+                return new HeroInfo(Class, Int32.Parse(data["hero_info"]["level"]), Int32.Parse(data["hero_info"]["hero_level"]), HeroTalents, ActiveTalents);
             }
-
-            return new HeroInfo(Class, Int32.Parse(data["hero_info"]["level"]), Int32.Parse(data["hero_info"]["hero_level"]), HeroTalents, ActiveTalents);
+            catch { return null; }
         }
 
         private Inventory GetInventory(IniData data)
@@ -211,9 +226,8 @@ namespace HSeditor.Classes.Other
             return relics;
         }
 
-        public void SaveBuild(string Name, string Desc)
+        public void SaveBuild(string path)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\builds\{Name}.build";
             StreamWriter sr = new StreamWriter(path);
             sr.Close();
 
@@ -221,8 +235,8 @@ namespace HSeditor.Classes.Other
             IniData data = parser.ReadFile(path);
 
             data.Sections.AddSection("build_info");
-            data["build_info"].AddKey("name", Name);
-            data["build_info"].AddKey("description", Desc);
+            data["build_info"].AddKey("name", Path.GetFileNameWithoutExtension(path));
+            data["build_info"].AddKey("description", "This is a local build.");
 
             data.Sections.AddSection("relics");
             foreach (Relic relic in MainWindow.INSTANCE.SaveFileHandler.SelectedFile.Relics)

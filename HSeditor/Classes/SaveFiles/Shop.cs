@@ -1,5 +1,4 @@
-﻿using IniParser;
-using IniParser.Model;
+﻿using HSeditor.Model;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -41,9 +40,6 @@ namespace HSeditor.Classes.SaveFiles
                     }
                 }
             }
-            string[] temp = File.ReadAllLines(path + @"shop.ini");
-            if (temp[temp.Length - 1] == "\0")
-                File.WriteAllLines(path + @"shop.ini", temp.Take(temp.Length - 1).ToArray());
 
             var parser = new FileIniDataParser();
             IniData data = parser.ReadFile(path + @"shop.ini");
@@ -67,10 +63,6 @@ namespace HSeditor.Classes.SaveFiles
                 sr.WriteLine("stash_reset = \"0.000000\"");
                 sr.Close();
             }
-
-            temp = File.ReadAllLines(path + @"stash.pas");
-            if (temp[temp.Length - 1] == "\0")
-                File.WriteAllLines(path + @"stash.pas", temp.Take(temp.Length - 1).ToArray());
 
             this.Stash = new ObservableCollection<Item>();
 

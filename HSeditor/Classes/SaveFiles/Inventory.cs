@@ -1,6 +1,5 @@
 ﻿using HSeditor.Classes.Items;
 using HSeditor.Classes.Other;
-using IniParser.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

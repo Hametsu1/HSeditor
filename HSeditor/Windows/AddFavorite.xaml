@@ -14,10 +14,10 @@
             <Border Padding="10,10,10,30">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                     <Grid Margin="0,0,0,5">
-                        <TextBlock  Text="Enter name:" HorizontalAlignment="Left" FontSize="18" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
+                        <TextBlock  Text="Enter name:" HorizontalAlignment="Left" FontSize="18" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
                     </Grid>
                     <Grid x:Name="gridDescription" Margin="0,0,0,20">
-                        <TextBox Style="{DynamicResource TextBoxMain}" Height="30" MaxLength="25" x:Name="textBlockName" Text=""  TextWrapping="Wrap"  FontSize="14" FontFamily="Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBox>
+                        <TextBox Style="{DynamicResource TextBoxMain}" Height="30" MaxLength="25" x:Name="textBlockName" Text=""  TextWrapping="Wrap"  FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBox>
                     </Grid>
                 </StackPanel>
             </Border>

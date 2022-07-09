@@ -2159,11 +2159,9 @@ namespace HSeditor
             ofd.InitialDirectory = Environment.GetEnvironmentVariable("LocalAppData") + $@"\Hero_Siege\hseditor\builds";
             ofd.Filter = "Build-File | *.build";
 
-            SaveBuild sb = new SaveBuild(this.SaveFileHandler.SelectedFile.HeroInfo.Class);
-            sb.ShowDialog();
-            if (!sb.Cancel)
+            if (ofd.ShowDialog() == true)
             {
-                this.BuildHandler.SaveBuild(sb.textBoxBuildName.Text, sb.textBoxBuildDesc.Text);
+                this.BuildHandler.SaveBuild(ofd.FileName);
                 this.BuildHandler.GetOfflineBuilds();
                 this.UpdateBuildsList();
             }

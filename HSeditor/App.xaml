@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:HSeditor"
              
-             StartupUri="MainWindow.xaml">
+             StartupUri="Windows/MainWindow.xaml">
 
     <Application.Resources>
         <LinearGradientBrush x:Key="TabItem.Static.Background" EndPoint="0,1" StartPoint="0,0">

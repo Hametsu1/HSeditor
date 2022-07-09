@@ -4,8 +4,7 @@ using HSeditor.Classes.Merc;
 using HSeditor.Classes.Other;
 using HSeditor.Classes.SaveFiles;
 using HSeditor.Classes.Util;
-using IniParser;
-using IniParser.Model;
+using HSeditor.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -160,10 +159,13 @@ namespace HSeditor.SaveFiles
                     y++;
                 }
 
-                foreach (string s in this.Inventory.UnknownItems)
+                if (this.Inventory.UnknownItems != null)
                 {
-                    data["inventory_list"].AddKey("inventory_list" + y, s);
-                    y++;
+                    foreach (string s in this.Inventory.UnknownItems)
+                    {
+                        data["inventory_list"].AddKey("inventory_list" + y, s);
+                        y++;
+                    }
                 }
 
                 // Equipment

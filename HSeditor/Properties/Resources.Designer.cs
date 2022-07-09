@@ -493,6 +493,16 @@ namespace HSeditor.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] TestItem {
+            get {
+                object obj = ResourceManager.GetObject("TestItem", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] Weapon {
             get {
                 object obj = ResourceManager.GetObject("Weapon", resourceCulture);
