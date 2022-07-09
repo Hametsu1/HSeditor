@@ -746,7 +746,7 @@
                                                                         </ItemsControl.Style>
                                                                         <ItemsControl.ItemsPanel>
                                                                             <ItemsPanelTemplate>
-                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                             </ItemsPanelTemplate>
                                                                         </ItemsControl.ItemsPanel>
                                                                         <ItemsControl.ItemTemplate>
@@ -1138,7 +1138,7 @@
                                                                         </ItemsControl.Style>
                                                                         <ItemsControl.ItemsPanel>
                                                                             <ItemsPanelTemplate>
-                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                             </ItemsPanelTemplate>
                                                                         </ItemsControl.ItemsPanel>
                                                                         <ItemsControl.ItemTemplate>
@@ -1664,7 +1664,7 @@
                                                                             </ItemsControl.Style>
                                                                             <ItemsControl.ItemsPanel>
                                                                                 <ItemsPanelTemplate>
-                                                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                                 </ItemsPanelTemplate>
                                                                             </ItemsControl.ItemsPanel>
                                                                             <ItemsControl.ItemTemplate>
@@ -1973,7 +1973,7 @@
                                             <Image.ToolTip>
                                                 <Border BorderBrush="#FF483D85" BorderThickness="3">
                                                     <StackPanel Background="#FF212329">
-                                                        <TextBlock Text="The *Roll-ID* is used as a seed for every random aspect of an item. It determines socket amount, innate ability level, resistances and damagetypes, aswell as random stats. The valid range is 0-10000." Tag="#7666cc #ad9247 #ad9247 #ad9247 #ad9247 #ad9247"  MaxWidth="350" FontFamily="/Resources/Fonts/#Nunito Sans Regular" TextWrapping="WrapWithOverflow" Margin="10" Foreground="{StaticResource Gray}" FontSize="14" Loaded="TextBlock_Loaded"/>
+                                                        <TextBlock Text="The *Roll-ID* is used as a seed for every random aspect of an item. It determines *socket amount*, *innate ability level*, *resistances and damagetypes*, aswell as *random stats*. The valid range is *0-10000*." Tag="#7666cc #ad9247"  MaxWidth="350" FontFamily="/Resources/Fonts/#Nunito Sans Regular" TextWrapping="WrapWithOverflow" Margin="10" Foreground="{StaticResource Gray}" FontSize="14" Loaded="TextBlock_Loaded"/>
                                                     </StackPanel>
                                                 </Border>
                                             </Image.ToolTip>
@@ -2021,42 +2021,42 @@
                                     <ComboBox x:Name="comboBoxForgeRune1" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune1}"  Width="112" HorizontalAlignment="Left" Margin="10,275,0,0" Height="30"   ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" Loaded="comboBoxForgeRune1_Loaded" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <ComboBox x:Name="comboBoxForgeRune2" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune2}"  Width="112" HorizontalAlignment="Right" Margin="0,275,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <ComboBox x:Name="comboBoxForgeRune3" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune3}"  Width="112" HorizontalAlignment="Left" Margin="10,310,0,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <ComboBox x:Name="comboBoxForgeRune4" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune4}"  Width="112" HorizontalAlignment="Right" Margin="0,310,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <ComboBox x:Name="comboBoxForgeRune5" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune5}"  Width="112" HorizontalAlignment="Left" Margin="10,345,0,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                     <ComboBox x:Name="comboBoxForgeRune6" SelectedIndex="0" VerticalAlignment="Top" SelectedItem="{Binding Sockets.Rune6}"  Width="112" HorizontalAlignment="Right" Margin="0,345,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
@@ -2064,7 +2064,7 @@
                                     <ComboBox x:Name="comboBoxForgeRuneAll" VerticalAlignment="Top" SelectedIndex="-1"  Width="112" HorizontalAlignment="Right" Margin="0,380,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded" ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxForgeRuneAll_SelectionChanged" IsEnabled="False">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
@@ -2264,7 +2264,7 @@
                                                                         </ItemsControl.Style>
                                                                         <ItemsControl.ItemsPanel>
                                                                             <ItemsPanelTemplate>
-                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                             </ItemsPanelTemplate>
                                                                         </ItemsControl.ItemsPanel>
                                                                         <ItemsControl.ItemTemplate>
@@ -2679,7 +2679,7 @@
                                                                         </ItemsControl.Style>
                                                                         <ItemsControl.ItemsPanel>
                                                                             <ItemsPanelTemplate>
-                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                             </ItemsPanelTemplate>
                                                                         </ItemsControl.ItemsPanel>
                                                                         <ItemsControl.ItemTemplate>
@@ -3084,7 +3084,31 @@
                                                                         <StackPanel Background="#FF212329">
                                                                             <Label Content="{Binding Name}" Margin="5,0,5,0"  HorizontalAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="{StaticResource White}" FontSize="14"/>
                                                                             <Label Content="{Binding Type.Name}" Margin="5,-10,5,0"  HorizontalAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="{Binding Type.Color}" FontSize="13"/>
-                                                                            <TextBlock Text="{Binding Description}" TextAlignment="Left" TextWrapping="WrapWithOverflow" MaxWidth="350" FontFamily="/Resources/Fonts/#Nunito Sans Regular" Padding="10,5,10,10" Foreground="#7c89c4" FontSize="12"></TextBlock>
+                                                                            <ItemsControl ItemsSource="{Binding Stats}" Margin="10,5,10,5">
+                                                                                <ItemsControl.Style>
+                                                                                    <Style TargetType="ItemsControl">
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding Stats.Count}" Value="0">
+                                                                                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </ItemsControl.Style>
+                                                                                <ItemsControl.ItemsPanel>
+                                                                                    <ItemsPanelTemplate>
+                                                                                        <StackPanel Orientation="Vertical"></StackPanel>
+                                                                                    </ItemsPanelTemplate>
+                                                                                </ItemsControl.ItemsPanel>
+                                                                                <ItemsControl.ItemTemplate>
+                                                                                    <DataTemplate>
+                                                                                        <StackPanel Orientation="Horizontal">
+                                                                                            <TextBlock Text="+" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Regular" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                                            <TextBlock Text="{Binding ValueFormatted}" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                                            <TextBlock Text="{Binding Name}" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#ab6e29" FontSize="12"></TextBlock>
+                                                                                        </StackPanel>
+                                                                                    </DataTemplate>
+                                                                                </ItemsControl.ItemTemplate>
+                                                                            </ItemsControl>
                                                                         </StackPanel>
                                                                     </Border>
                                                                 </Grid.ToolTip>
@@ -3607,7 +3631,7 @@
                                                                                             </ItemsControl.Style>
                                                                                             <ItemsControl.ItemsPanel>
                                                                                                 <ItemsPanelTemplate>
-                                                                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                                                 </ItemsPanelTemplate>
                                                                                             </ItemsControl.ItemsPanel>
                                                                                             <ItemsControl.ItemTemplate>
@@ -4176,7 +4200,7 @@
                                                                                                 </ItemsControl.Style>
                                                                                                 <ItemsControl.ItemsPanel>
                                                                                                     <ItemsPanelTemplate>
-                                                                                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                                                                                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                                                                                                     </ItemsPanelTemplate>
                                                                                                 </ItemsControl.ItemsPanel>
                                                                                                 <ItemsControl.ItemTemplate>
@@ -4626,42 +4650,42 @@
                                             <ComboBox x:Name="comboBoxNewItemRune1"  VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune1}"  Width="112" HorizontalAlignment="Left" Margin="10,280,0,0" Height="30"   ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" Loaded="comboBoxForgeRune1_Loaded">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                             <ComboBox x:Name="comboBoxNewItemRune2"  VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune2}"  Width="112" HorizontalAlignment="Right" Margin="0,280,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                             <ComboBox x:Name="comboBoxNewItemRune3" VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune3}"  Width="112" HorizontalAlignment="Left" Margin="10,325,0,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                             <ComboBox x:Name="comboBoxNewItemRune4" VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune4}"  Width="112" HorizontalAlignment="Right" Margin="0,325,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                             <ComboBox x:Name="comboBoxNewItemRune5"  VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune5}"  Width="112" HorizontalAlignment="Left" Margin="10,370,0,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}"  VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>
                                             <ComboBox x:Name="comboBoxNewItemRune6" VerticalAlignment="Top" SelectedItem="{Binding NewItem.Sockets.Rune6}"  Width="112" HorizontalAlignment="Right" Margin="0,370,10,0" Height="30" Loaded="comboBoxForgeRune1_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand" SelectionChanged="comboBoxRelicFilterSearchBy_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}" Width="112" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"/>
+                                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,5,0"/>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
                                             </ComboBox>

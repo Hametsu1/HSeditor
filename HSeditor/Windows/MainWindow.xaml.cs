@@ -71,6 +71,7 @@ namespace HSeditor
             this.CheckDirectory();
             this.iniDB = new iniDB(Environment.CurrentDirectory + @"\ini.dll");
             this.UpdateHandler = new UpdateHandler();
+            this.StatHandler = new StatHandler();
             this.RuneHandler = new RuneHandler();
             InitializeComponent();
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
@@ -86,7 +87,6 @@ namespace HSeditor
             this.ConfigHandler = new ConfigHandler();
             this.RefreshSettings();
             this.ItemHandler = new ItemHandler();
-            this.StatHandler = new StatHandler();
             this.StatHandler.ReadStats();
             this.RelicHandler = new RelicHandler();
             this.UberHandler = new UberHandler();

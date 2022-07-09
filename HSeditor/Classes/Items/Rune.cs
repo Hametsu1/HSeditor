@@ -1,4 +1,6 @@
-﻿using HSeditor.Classes.Other;
+﻿using HSeditor.Classes;
+using HSeditor.Classes.Other;
+using HSeditor.Classes.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,17 +14,17 @@ namespace HSeditor
         public string Name { get; set; }
         public int EditorID { get; private set; }
         public int IngameID { get; private set; }
-        public string Description { get; private set; }
+        public List<Stat> Stats { get; private set; }
         public RuneType Type { get; set; }
         public int Amount { get; set; }
         public string Sprite { get; private set; }
 
-        public Rune(string Name, int ID, int IngameID, string Description, RuneType Type)
+        public Rune(string Name, int ID, int IngameID, List<Stat> Stats, RuneType Type)
         {
             this.Name = Name;
             this.EditorID = ID;
             this.IngameID = IngameID;
-            this.Description = Description;
+            this.Stats = Stats;
             this.Type = Type;
             this.Sprite = Environment.CurrentDirectory + $@"\Sprites\Runes\{this.Name}_.png";
         }
@@ -35,7 +37,7 @@ namespace HSeditor
             Rune equivalent = MainWindow.INSTANCE.RuneHandler.GetRuneFromID(ID);
             if (equivalent == null) return;
             this.EditorID = equivalent.IngameID;
-            this.Description = equivalent.Description;
+            this.Stats = equivalent.Stats;
             this.Name = equivalent.Name;
             this.Type = new RuneType(equivalent.Type.ID, equivalent.Type.Name, equivalent.Type.Color);
         }
@@ -50,6 +52,13 @@ namespace HSeditor
         {
             Rune temp = (Rune)this.MemberwiseClone();
             return temp;
+        }
+
+        public bool ContainsStat(string s)
+        {
+            foreach (Stat stat in this.Stats)
+                if (stat.Name.ToLower() == s) return true;
+            return false;
         }
     }
 
@@ -69,7 +78,7 @@ namespace HSeditor
             this.RuneTypesFiltered.Add(new RuneType(-1, "Null", "#F6F6F6"));
             this.Runes = this.GetRunes().OrderBy(o => o.Type.ID).ToList();
             this.RunesFiltered = new List<Rune>(this.Runes);
-            this.Runes.Insert(0, new Rune("None", 0, 0, "Default", this.GetRuneTypeFromString("Null")));
+            this.Runes.Insert(0, new Rune("None", 0, 0, new List<Stat>(), this.GetRuneTypeFromString("Null")));
         }
 
         private List<RuneType> GetRuneTypes()
@@ -94,7 +103,7 @@ namespace HSeditor
 
             while (result.Read())
             {
-                runes.Add(new Rune(result.GetString("name"), result.GetInt32("id"), result.GetInt32("ingameid"), result.GetString("description"), this.GetRuneTypeFromString(result.GetString("type"))));
+                runes.Add(new Rune(result.GetString("name"), result.GetInt32("id"), result.GetInt32("ingameid"), Util.GetStatsFromString(result.GetString("description")), this.GetRuneTypeFromString(result.GetString("type"))));
             }
             result.Close();
 

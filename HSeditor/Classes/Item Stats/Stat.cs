@@ -188,10 +188,16 @@ namespace HSeditor.Classes
 
         public Stat GetStat(string stat, string type)
         {
+            Stat temp = null;
             foreach (Stat Stat in Stats)
-                if (Stat.Name == stat && Stat.Type == type)
-                    return Stat;
-            return null;
+                if (Stat.Name == stat)
+                {
+                    temp = Stat;
+                    if (Stat.Type == type)
+                        return Stat;
+                }
+
+            return temp;
         }
         public void ReadStats()
         {

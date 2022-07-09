@@ -1,5 +1,6 @@
 ﻿using HSeditor.Classes;
 using HSeditor.Classes.Other;
+using HSeditor.Classes.Util;
 using HSeditor.Model;
 using System;
 using System.Collections.Generic;
@@ -175,29 +176,7 @@ namespace HSeditor.SaveFiles
 
             while (result.Read())
             {
-                List<string> list = result.GetString("stats").Split('|').ToList();
-                List<Stat> statlist = new List<Stat>();
-                foreach (string stat in list)
-                {
-                    if (stat == "null") continue;
-                    string[] temp = stat.Split(" ");
-                    string statstr = "";
-                    if (temp.Length > 2)
-                    {
-                        for (int i = 1; i < temp.Length; i++)
-                        {
-                            statstr += temp[i] + " ";
-                        }
-                        statstr = statstr.Remove(statstr.Length - 1);
-                    }
-                    else
-                        statstr = temp[1];
-
-                    Stat Stat = MainWindow.INSTANCE.StatHandler.GetStat(statstr, temp[0].Contains("%") ? "%" : "flat");
-                    statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
-                }
-
-                relics.Add(new Relic(result.GetInt32("id"), result.GetString("name"), result.GetString("description"), this.GetRelicTypeFromString(result.GetString("type")), statlist));
+                relics.Add(new Relic(result.GetInt32("id"), result.GetString("name"), result.GetString("description"), this.GetRelicTypeFromString(result.GetString("type")), Util.GetStatsFromString(result.GetString("stats"))));
             }
             result.Close();
 

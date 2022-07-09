@@ -51,7 +51,7 @@ namespace HSeditor.SaveFiles
             ObservableCollection<Rune> filteredRunes = new ObservableCollection<Rune>();
             foreach (Rune rune in this.Runes)
             {
-                if (!rune.Name.ToLower().Contains(Text.ToLower()) && !rune.Description.ToLower().Contains(Text.ToLower()) && Text != "Search..." && Text != "")
+                if (!rune.Name.ToLower().Contains(Text.ToLower()) && !rune.ContainsStat(Text.ToLower()) && Text != "Search..." && Text != "")
                     continue;
                 if (rune.Type != Type && Type.Name != "All Types")
                     continue;

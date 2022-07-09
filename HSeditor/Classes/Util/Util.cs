@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HSeditor.Classes.Util
 {
@@ -40,6 +41,33 @@ namespace HSeditor.Classes.Util
                 ability += i == 0 ? Char.ToUpper(tempstr[i]) : tempstr[i];
             }
             return ability;
+        }
+
+        public static List<Stat> GetStatsFromString(string s)
+        {
+            List<string> list = s.Split('|').ToList();
+            List<Stat> statlist = new List<Stat>();
+            foreach (string stat in list)
+            {
+                if (stat == "null") continue;
+                string[] temp = stat.Split(" ");
+                string statstr = "";
+                if (temp.Length > 2)
+                {
+                    for (int i = 1; i < temp.Length; i++)
+                    {
+                        statstr += temp[i] + " ";
+                    }
+                    statstr = statstr.Remove(statstr.Length - 1);
+                }
+                else
+                    statstr = temp[1];
+
+                Stat Stat = MainWindow.INSTANCE.StatHandler.GetStat(statstr, temp[0].Contains("%") ? "%" : "flat");
+                if (Stat == null) continue;
+                statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
+            }
+            return statlist;
         }
     }
 }

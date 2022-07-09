@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,55 +12,67 @@ namespace HSeditor.Classes.Util
 {
     public static class TooltipHandler
     {
+        private static readonly char highlightChar = '*';
         static List<TextBlock> tooltips = new List<TextBlock>();
         public static void SetToolTip(TextBlock tb)
         {
             if (tooltips.Contains(tb)) return; else tooltips.Add(tb);
             string[] temp = tb.Text.Split();
-            string[]? colors = tb.Tag == null ? null : tb.Tag.ToString().Split();
             tb.Text = "";
+            List<string> seperatedWords = new List<string>();
+            List<string> colors = tb.Tag == null ? new List<string> { "#ad9247" } : tb.Tag.ToString().Split().ToList();
+
             int counter = 0;
-            List<string> words = new List<string>();
-
-            for (int i = 0; i < temp.Length; i++)
+            foreach (string word in temp)
             {
-                string end = i == temp.Length - 1 ? "" : " ";
-
-                // not highlighted
-                if (!temp[i].Contains("*") && words.Count == 0)
+                string end = counter == temp.Length - 1 ? "" : " ";
+                if (word.StartsWith(highlightChar))
                 {
-                    tb.Inlines.Add(new Run(temp[i] + end));
+                    // single word
+                    if (word.EndsWith(highlightChar) || (word.Length >= 2 && word[word.Length - 2] == highlightChar))
+                    {
+                        string append = word.EndsWith(highlightChar) ? String.Empty : word[word.Length - 1].ToString();
+                        string word2 = word.EndsWith(highlightChar) ? word : word.Remove(word.Length - 1);
+                        tb.Inlines.Add(new Run(word2.Replace("*", string.Empty))
+                        {
+                            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors.Count <= counter ? colors[colors.Count - 1] : colors[counter]))
+                        });
+                        tb.Inlines.Add(new Run(append + end));
+
+                        counter++;
+                        continue;
+                    }
+
+                    // multiple words start
+                    seperatedWords.Add(word);
                     continue;
                 }
 
-                // Single highlighted word
-                if (temp[i][0] == '*' && (temp[i][temp[i].Length - 1] == '*' || temp[i][temp[i].Length - 2] == '*'))
+
+                if (seperatedWords.Count > 0)
                 {
-                    tb.Inlines.Add(new Run(temp[i].Replace("*", string.Empty)[temp[i].Replace("*", string.Empty).Length - 1] == '.' ? temp[i].Replace("*", string.Empty).Remove(temp[i].Replace("*", string.Empty).Length - 1) + end : temp[i].Replace("*", string.Empty) + end)
+                    // multiple words end
+                    if (word.EndsWith(highlightChar) || (word.Length >= 2 && word[word.Length - 2] == highlightChar))
                     {
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors == null ? "#ad9247" : counter < colors.Length ? colors[counter] : colors[0]))
-                    });
-                    counter++;
+                        string append = word.EndsWith(highlightChar) ? String.Empty : word[word.Length - 1].ToString();
+                        string words = "";
+                        seperatedWords.ForEach(o => { words += o.Replace("*", String.Empty) + " "; });
+                        seperatedWords.Clear();
+                        string word2 = word.EndsWith(highlightChar) ? word : word.Remove(word.Length - 1);
+                        tb.Inlines.Add(new Run(words + word2.Replace("*", string.Empty))
+                        {
+                            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors.Count <= counter ? colors[colors.Count - 1] : colors[counter]))
+                        });
+                        tb.Inlines.Add(new Run(append + end));
+
+                        counter++;
+                        continue;
+                    }
+                    seperatedWords.Add(word);
                     continue;
                 }
 
-
-                // multiple highlighted words seperated by space
-                words.Add(temp[i]);
-                if ((temp[i][temp[i].Length - 1] == '*' || (i < temp[i].Length && (temp[i][temp[i].Length - 2] == '*')) && temp[i][temp[i].Length - 2] == '*'))
-                {
-                    string s = "";
-                    words.ForEach(o => { s += o + " "; });
-                    s = s.Remove(s.Length - 1);
-                    s = s.Replace("*", string.Empty);
-
-                    tb.Inlines.Add(new Run(s + end)
-                    {
-                        Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colors == null ? "#ad9247" : counter < colors.Length ? colors[counter] : colors[0]))
-                    });
-                    counter++;
-                    words = new List<string>();
-                }
+                tb.Inlines.Add(new Run(word + end));
             }
 
         }

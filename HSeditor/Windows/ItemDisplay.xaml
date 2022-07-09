@@ -16,12 +16,12 @@
                 <Grid Margin="5,5,0,0" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Image Source="{Binding Sprite}" HorizontalAlignment="Center" VerticalAlignment="Top"></Image>
                 </Grid>
-                <Label Content="{Binding Name}" Margin="55,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="{StaticResource White}" FontSize="14"></Label>
-                <Label Content="{Binding Rarity.Name}" Margin="55,20,5,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="{Binding Rarity.Color}" FontSize="14"></Label>
+                <Label Content="{Binding Name}" Margin="55,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="{StaticResource White}" FontSize="14"></Label>
+                <Label Content="{Binding Rarity.Name}" Margin="55,20,5,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="{Binding Rarity.Color}" FontSize="14"></Label>
                 <StackPanel Orientation="Horizontal" Margin="5,65,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                    <TextBlock Text="{Binding Slot.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                    <TextBlock Text="]" FontSize="13" Margin="0,0,5,0" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="{Binding Slot.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="]" FontSize="13" Margin="0,0,5,0" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
@@ -33,9 +33,9 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                        <TextBlock Text="{Binding WeaponType.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                        <TextBlock Text="]" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
+                        <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                        <TextBlock Text="{Binding WeaponType.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                        <TextBlock Text="]" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,65,5,0" VerticalAlignment="Top" HorizontalAlignment="Right">
@@ -51,9 +51,9 @@
                             </Style.Triggers>
                         </Style>
                     </StackPanel.Style>
-                    <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                    <TextBlock Text="{Binding Stats.Class.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                    <TextBlock Text="]" FontSize="13" Margin="0,0,5,0" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="[" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="{Binding Stats.Class.Name}" Margin="1,0" FontSize="13" Foreground="#566ee3" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                    <TextBlock Text="]" FontSize="13" Margin="0,0,5,0" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                 </StackPanel>
                 <StackPanel Margin="0,25,5,0"  VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Right">
                     <StackPanel.Style>
@@ -66,8 +66,8 @@
                         </Style>
                     </StackPanel.Style>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="Tier:"  HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"></TextBlock>
-                        <TextBlock Text="{Binding Stats.Tier.Name}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" HorizontalAlignment="Right" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#99AAB5" FontSize="15"/>
+                        <TextBlock Text="Tier:"  HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"></TextBlock>
+                        <TextBlock Text="{Binding Stats.Tier.Name}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" HorizontalAlignment="Right" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#99AAB5" FontSize="15"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
                         <StackPanel.Style>
@@ -80,8 +80,8 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <TextBlock Text="{Binding Stats.HandedType}" TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"/>
-                        <TextBlock Text="-Handed" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"></TextBlock>
+                        <TextBlock Text="{Binding Stats.HandedType}" TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"/>
+                        <TextBlock Text="-Handed" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#B89250" FontSize="13"></TextBlock>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Top" Margin="0,85,0,0">
@@ -95,7 +95,7 @@
                                 </Style.Triggers>
                             </Style>
                         </Grid.Style>
-                        <Label Margin="5,0,0,0" Content="Runes:" FontSize="16" Foreground="{StaticResource White}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
+                        <Label Margin="5,0,0,0" Content="Runes:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                     </Grid>
                     <ItemsControl ItemsSource="{Binding Sockets.Runes}" Margin="10,0,5,0" BorderThickness="0" Background="Transparent">
                         <ItemsControl.Style>
@@ -109,7 +109,7 @@
                         </ItemsControl.Style>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"></WrapPanel>
+                                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" MaxWidth="350"></WrapPanel>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
@@ -137,13 +137,37 @@
                                             </Image.Style>
                                             <Image.ToolTip>
                                                 <Border BorderBrush="#FF483D85" BorderThickness="3">
-                                                    <Grid Background="#FF212329">
-                                                        <TextBlock Text="{Binding Description}" Margin="5" FontSize="14" Foreground="{Binding Type.Color}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                                                    </Grid>
+                                                    <StackPanel Background="#FF212329">
+                                                        <ItemsControl ItemsSource="{Binding Stats}" Margin="10,5,10,5">
+                                                            <ItemsControl.Style>
+                                                                <Style TargetType="ItemsControl">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Stats.Count}" Value="0">
+                                                                            <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ItemsControl.Style>
+                                                            <ItemsControl.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <StackPanel Orientation="Vertical"></StackPanel>
+                                                                </ItemsPanelTemplate>
+                                                            </ItemsControl.ItemsPanel>
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <TextBlock Text="+" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Regular" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                        <TextBlock Text="{Binding ValueFormatted}" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Bold" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                        <TextBlock Text="{Binding Name}" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Bold" Foreground="#ab6e29" FontSize="12"></TextBlock>
+                                                                    </StackPanel>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
                                                 </Border>
                                             </Image.ToolTip>
                                         </Image>
-                                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="12" FontFamily="Resources/Fonts/#Nunito Sans Bold">
+                                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="12" FontFamily="/Resources/Fonts/#Nunito Sans Bold">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Foreground" Value="{Binding Type.Color}"></Setter>
@@ -178,13 +202,13 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Label Margin="5,0,0,0" Content="Stats:" FontSize="16" Foreground="{StaticResource White}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
+                            <Label Margin="5,0,0,0" Content="Stats:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,5,0">
-                                <TextBox Style="{DynamicResource TextBoxMain}" TextAlignment="Left" VerticalContentAlignment="Top" Text="{Binding Quality}" x:Name="textBoxQuality" Margin="0,0,-19,0" Padding="3,2,20,0" BorderThickness="2" CommandManager.PreviewExecuted="textBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="7" Width="80" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Right" TextChanged="TextBox_TextChanged" Height="25"/>
-                                <TextBlock Text="%" Background="{x:Null}"  FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Right"/>
+                                <TextBox Style="{DynamicResource TextBoxMain}" TextAlignment="Left" VerticalContentAlignment="Top" Text="{Binding Quality}" x:Name="textBoxQuality" Margin="0,0,-19,0" Padding="3,2,20,0" BorderThickness="2" CommandManager.PreviewExecuted="textBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="7" Width="80" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Right" TextChanged="TextBox_TextChanged" Height="25"/>
+                                <TextBlock Text="%" Background="{x:Null}"  FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Right"/>
                                 <Grid>
-                                    <TextBox Style="{DynamicResource TextBoxMain}" Padding="3,2,30,0" VerticalContentAlignment="Top" TextAlignment="Left" Text="{Binding UpgradeLevel}" x:Name="textBoxLevel" Margin="8,0,0,0" BorderThickness="2"  CommandManager.PreviewExecuted="textBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" Width="75"  FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left" TextChanged="textBoxLevel_TextChanged" Height="25"/>
-                                    <TextBlock Text="/10" Background="{x:Null}" Margin="0,0,6,0" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
+                                    <TextBox Style="{DynamicResource TextBoxMain}" Padding="3,2,30,0" VerticalContentAlignment="Top" TextAlignment="Left" Text="{Binding UpgradeLevel}" x:Name="textBoxLevel" Margin="8,0,0,0" BorderThickness="2"  CommandManager.PreviewExecuted="textBox_PreviewExecuted" PreviewTextInput="TextBox_PreviewTextInput" Width="75"  FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left" TextChanged="textBoxLevel_TextChanged" Height="25"/>
+                                    <TextBlock Text="/10" Background="{x:Null}" Margin="0,0,6,0" HorizontalAlignment="Right" FontSize="14" VerticalAlignment="Center" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -204,12 +228,12 @@
                             </StackPanel.Style>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock  Text="Base Damage:" Width="100" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="13" Foreground="#415bd1" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
-                                    <TextBlock Text="{Binding Stats.Damage}"  VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold" Initialized="TextBlock_Initialized" />
+                                    <TextBlock  Text="Base Damage:" Width="100" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="13" Foreground="#415bd1" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                    <TextBlock Text="{Binding Stats.Damage}"  VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Initialized="TextBlock_Initialized" />
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock  Text="Attack Speed:" Width="100" Margin="0,0,5,0" VerticalAlignment="Center" FontSize="13" Foreground="#415bd1" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
-                                    <TextBlock Text="{Binding Stats.APS}"  VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
+                                    <TextBlock  Text="Attack Speed:" Width="100" Margin="0,0,5,0" VerticalAlignment="Center" FontSize="13" Foreground="#415bd1" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                    <TextBlock Text="{Binding Stats.APS}"  VerticalAlignment="Center" FontSize="13" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -245,9 +269,9 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </StackPanel.Style>
-                                                <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                                                <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
-                                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
+                                                <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                                                <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -279,9 +303,9 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </StackPanel.Style>
-                                                <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
-                                                <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
-                                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="Resources/Fonts/#Nunito Sans Bold" />
+                                                <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
+                                                <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -305,7 +329,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </StackPanel.Style>-->
-                            <TextBlock x:Name="AbilityString" Text="{Binding Stats.AbilityString}" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="13" Foreground="#C28633" FontFamily="Resources/Fonts/#Nunito Sans Bold">
+                            <TextBlock x:Name="AbilityString" Text="{Binding Stats.AbilityString}" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="13" Foreground="#C28633" FontFamily="/Resources/Fonts/#Nunito Sans Bold">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
@@ -319,7 +343,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="AuraString" Text="{Binding Stats.AuraString}" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="13" Foreground="#00FFFF" FontFamily="Resources/Fonts/#Nunito Sans Bold">
+                            <TextBlock x:Name="AuraString" Text="{Binding Stats.AuraString}" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="13" Foreground="#00FFFF" FontFamily="/Resources/Fonts/#Nunito Sans Bold">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
@@ -333,7 +357,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock Text="{Binding AbilityString}" VerticalAlignment="Center" FontSize="13" Foreground="#5b359c" FontFamily="Resources/Fonts/#Nunito Sans Bold">
+                            <TextBlock Text="{Binding AbilityString}" VerticalAlignment="Center" FontSize="13" Foreground="#5b359c" FontFamily="/Resources/Fonts/#Nunito Sans Bold">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
@@ -358,8 +382,8 @@
                                     </Style.Triggers>
                                 </Style>
                             </StackPanel.Style>
-                            <TextBlock Text="{Binding Set.Name}" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="13" Foreground="#C83800" FontFamily="Resources/Fonts/#Nunito Sans Bold"></TextBlock>
-                            <TextBlock Text="{Binding Set.Description}" Margin="0,0,0,0" MaxWidth="220" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="11" Foreground="{StaticResource Gray}" FontFamily="Resources/Fonts/#Nunito Sans"></TextBlock>
+                            <TextBlock Text="{Binding Set.Name}" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="13" Foreground="#C83800" FontFamily="/Resources/Fonts/#Nunito Sans Bold"></TextBlock>
+                            <TextBlock Text="{Binding Set.Description}" Margin="0,0,0,0" MaxWidth="220" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="11" Foreground="{StaticResource Gray}" FontFamily="/Resources/Fonts/#Nunito Sans"></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Vertical">
                             <StackPanel.Style>
@@ -375,7 +399,7 @@
                                 </Style>
                             </StackPanel.Style>
                             <Grid Height="30"  Background="#FF1F2126">
-                                <Label Margin="5,0,0,0" Content="Damage Types:" FontSize="16" Foreground="{StaticResource White}" FontFamily="Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
+                                <Label Margin="5,0,0,0" Content="Damage Types:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                             </Grid>
                             <ItemsControl Margin="10,0,10,10" ItemsSource="{Binding Stats.DamageTypes}" BorderThickness="0" Background="Transparent">
                                 <ItemsControl.ItemsPanel>
@@ -390,7 +414,7 @@
                                                 <Image.ToolTip>
                                                     <Border BorderBrush="#FF483D85" BorderThickness="3">
                                                         <Grid Background="#FF212329">
-                                                            <TextBlock Text="{Binding Name}" Margin="5" FontSize="14" Foreground="{Binding Color}" FontFamily="Resources/Fonts/#Nunito Sans Bold"/>
+                                                            <TextBlock Text="{Binding Name}" Margin="5" FontSize="14" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                                                         </Grid>
                                                     </Border>
                                                 </Image.ToolTip>
