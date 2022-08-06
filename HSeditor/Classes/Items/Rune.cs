@@ -57,8 +57,16 @@ namespace HSeditor
         public bool ContainsStat(string s)
         {
             foreach (Stat stat in this.Stats)
-                if (stat.Name.ToLower() == s) return true;
+                if (stat.Name.ToLower().Contains(s)) return true;
             return false;
+        }
+
+        public Stat GetStat(string name)
+        {
+            foreach (Stat stat in this.Stats)
+                if (stat.DebugName.ToLower() == name.ToLower())
+                    return stat;
+            return null;
         }
     }
 

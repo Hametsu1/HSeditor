@@ -28,7 +28,7 @@ namespace HSeditor
             InitializeComponent();
             this.Item = item.DeepCopy();
             this.mainBorder.DataContext = this.Item;
-            //textBoxLevel.MaxLength = Item.Rarity.MaxUpgradeLevel.ToString().Length;
+            textBoxLevel.MaxLength = Item.Rarity.MaxUpgradeLevel.ToString().Length;
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -82,12 +82,12 @@ namespace HSeditor
         {
             try
             {
-                //if (textBoxLevel.Text == "" || textBoxQuality.Text == "" || ItemControls.Count == 0) return;
-                //this.Item.Forge(Item.ItemLevel, Int32.Parse(textBoxQuality.Text), Int32.Parse(textBoxLevel.Text), Item.RollID, Item.Ability, Item.AbilityLevel, Item.Sockets.GetRuneList());
-                //if (this.ItemControls[0] == null) return;
-                //this.ItemControls[0].Items.Refresh();
-                //this.ItemControls[1].Items.Refresh();
-                //this.Damage.Text = Item.Stats.Damage.ToString();
+                if (textBoxLevel.Text == "" || textBoxQuality.Text == "" || ItemControls.Count == 0) return;
+                this.Item.Forge(Item.ItemLevel, Int32.Parse(textBoxQuality.Text), Int32.Parse(textBoxLevel.Text), Item.RollID, Item.Ability, Item.AbilityLevel, Item.Sockets.GetRuneList());
+                if (this.ItemControls[0] == null) return;
+                this.ItemControls[0].Items.Refresh();
+                this.ItemControls[1].Items.Refresh();
+                this.Damage.Text = Item.Stats.Damage.ToString();
             }
             catch { }
 

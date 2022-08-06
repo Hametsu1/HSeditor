@@ -65,7 +65,7 @@ namespace HSeditor.Classes.Util
 
                 Stat Stat = MainWindow.INSTANCE.StatHandler.GetStat(statstr, temp[0].Contains("%") ? "%" : "flat");
                 if (Stat == null) continue;
-                statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
+                statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.WíkiName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
             }
             return statlist;
         }

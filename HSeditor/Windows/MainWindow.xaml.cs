@@ -2391,5 +2391,10 @@ namespace HSeditor
         {
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Export.Stats();
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace HSeditor.Classes.Item_Stats
         public Class Class { get; set; }
         public int PriorityCount { get; set; }
         public string UpgradePriceString { get; set; }
+        public int VendorPrice { get; set; }
 
         public List<Stat> StatList { get; set; }
 
@@ -74,7 +75,7 @@ namespace HSeditor.Classes.Item_Stats
             Stats temp = (Stats)this.MemberwiseClone();
             temp.StatList = new List<Stat>();
             foreach (Stat stat in this.StatList)
-                temp.StatList.Add(new Stat(stat.Name, stat.DebugName, stat.Type, stat.Multiplier, stat.Priority, stat.HasPriority, stat.Value));
+                temp.StatList.Add(new Stat(stat.Name, stat.DebugName, stat.WíkiName, stat.Type, stat.Multiplier, stat.Priority, stat.HasPriority, stat.Value));
             return temp;
         }
 
@@ -90,12 +91,15 @@ namespace HSeditor.Classes.Item_Stats
         {
             int level = Item.UpgradeLevel - 1;
             Stats def = MainWindow.INSTANCE.ItemHandler.GetDefaultStats(Item);
+
             double defaultValue = def.Damage * (Convert.ToDouble(Item.Quality) / 100.0);
             double increase = defaultValue * Double.Parse("0.15", CultureInfo.InvariantCulture);
             double newValue = defaultValue + level * increase;
             double bonus = 0.15 * (((def.Damage * 0.15) * level) + def.Damage);
             if (Item.Rarity.Name == "Heroic Set") newValue += bonus;
             Item.Stats.Damage = Math.Ceiling(newValue);
+
+
             foreach (Stat Stat in StatList)
             {
                 if (Item.Quality == 100 && Item.UpgradeLevel == 1 && Item.Rarity.Name != "Heroic Set") { Stat.ChangeValue(def.GetStat(Stat.DebugName).Value); continue; }

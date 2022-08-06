@@ -156,9 +156,9 @@
                                                             <ItemsControl.ItemTemplate>
                                                                 <DataTemplate>
                                                                     <StackPanel Orientation="Horizontal">
-                                                                        <TextBlock Text="+" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Regular" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
-                                                                        <TextBlock Text="{Binding ValueFormatted}" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Bold" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
-                                                                        <TextBlock Text="{Binding Name}" TextAlignment="Left" FontFamily="//Resources/Fonts/#Nunito Sans Bold" Foreground="#ab6e29" FontSize="12"></TextBlock>
+                                                                        <TextBlock Text="+" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Regular" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                        <TextBlock Text="{Binding ValueFormatted}" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="0,0,3,0" Foreground="{StaticResource Gray}" FontSize="12"></TextBlock>
+                                                                        <TextBlock Text="{Binding Name}" TextAlignment="Left" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#ab6e29" FontSize="12"></TextBlock>
                                                                     </StackPanel>
                                                                 </DataTemplate>
                                                             </ItemsControl.ItemTemplate>

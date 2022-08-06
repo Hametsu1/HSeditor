@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
         mc:Ignorable="d"
-        Title="HSeditor" MinHeight="620" Height="640" Width="1114" MinWidth="1114" Background="#FF25282E"  Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Initialized="Window_Initialized">
+        Title="HSeditor" MinHeight="620" Height="620" Width="1114" MinWidth="1114" Background="#FF25282E"    Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" Initialized="Window_Initialized">
     <Window.Resources>
         <SolidColorBrush x:Key="White" Color="#F6F6F6"></SolidColorBrush>
         <SolidColorBrush x:Key="Gray" Color="#99AAB5"></SolidColorBrush>
@@ -27,6 +27,7 @@
         <FontFamily x:Key="FontBold">/Resources/Fonts/#Nunito Sans Bold</FontFamily>
         <FontFamily x:Key="FontRegular">/Resources/Fonts/#Nunito Sans Regular</FontFamily>
     </Window.Resources>
+
     <Viewbox Stretch="Fill"   RenderOptions.BitmapScalingMode="HighQuality">
         <Grid Background="#282C34" x:Name="MainGrid" Loaded="MainGrid_Loaded">
             <TabControl x:Name="MenuControl" BorderBrush="{x:Null}"   Background="{x:Null}" SelectedIndex="0" Margin="220,0,0,0" SelectionChanged="MenuControl_SelectionChanged">
@@ -43,10 +44,10 @@
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Grid Width="24" Height="24" VerticalAlignment="Center">
-                                                        <Image Source="{Binding Sprite}" Margin="5,0,0,0" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                                    <Grid Width="24" Height="24" VerticalAlignment="Center" Margin="1,0,0,0">
+                                                        <Image Source="{Binding Sprite}" Height="20" Width="20" Stretch="Uniform" HorizontalAlignment="Center"/>
                                                     </Grid>
-                                                    <TextBlock Text="{Binding Name}" Margin="5,0,0,0" Width="180" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans"/>
+                                                    <TextBlock Text="{Binding Name}" Width="230" Padding="5,0,5,0" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans "/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
@@ -1776,7 +1777,7 @@
                                                                                             </StackPanel.Style>
                                                                                             <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                                                                                             <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
-                                                                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                                                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" Initialized="TextBlock_Initialized" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
                                                                                         </StackPanel>
                                                                                     </DataTemplate>
                                                                                 </ItemsControl.ItemTemplate>
@@ -1810,7 +1811,7 @@
                                                                                             </StackPanel.Style>
                                                                                             <TextBlock Text="{Binding Prefix}" Margin="0,0,3,0" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold"/>
                                                                                             <TextBlock Text="{Binding ValueFormatted}" VerticalAlignment="Center" FontSize="13" Foreground="#99AAB5" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
-                                                                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
+                                                                                            <TextBlock Margin="5,0,0,0" Text="{Binding Name}" Initialized="TextBlock_Initialized" VerticalAlignment="Center" FontSize="13" Foreground="{Binding Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" />
                                                                                         </StackPanel>
                                                                                     </DataTemplate>
                                                                                 </ItemsControl.ItemTemplate>
@@ -4577,10 +4578,10 @@
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Grid Width="24" Height="24" VerticalAlignment="Center">
-                                                                <Image Source="{Binding Sprite}" Margin="5,0,0,0" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                                            <Grid Width="24" Height="24" VerticalAlignment="Center" Margin="1,0,0,0">
+                                                                <Image Source="{Binding Sprite}" Height="20" Width="20" Stretch="Uniform" HorizontalAlignment="Center"/>
                                                             </Grid>
-                                                            <TextBlock Text="{Binding Name}" Margin="5,0,0,0" Width="180" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans"/>
+                                                            <TextBlock Text="{Binding Name}" Width="230" Padding="5,0,5,0" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans "/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
@@ -4732,12 +4733,13 @@
                                             </Border>
                                             <Border CornerRadius="0,0,3,3" BorderBrush="#FF483D85" Background="#FF483D85" BorderThickness="3" Height="10" VerticalAlignment="Bottom" />
                                         </Grid>
-                                        <Grid x:Name="gridSettingsMisc" Width="250" Height="120" VerticalAlignment="Top" Margin="0,20,0,0" HorizontalAlignment="Right">
-                                            <Grid Margin="0,30,0,0" Height="80" Background="#FF262930" VerticalAlignment="Top">
+                                        <Grid x:Name="gridSettingsMisc" Width="250" Height="160" VerticalAlignment="Top" Margin="0,20,0,0" HorizontalAlignment="Right">
+                                            <Grid Margin="0,30,0,0" Height="120" Background="#FF262930" VerticalAlignment="Top">
                                                 <Grid  Height="30"  Background="#FF1F2126" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                                                 <Grid  Height="30"  Background="#FF1F2126" VerticalAlignment="Top">
                                                     <Label Content="Resolution:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                                                 </Grid>
+                                                <Button Style="{DynamicResource ButtonMain}" Content="Export Item Stats" Height="30" FontSize="14" Width="200" Margin="0,80,0,0"  HorizontalAlignment="Center"  VerticalAlignment="Top" Click="Button_Click" Cursor="Hand"/>
                                             </Grid>
                                             <ComboBox x:Name="comboBoxResolution" VerticalAlignment="Top"  Padding="5,0,0,0"  Width="230" HorizontalAlignment="Left" Margin="10,70,0,0" Height="30" Loaded="comboBoxNewItemAbilities_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" Cursor="Hand">
                                                 <ComboBoxItem Content="1280x720" Padding="5,0,0,0" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="{StaticResource Gray}" FontSize="14"/>

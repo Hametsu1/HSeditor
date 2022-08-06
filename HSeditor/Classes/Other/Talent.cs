@@ -85,7 +85,7 @@ namespace HSeditor.Classes.Other
                 for (int i = 1; i < s.Split().Length; i++)
                     name += s.Split()[i] + " ";
                 name = name.Remove(name.Length - 1);
-                statlist.Add(new Stat(name, name, type, "0", 0, false, value));
+                statlist.Add(new Stat(name, name, name, type, "0", 0, false, value));
             }
             return statlist;
         }

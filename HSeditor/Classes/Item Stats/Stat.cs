@@ -17,6 +17,7 @@ namespace HSeditor.Classes
     {
         public string Name { get; private set; }
         public string DebugName { get; private set; }
+        public string WíkiName { get; private set; }
         public string Type { get; private set; }
         public double Value { get; set; }
         public string ValueFormatted { get; set; }
@@ -26,11 +27,12 @@ namespace HSeditor.Classes
         public int Priority { get; set; }
         public bool HasPriority { get; set; }
 
-        public Stat(string Name, string DebugName, string Type, string Multiplier, int Priority, bool HasPriority, double Value = 0)
+        public Stat(string Name, string DebugName, string WikiName, string Type, string Multiplier, int Priority, bool HasPriority, double Value = 0)
         {
             this.Name = Name;
             this.HasPriority = HasPriority;
             this.DebugName = DebugName;
+            this.WíkiName = WikiName;
             this.Type = Type;
             this.Multiplier = Multiplier;
             this.Priority = Priority;
@@ -123,7 +125,7 @@ namespace HSeditor.Classes
                 }
             }
             statList = statList.OrderBy(o => o.Name).ToList();
-            statList.Insert(0, new Stat("All Stats", "Default", "Default", "0.0", -1, false));
+            statList.Insert(0, new Stat("All Stats", "Default", "Default", "Default", "0.0", -1, false));
             return statList;
         }
 
@@ -173,7 +175,7 @@ namespace HSeditor.Classes
 
             while (result.Read())
             {
-                stats.Add(new Stat(result.GetString("name"), result.GetString("debugname"), result.GetString("type"), result.GetString("scalefactor"), result.GetInt32("priority"), false));
+                stats.Add(new Stat(result.GetString("name"), result.GetString("debugname"), result.GetString("wikiname"), result.GetString("type"), result.GetString("scalefactor"), result.GetInt32("priority"), false));
             }
             return stats;
         }
@@ -337,6 +339,7 @@ namespace HSeditor.Classes
                         AuraLevelMax = section.Keys["lootAuraLevelMax"] == null ? 0 : Convert.ToInt32(section.Keys["lootAuraLevelMax"]),
                         LevelRequirement = Convert.ToInt32(section.Keys["itemData[INV_LEVEL_REQ]"]),
                         UpgradePrice = Convert.ToInt32(section.Keys["lootInfoUpgradePrice"]),
+                        VendorPrice = Convert.ToInt32(section.Keys["lootInfoPrice"]),
                         Class = section.Keys["itemData[INV_CLASS]"] == null ? null : MainWindow.INSTANCE.ClassHandler.GetClassFromName(section.Keys["itemData[INV_CLASS]"].Replace("eClass.", String.Empty).Replace("Locked", String.Empty)),
 
                         Ability = MainWindow.INSTANCE.AbilityHandler.GetAbilityFromName(section.Keys["itemData[INV_ABILITY]"]) == null
@@ -363,14 +366,19 @@ namespace HSeditor.Classes
                     }
 
                     List<DamageType> DamageTypes = new List<DamageType>();
-                    if (section.Keys["lootInfoDamageType"] == null && section.Keys["lootInfoRandomType"] != null && section.Keys["lootInfoRandomType"] != "[eDtype.nothing]")
+                    if (section.Keys["lootInfoDamageType"] != null)
+                    {
+                        DamageType damageType = this.GetDamageType(section.Keys["lootInfoDamageType"].Replace("[", String.Empty).Replace("]", String.Empty));
+                        if (damageType != null) DamageTypes.Add(damageType);
+                    }
+                    if (section.Keys["lootInfoRandomType"] != null && section.Keys["lootInfoRandomType"] != "[eDtype.nothing]")
                         foreach (string s in section.Keys["lootInfoRandomType"].Split(','))
                         {
                             DamageType damageType = this.GetDamageType(s.Replace("[", String.Empty).Replace("]", String.Empty));
-                            if (damageType == null) continue;
+                            if (damageType == null || DamageTypes.Contains(damageType)) continue;
                             DamageTypes.Add(damageType);
                         }
-                    { }
+
                     stats.DamageTypes = DamageTypes;
 
 
@@ -381,14 +389,14 @@ namespace HSeditor.Classes
                         if (key.KeyName.StartsWith("itemData[INV_TALENT_"))
                         {
                             if (stats.Class == null) continue;
-                            Stat = new Stat(stats.Class.Talents.GetTalentFromID(Convert.ToInt32(key.KeyName.Trim('[').Trim(']').Remove(0, 20))).Name, key.KeyName.Replace("[", String.Empty).Replace("]", String.Empty).Replace("itemData", string.Empty), "flat", "0", 67, false, Double.Parse(key.Value, CultureInfo.InvariantCulture));
+                            Stat = new Stat(stats.Class.Talents.GetTalentFromID(Convert.ToInt32(key.KeyName.Trim('[').Trim(']').Remove(0, 20))).Name, key.KeyName.Replace("[", String.Empty).Replace("]", String.Empty).Replace("itemData", string.Empty), "randomtalent1_18", "flat", "0", 67, false, Double.Parse(key.Value, CultureInfo.InvariantCulture));
                             Stats.Add(Stat);
                             continue;
                         }
                         Stat stat = this.GetStat(key.KeyName.Replace("itemData", String.Empty));
                         if (stat == null) continue;
 
-                        Stats.Add(new Stat(stat.Name, stat.DebugName, stat.Type, stat.Multiplier, stat.Priority, stat.HasPriority, Double.Parse(key.Value, CultureInfo.InvariantCulture)));
+                        Stats.Add(new Stat(stat.Name, stat.DebugName, stat.WíkiName, stat.Type, stat.Multiplier, stat.Priority, stat.HasPriority, Double.Parse(key.Value, CultureInfo.InvariantCulture)));
                     }
                     stats.StatList = Stats;
 
