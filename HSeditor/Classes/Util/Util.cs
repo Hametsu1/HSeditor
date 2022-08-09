@@ -45,29 +45,36 @@ namespace HSeditor.Classes.Util
 
         public static List<Stat> GetStatsFromString(string s)
         {
-            List<string> list = s.Split('|').ToList();
-            List<Stat> statlist = new List<Stat>();
-            foreach (string stat in list)
+            try
             {
-                if (stat == "null") continue;
-                string[] temp = stat.Split(" ");
-                string statstr = "";
-                if (temp.Length > 2)
+                List<string> list = s.Split('|').ToList();
+                List<Stat> statlist = new List<Stat>();
+                foreach (string stat in list)
                 {
-                    for (int i = 1; i < temp.Length; i++)
+                    if (stat == "null") continue;
+                    string[] temp = stat.Split(" ");
+                    string statstr = "";
+                    if (temp.Length > 2)
                     {
-                        statstr += temp[i] + " ";
+                        for (int i = 1; i < temp.Length; i++)
+                        {
+                            statstr += temp[i] + " ";
+                        }
+                        statstr = statstr.Remove(statstr.Length - 1);
                     }
-                    statstr = statstr.Remove(statstr.Length - 1);
-                }
-                else
-                    statstr = temp[1];
+                    else
+                        statstr = temp[1];
 
-                Stat Stat = MainWindow.INSTANCE.StatHandler.GetStat(statstr, temp[0].Contains("%") ? "%" : "flat");
-                if (Stat == null) continue;
-                statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.WíkiName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
+                    Stat Stat = MainWindow.INSTANCE.StatHandler.GetStat(statstr, temp[0].Contains("%") ? "%" : "flat");
+                    if (Stat == null) continue;
+                    statlist.Add(new Stat(Stat.Name, Stat.DebugName, Stat.WíkiName, Stat.Type, Stat.Multiplier, Stat.Priority, Stat.HasPriority, Convert.ToDouble(temp[0].Trim('+').Trim('%'))));
+                }
+                return statlist;
             }
-            return statlist;
+            catch
+            {
+                return new List<Stat>();
+            }
         }
     }
 }
