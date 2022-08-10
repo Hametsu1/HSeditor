@@ -9,7 +9,14 @@ namespace HSeditor.Classes.Util
         public static int FormatString(string row)
         {
             if (row == null) return 0;
-            return Int32.Parse((row.Trim('"').Split('.'))[0]);
+            try
+            {
+                return Int32.Parse((row.Trim('"').Split('.'))[0]);
+            }
+            catch
+            {
+                return Int32.MaxValue;
+            }
         }
 
         public static bool ContainsFavorite(List<Item> Items)

@@ -172,7 +172,7 @@ namespace HSeditor.Classes.Other
                                 talent.Selected = true;
                     }
                     if (key.KeyName.StartsWith("talent_") && !key.KeyName.Contains("reset"))
-                        Class.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = Util.Util.FormatString(key.Value);
+                        Class.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = (int)Util.Util.FormatString(key.Value);
 
                     if (key.KeyName.StartsWith("active_talent_"))
                     {

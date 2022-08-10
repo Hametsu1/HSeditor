@@ -349,7 +349,7 @@ namespace HSeditor.SaveFiles
                 string s = x.Remove(3).ToLower();
                 foreach (MercenaryTalent talent in Talents)
                     if (talent.Type == x && talent.ID == Convert.ToInt32(key.KeyName.Replace($"minion_talent_{s}", string.Empty)))
-                        talent.Points = Util.FormatString(key.Value);
+                        talent.Points = (int)Util.FormatString(key.Value);
             }
 
             Equipment equipmentMelee = new Equipment();
@@ -387,7 +387,7 @@ namespace HSeditor.SaveFiles
                 var parser = new FileIniDataParser();
                 IniData data = slotid == "X" ? parser.ReadData(new StreamReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(Assembly.GetExecutingAssembly().GetManifestResourceNames().Single(str => str.EndsWith("herosiegeX.pas"))))) : parser.ReadFile(path + @$"herosiege{slotid}.pas");
 
-                Class heroClass = MainWindow.INSTANCE.ClassHandler.GetClassFromID(Util.FormatString(data["0"]["class"])).DeepCopy();
+                Class heroClass = MainWindow.INSTANCE.ClassHandler.GetClassFromID((int)Util.FormatString(data["0"]["class"])).DeepCopy();
                 List<HeroTalent> HeroTalents = MainWindow.INSTANCE.TalentHandler.GetHeroTalentList();
                 List<ActiveTalent> ActiveTalents = MainWindow.INSTANCE.TalentHandler.GetEmptyActiveTalents();
                 foreach (KeyData key in data.Sections["0"])
@@ -398,7 +398,7 @@ namespace HSeditor.SaveFiles
                         {
                             if (Util.FormatString(key.Value) == 0) continue;
                             int id = Int32.Parse(key.KeyName.Replace("active_talent_", String.Empty));
-                            ActiveTalents[id].Talent = heroClass.Talents.GetActiveTalents()[Util.FormatString(key.Value) - 1];
+                            ActiveTalents[id].Talent = heroClass.Talents.GetActiveTalents()[(int)Util.FormatString(key.Value) - 1];
                         }
 
 
@@ -410,13 +410,13 @@ namespace HSeditor.SaveFiles
 
                         }
                         if (key.KeyName.StartsWith("talent_") && !key.KeyName.Contains("reset"))
-                            heroClass.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = Util.FormatString(key.Value);
+                            heroClass.Talents.GetTalentFromID(Int32.Parse(key.KeyName.Remove(0, 7))).Points = (int)Util.FormatString(key.Value);
                     }
                     catch { }
                 }
 
                 string name = slotid == "X" || data["0"]["name"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.Name : data["0"]["name"].Trim('"');
-                int level = slotid == "X" || data["0"]["level"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.Level : Util.FormatString(data["0"]["level"]);
+                int level = slotid == "X" || data["0"]["level"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.Level : (int)Util.FormatString(data["0"]["level"]);
                 int herolevel = slotid == "X" || data["0"]["herolevel"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.HeroLevel : Util.FormatString(data["0"]["herolevel"]);
                 int wormhole = slotid == "X" || data["0"]["wormhole_level"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.WormholeLevel : Util.FormatString(data["0"]["wormhole_level"]);
                 int ct = slotid == "X" || data["0"]["chaos_towers_cleared"] == null ? MainWindow.INSTANCE.ConfigHandler.Config.NewChar.ChaosTower : Util.FormatString(data["0"]["chaos_towers_cleared"]);

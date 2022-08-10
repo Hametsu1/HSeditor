@@ -6,14 +6,41 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace HSeditor.Classes.Util
 {
     public static class Export
     {
 
+        public static void JSON()
+        {
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export\json\items.json"))
+                File.Delete(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export\json\items.json");
+
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export\json\");
+            StreamWriter sr = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export\json\items.json");
+            List<ExportItem> exports = new List<ExportItem>();
+            foreach (Item item in MainWindow.INSTANCE.ItemHandler.AllItems)
+                if (item.Stats != null && item.Rarity.Name != "Heroic Set")
+                {
+                    item.Quality = 100; item.UpgradeLevel = 1;
+                    item.Stats.Calculate(item);
+                    ExportItem ex = new ExportItem(item.Name, item.ID, item.Rarity, item.Slot, item.WeaponType, item.Stats);
+                    exports.Add(ex);
+                }
+            string json = JsonConvert.SerializeObject(exports, Formatting.Indented);
+            sr.Write(json);
+            sr.Close();
+            System.Windows.MessageBox.Show("Export Done");
+            //Process.Start("Notepad", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export\json\items.json");
+        }
+
+
         public static void Stats()
         {
+            JSON();
+            return;
             string filename = "";
             StreamWriter sr = null;
             if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export")) Directory.Delete(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @$"\Hero_Siege\hseditor\export", true);
