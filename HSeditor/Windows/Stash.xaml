@@ -1,0 +1,43 @@
+﻿<Window x:Class="HSeditor.Windows.Stash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HSeditor.Windows"
+        mc:Ignorable="d"
+        Title="Stash" SizeToContent="Manual" MinWidth="675.2" MinHeight="808" Width="675.2" Height="808"  MouseMove="Window_MouseMove" ShowInTaskbar="False"  WindowStartupLocation="Manual" Closing="Window_Closing" Background="#FF222222" PreviewKeyDown="Window_PreviewKeyDown" MouseLeftButtonDown="Window_MouseLeftButtonDown" SizeChanged="Window_SizeChanged" MouseUp="Window_MouseUp">
+    <Window.Resources>
+        <SolidColorBrush x:Key="White" Color="#F6F6F6"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gray" Color="#99AAB5"></SolidColorBrush>
+        <SolidColorBrush x:Key="Main" Color="#483d85"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gold" Color="#a3895b"></SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorder" Color="#FF2E323A"></SolidColorBrush>
+        <Style x:Key="BoldFont">
+            <Setter Property="TextElement.FontFamily" Value="/Resources/Fonts/#Nunito Sans Bold"></Setter>
+        </Style>
+        <FontFamily x:Key="FontBold">/Resources/Fonts/#Nunito Sans Bold</FontFamily>
+        <FontFamily x:Key="FontRegular">/Resources/Fonts/#Nunito Sans Regular</FontFamily>
+    </Window.Resources>
+    <Viewbox RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Top" Stretch="Uniform" ClipToBounds="True" Name="vbMain">
+        <Grid VerticalAlignment="Top">
+            <WrapPanel x:Name="gridInvMain"   Margin="0,72,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF292929" FlowDirection="LeftToRight" Loaded="gridInvMain_Loaded"/>
+            <Grid x:Name="gridInvMainImages"  Margin="0,72,0,0"  VerticalAlignment="Top"  HorizontalAlignment="Left"/>
+            <Grid  Height="40"  VerticalAlignment="Top"  Background="#FF1A1B1C">
+                <TextBox x:Name="textBoxStashSearch" Padding="5,0,30,0" MaxLength="30" Style="{DynamicResource TextBoxMain}" Text="Search..."  Width="300" HorizontalAlignment="Left" Margin="5,5,0,0" Height="30" GotFocus="textBoxStashSearch_GotFocus" LostFocus="textBoxStashSearch_LostFocus" TextChanged="textBoxStashSearch_TextChanged"/>
+                <Image Source="/Resources/Clear.png" Cursor="Hand" Height="18" Width="18" VerticalAlignment="Center" Margin="280,0,0,0" HorizontalAlignment="Left" MouseDown="Image_MouseDown"/>
+            </Grid>
+            <Grid  Height="32"  VerticalAlignment="Top" Margin="0,40,0,0"  Background="#FF1A1B1C" >
+                <TabControl x:Name="controlSelectedStash" HorizontalAlignment="Left" SelectedIndex="1" SelectionChanged="controlSelectedInventory_SelectionChanged">
+                    <TabItem AllowDrop="True" IsEnabled="False" Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Personal"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                    <TabItem AllowDrop="True"  Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Shared"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                    <TabItem AllowDrop="True" Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Shared"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                    <TabItem AllowDrop="True" Foreground="#CCA749" Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Shared"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                    <TabItem AllowDrop="True" Foreground="#CCA749" Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Shared"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                    <TabItem AllowDrop="True" Foreground="#CCA749" Style="{DynamicResource TabItemStyle1}" Width="93" FontFamily="{StaticResource FontBold}" Header="Shared"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15" DragOver="TabItem_DragOver"/>
+                </TabControl>
+                <Label Content="100" x:Name="labelStashCount" FontSize="16" Foreground="{StaticResource Gray}" Margin="0,0,42,0" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Right"  FlowDirection="RightToLeft"/>
+                <Button x:Name="buttonSort" Style="{DynamicResource ButtonSort}" Content="Sort" FontSize="14" Width="40" Height="32" VerticalAlignment="Center" HorizontalAlignment="Right" Cursor="Hand" Click="buttonSort_Click"/>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</Window>

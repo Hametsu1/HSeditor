@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="HSeditor.Windows.EquipmentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HSeditor.Windows"
+             mc:Ignorable="d" 
+              Height="Auto" Width="Auto">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="White" Color="#F6F6F6"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gray" Color="#99AAB5"></SolidColorBrush>
+        <SolidColorBrush x:Key="Main" Color="#483d85"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gold" Color="#a3895b"></SolidColorBrush>
+        <Style x:Key="BorderEquipment" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="{Binding Border}"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="Background" Value="{Binding Background}"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="equipmentSlotStartDrag"/>
+            <EventSetter Event="DragEnter" Handler="equipmentSlotDragOver"/>
+            <EventSetter Event="DragLeave" Handler="equipmentSlotDragLeave"/>
+            <EventSetter Event="Drop" Handler="equipmentSlotDragDrop"/>
+            <EventSetter Event="GiveFeedback" Handler="Grid_GiveFeedback"/>
+            <EventSetter Event="Loaded" Handler="equipmentLoaded"/>
+            <EventSetter Event="MouseEnter" Handler="ShowTooltip"/>
+            <EventSetter Event="MouseLeave" Handler="HideTooltip"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="{StaticResource Gold}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="imageEquipment" TargetType="Image">
+            <Setter Property="Source" Value="{Binding Item.Sprite}"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+            <Setter Property="StretchDirection" Value="DownOnly"/>
+            <Setter Property="Margin" Value="3"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Item}" Value="{x:Null}">
+                    <Setter Property="Source" Value="{Binding Sprite}"/>
+                    <Setter Property="Opacity" Value="0.4"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="ToolTip">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToolTip">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid x:Name="gridEquipment" Height="278" Width="520" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FF1E1F22">
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotHelmet" Tag="0" VerticalAlignment="Top" Margin="0,15,0,0" Width="60" Height="60">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotAmulet" Tag="5" VerticalAlignment="Top" Margin="120,15,0,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotArmor" Tag="1" VerticalAlignment="Top" Margin="0,90,0,0" Width="60" Height="80">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotWeapon" Tag="3" VerticalAlignment="Top" Margin="0,60,220,0" Width="90" Height="110">
+            <Image Style="{DynamicResource imageEquipment}"/>
+        </Border>
+        <Border x:Name="slotShield" Style="{DynamicResource BorderEquipment}" Tag="6" VerticalAlignment="Top" Margin="220,60,0,0" Width="90" Height="110">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotBelt" Style="{DynamicResource BorderEquipment}" Tag="8" VerticalAlignment="Top" Margin="0,185,0,0" Width="60" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRing1" Style="{DynamicResource BorderEquipment}" Tag="7" VerticalAlignment="Top" Margin="0,185,120,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotGloves" Style="{DynamicResource BorderEquipment}" Tag="4" VerticalAlignment="Top" Margin="0,185,250,0" Width="60" Height="60">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRing2" Style="{DynamicResource BorderEquipment}" Tag="9" VerticalAlignment="Top" Margin="120,185,0,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotBoots" Style="{DynamicResource BorderEquipment}" Tag="2" VerticalAlignment="Top" Margin="250,185,0,0" Width="60" Height="60">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRelic2" Style="{DynamicResource BorderEquipment}" Tag="11" VerticalAlignment="Top" Margin="0,225,40,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRelic3" Style="{DynamicResource BorderEquipment}" Tag="12" VerticalAlignment="Top" Margin="40,225,0,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRelic1" Style="{DynamicResource BorderEquipment}" Tag="10" VerticalAlignment="Top" Margin="0,225,120,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+        <Border x:Name="slotRelic4" Style="{DynamicResource BorderEquipment}" Tag="13" VerticalAlignment="Top" Margin="120,225,0,0" Width="30" Height="30">
+            <Image Style="{DynamicResource imageEquipment}"></Image>
+        </Border>
+    </Grid>
+</UserControl>

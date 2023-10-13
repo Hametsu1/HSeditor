@@ -1,0 +1,382 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<NoWin32Manifest>true</NoWin32Manifest>
+		<ApplicationIcon>editor.ico</ApplicationIcon>
+		<Platforms>AnyCPU;x86</Platforms>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="bin\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <None Remove="bin\**" />
+	  <Page Remove="bin\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="editor.ico" />
+		<None Remove="Resources\All Slots.png" />
+		<None Remove="Resources\All Weapons.png" />
+		<None Remove="Resources\Amulet.png" />
+		<None Remove="Resources\Armor.png" />
+		<None Remove="Resources\arrowDown.png" />
+		<None Remove="Resources\Auth.txt" />
+		<None Remove="Resources\Axe.png" />
+		<None Remove="Resources\Belt.png" />
+		<None Remove="Resources\Book.png" />
+		<None Remove="Resources\Boots.png" />
+		<None Remove="Resources\Bow.png" />
+		<None Remove="Resources\calendar.ico" />
+		<None Remove="Resources\Cane.png" />
+		<None Remove="Resources\Chainsaw.png" />
+		<None Remove="Resources\Charm.png" />
+		<None Remove="Resources\Claw.png" />
+		<None Remove="Resources\Clear.png" />
+		<None Remove="Resources\ClearFilter.ico" />
+		<None Remove="Resources\Close.ico" />
+		<None Remove="Resources\CloseHover.ico" />
+		<None Remove="Resources\Cold.png" />
+		<None Remove="Resources\Collectible.png" />
+		<None Remove="Resources\Consumable.png" />
+		<None Remove="Resources\Dagger.png" />
+		<None Remove="Resources\DefaultItem.txt" />
+		<None Remove="Resources\discord.png" />
+		<None Remove="Resources\Dislike.png" />
+		<None Remove="Resources\DislikeHover.png" />
+		<None Remove="Resources\Elemental.png" />
+		<None Remove="Resources\Fire.png" />
+		<None Remove="Resources\Flask.png" />
+		<None Remove="Resources\Fonts\BebasNeue-Regular.ttf" />
+		<None Remove="Resources\Fonts\NunitoSans-Bold.ttf" />
+		<None Remove="Resources\Fonts\NunitoSans-Regular.ttf" />
+		<None Remove="Resources\Gloves.png" />
+		<None Remove="Resources\Gun.png" />
+		<None Remove="Resources\Helmet.png" />
+		<None Remove="Resources\herosiegeX.pas" />
+		<None Remove="Resources\import.ico" />
+		<None Remove="Resources\info.ico" />
+		<None Remove="Resources\Javelin.png" />
+		<None Remove="Resources\key.png" />
+		<None Remove="Resources\Lance.png" />
+		<None Remove="Resources\Lightning.png" />
+		<None Remove="Resources\Like.png" />
+		<None Remove="Resources\LikeHover.png" />
+		<None Remove="Resources\Mace.png" />
+		<None Remove="Resources\Magic.png" />
+		<None Remove="Resources\Material.png" />
+		<None Remove="Resources\Melee.png" />
+		<None Remove="Resources\NewCharacter.png" />
+		<None Remove="Resources\Novelty.png" />
+		<None Remove="Resources\Physical.png" />
+		<None Remove="Resources\Placeholder.png" />
+		<None Remove="Resources\Poison.png" />
+		<None Remove="Resources\Polearm.png" />
+		<None Remove="Resources\Potion.png" />
+		<None Remove="Resources\PotionIcon.png" />
+		<None Remove="Resources\price.ico" />
+		<None Remove="Resources\Rating.ico" />
+		<None Remove="Resources\Relic.png" />
+		<None Remove="Resources\Ring.png" />
+		<None Remove="Resources\Shield.png" />
+		<None Remove="Resources\shopX.ini" />
+		<None Remove="Resources\socketable.png" />
+		<None Remove="Resources\SocketIcon.png" />
+		<None Remove="Resources\Spell.png" />
+		<None Remove="Resources\Spellblade.png" />
+		<None Remove="Resources\SplashScreen.png" />
+		<None Remove="Resources\Staff.png" />
+		<None Remove="Resources\Star.ico" />
+		<None Remove="Resources\StarFilled.ico" />
+		<None Remove="Resources\Sword.png" />
+		<None Remove="Resources\TestItem.png" />
+		<None Remove="Resources\Throwing.png" />
+		<None Remove="Resources\user.ico" />
+		<None Remove="Resources\Wand.png" />
+		<None Remove="Resources\Weapon.png" />
+		<None Remove="Resources\Wind.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="editor.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NuGet.CommandLine" Version="6.2.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="squirrel.windows" Version="1.9.0" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+		<PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="editor.ico" />
+		<Resource Include="Resources\All Slots.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\All Weapons.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Amulet.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Armor.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\arrowDown.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Axe.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Belt.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Book.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Boots.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Bow.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\calendar.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Cane.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Chainsaw.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Charm.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Claw.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Clear.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\ClearFilter.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Close.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\CloseHover.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Cold.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Collectible.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Consumable.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<EmbeddedResource Include="Resources\DefaultItem.txt">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<Resource Include="Resources\Dagger.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\discord.png" />
+		<Resource Include="Resources\Dislike.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\DislikeHover.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Elemental.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Fire.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Flask.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Fonts\BebasNeue-Regular.ttf" />
+		<Resource Include="Resources\Fonts\NunitoSans-Bold.ttf">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Fonts\NunitoSans-Regular.ttf">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Gloves.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Gun.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Helmet.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\info.ico" />
+		<Resource Include="Resources\Javelin.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\key.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Lance.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Lightning.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Like.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\LikeHover.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Mace.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Magic.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Material.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Melee.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\NewCharacter.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Novelty.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Physical.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Placeholder.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Poison.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Polearm.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Potion.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\PotionIcon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\price.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Rating.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Relic.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Ring.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Shield.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\socketable.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\SocketIcon.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Spell.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<EmbeddedResource Include="Resources\Auth.txt" />
+		<EmbeddedResource Include="Resources\herosiegeX.pas" />
+		<Resource Include="Resources\import.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<EmbeddedResource Include="Resources\shopX.ini" />
+		<Resource Include="Resources\Spellblade.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\SplashScreen.png" />
+		<Resource Include="Resources\Staff.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Star.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\StarFilled.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Sword.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\TestItem.png">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Throwing.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\user.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Wand.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Weapon.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Wind.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<PropertyGroup>
+		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
+		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
+
+		<Version>3.0.0</Version>
+
+		<NuspecFile>$(SolutionDir)HSeditor\ReleaseSpec.nuspec</NuspecFile>
+	</PropertyGroup>
+	<Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+
+		<Copy SourceFiles="@(SquirrelTools->'%(FullPath)')" DestinationFiles="$(OutDir)..\Update.exe" Condition="!Exists('$(OutDir)..\Update.exe')" />
+
+		<XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
+			<Output TaskParameter="Result" ItemName="ID" />
+		</XmlPeek>
+
+		<Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />
+
+		<Exec Command="$(SquirrelTools)\Squirrel.exe --releasify $(SolutionDir)Deployment\GeneratedNugets\@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)Deployment\Releases" />
+	</Target>
+	
+</Project>

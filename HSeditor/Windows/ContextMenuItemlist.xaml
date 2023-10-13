@@ -1,0 +1,34 @@
+﻿<ContextMenu x:Class="HSeditor.Windows.ContextMenuItemlist"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HSeditor.Windows"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" ContextMenuService.Placement="Relative" Opened="Open">
+    <ContextMenu.Resources>
+        <SolidColorBrush x:Key="White" Color="#F6F6F6"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gray" Color="#99AAB5"></SolidColorBrush>
+        <SolidColorBrush x:Key="Main" Color="#483d85"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gold" Color="#a3895b"></SolidColorBrush>
+    </ContextMenu.Resources>
+    <ContextMenu.Template>
+        <ControlTemplate>
+            <Viewbox>
+                <Grid>
+                    <Border BorderThickness="2" BorderBrush="{StaticResource Main}" Background="Black" Opacity="0.95" CornerRadius="2" UseLayoutRounding="True">
+                        <StackPanel Orientation="Vertical">
+                            <Button x:Name="ContextMenu_Equip" Padding="2" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Equip" Height="22" Margin="5,5,5,0" Cursor="Hand"  Loaded="ContextMenu_Equip_Loaded"/>
+                            <Button x:Name="ContextMenu_Add" Padding="2" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Edit" Height="22" Margin="5,5,5,0" Cursor="Hand"  Loaded="ContextMenu_Add_Loaded" />
+                            <Button x:Name="ContextMenu_Fill" Padding="2" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Edit" Height="22" Margin="5,5,5,0" Cursor="Hand"  Loaded="ContextMenu_Fill_Loaded" />
+                            <Button x:Name="ContextMenu_AddAll" Padding="2" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Edit" Height="22" Margin="5,5,5,0" Cursor="Hand"  Loaded="ContextMenu_AddAll_Loaded" />
+                            <Button x:Name="ContextMenu_AddSet" Padding="2" Style="{DynamicResource ButtonDarkGreen}" FontSize="12" Content="Edit" Height="22" Margin="5,5,5,0" Cursor="Hand"  Loaded="ContextMenu_AddSet_Loaded" />
+                            <Button x:Name="ContextMenu_EquipSet" Padding="2" Style="{DynamicResource ButtonDarkGreen}" FontSize="12" Content="Equip Set" Height="22" Margin="5,5,5,5" Cursor="Hand"  Loaded="ContextMenu_EquipSet_Loaded" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Viewbox>
+
+        </ControlTemplate>
+    </ContextMenu.Template>
+</ContextMenu>

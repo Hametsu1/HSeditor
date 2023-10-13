@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="HSeditor.Windows.ItemTooltip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HSeditor.Windows"
+             mc:Ignorable="d" 
+             Height="Auto" Width="Auto">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="White" Color="#F6F6F6"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gray" Color="#99AAB5"></SolidColorBrush>
+        <SolidColorBrush x:Key="Main" Color="#483d85"></SolidColorBrush>
+        <SolidColorBrush x:Key="Gold" Color="#C7B377"></SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorder" Color="#FF2E323A"></SolidColorBrush>
+        <FontFamily x:Key="FontBold">/Resources/Fonts/#Nunito Sans Bold</FontFamily>
+        <FontFamily x:Key="SemiBold">/Resources/Fonts/#Merriweather Sans</FontFamily>
+        <FontFamily x:Key="FontRegular">/Resources/Fonts/#Nunito Sans Regular</FontFamily>
+    </UserControl.Resources>
+    <Grid>
+        <Border x:Name="mainBorder" Padding="10,5" BorderBrush="{Binding Rarity.TooltipBorderColor}" Background="Black" Opacity="0.95" CornerRadius="1" BorderThickness="2" MinWidth="120">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top">
+                <Label Content="{Binding BindingProp1}" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="13" Foreground="{Binding Rarity.TooltipNameColor}"></Label>
+                <Label Content="{Binding BindingProp2}" Margin="0,-5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="11" Foreground="White"></Label>
+                <TextBlock Text="{Binding BindingProp3}" TextAlignment="Center" Margin="0,0,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="9" Foreground="White">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BindingProp3}" Value="()">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Slot.ShowRunes}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <StackPanel Orientation="Vertical" Margin="0,5,0,0">
+                    <Label Content="{Binding Set.Name}" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="11" Foreground="{StaticResource Gold}"></Label>
+                    <ItemsControl ItemsSource="{Binding Set.Items}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Name}" Margin="0,-8,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="9" Foreground="{Binding BindingProp1}"></Label>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Set}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Set.ID}" Value="-1">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,0,5">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ItemDescription}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="{Binding ItemDescription.Effects}"  TextAlignment="Center" Margin="0,8,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="10" Foreground="#FF4800">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ItemDescription.Effects}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="{Binding ItemDescription.Stats}" TextAlignment="Center" Margin="0,8,0,0"  TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="10" Foreground="#5151B1">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ItemDescription.Stats}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBlock Text="{Binding ItemDescription.Lore}" TextAlignment="Center" Margin="0,8,0,0" MaxWidth="200" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="10" Foreground="#C7B377">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ItemDescription.Lore}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
