@@ -331,9 +331,12 @@ namespace HSeditor.Windows
             {
                 MainWindow.INSTANCE.customCursor = null;
                 MainWindow.INSTANCE.previewDrag = null;
+                MainWindow.INSTANCE.quickActions.Visibility = Visibility.Collapsed;
+                this.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
+                MainWindow.INSTANCE.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
+                ((EquipmentView)MainWindow.INSTANCE.gridEquipment.Children[0]).SetAllowDrop(null);
                 if (MainWindow.INSTANCE.activeDrag)
                 {
-                    ((EquipmentView)MainWindow.INSTANCE.gridEquipment.Children[0]).SetAllowDrop(null);
                     MainWindow.INSTANCE.UpdateInventory();
                     MainWindow.INSTANCE.UpdateEquippedItems();
                     MainWindow.INSTANCE.UpdateStash();
@@ -355,6 +358,8 @@ namespace HSeditor.Windows
 
                 if (MainWindow.INSTANCE.previewDrag.Item.InvImage != null)
                     MainWindow.INSTANCE.previewDrag.Item.InvImage.Visibility = Visibility.Collapsed;
+
+                MainWindow.INSTANCE.ShowQuickActions(MainWindow.INSTANCE.previewDrag.Type);
 
                 DataObject dataObject = new DataObject(typeof(ItemDrag), MainWindow.INSTANCE.previewDrag);
                 ((EquipmentView)MainWindow.INSTANCE.gridEquipment.Children[0]).SetAllowDrop(MainWindow.INSTANCE.previewDrag.Item);

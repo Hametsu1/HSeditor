@@ -27,6 +27,7 @@ namespace HSeditor.Classes.Other
 
         }
 
+
         [Conditional("RELEASE")]
         public async void CheckForUpdate()
         {
@@ -39,7 +40,7 @@ namespace HSeditor.Classes.Other
 
                 if (updateInfo.ReleasesToApply.Any())
                 {
-                    updateInfo.FutureReleaseEntry.GetReleaseNotes(updateInfo.FutureReleaseEntry.PackageName);
+                    //updateInfo.FutureReleaseEntry.GetReleaseNotes(updateInfo.FutureReleaseEntry.PackageName);
                     UpdatePreview mb = new UpdatePreview(this.Version, updateInfo.FutureReleaseEntry.Version.ToString());
                     mb.ShowDialog();
 

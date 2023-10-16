@@ -286,6 +286,8 @@ namespace HSeditor
                     MainWindow.INSTANCE.SetHandler.GetSetFromID(-1),
                     new Point(result.GetInt32("x"), result.GetInt32("y")));
                 List<Rune> runes = new List<Rune>();
+                if (result.GetString("name") == "Rainbow")
+                    Console.WriteLine();
                 result.GetString("runes").Split(',').ToList().ForEach(o => runes.Add(MainWindow.INSTANCE.RuneHandler.GetRuneFromName(o)));
                 item.Sockets = new Sockets(runes);
                 item.RollID = seeds[result.GetString("runes").Split(',').Length];

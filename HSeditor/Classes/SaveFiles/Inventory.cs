@@ -21,6 +21,8 @@ namespace HSeditor.SaveFiles
             {
                 InventoryBox box = MainWindow.INSTANCE.InventoryBoxHandler.FindSpace(item, MainWindow.INSTANCE.InventoryBoxHandler.InventoryBoxes);
                 if (box == null) return;
+                List<InventoryBox> boxes = MainWindow.INSTANCE.InventoryBoxHandler.GetInventoryBoxesInMatrix(box.Position, item, MainWindow.INSTANCE.InventoryBoxHandler.InventoryBoxes);
+                boxes.ForEach(o => o.Item = item);
                 item.InvPos = box.Position;
             }
             this.InventoryItems.Add(item);

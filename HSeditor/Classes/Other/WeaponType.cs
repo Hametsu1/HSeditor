@@ -10,13 +10,13 @@ namespace HSeditor.Classes.Other
         public string Name { get; private set; }
         public int ID { get; private set; }
         public string Sprite { get; private set; }
-        public int DefaultHandedType { get; private set; }
+        public string TooltipName { get; private set; }
 
-        public WeaponType(string Name, int ID, int DefaultHandedType)
+        public WeaponType(string Name, int ID, string TooltipName)
         {
             this.Name = Name;
             this.ID = ID;
-            this.DefaultHandedType = DefaultHandedType;
+            this.TooltipName = TooltipName;
             if (this.Name == "None") return;
             this.Sprite = @"pack://application:,,,/HSeditor;component/Resources/" + Name + ".png";
         }
@@ -32,7 +32,7 @@ namespace HSeditor.Classes.Other
             this.WeaponTypes = this.GetWeaponTypes();
             this.WeaponTypesFiltered = new List<WeaponType>(WeaponTypes);
             this.WeaponTypesFiltered.Remove(this.WeaponTypesFiltered.Find(o => o.ID == 0));
-            this.WeaponTypesFiltered.Add(new WeaponType("All Weapons", -1, 1));
+            this.WeaponTypesFiltered.Add(new WeaponType("All Weapons", -1, "All Weapons"));
             this.WeaponTypesFiltered = this.WeaponTypesFiltered.OrderBy(o => o.ID).ToList();
         }
 
@@ -43,7 +43,7 @@ namespace HSeditor.Classes.Other
 
             while (result.Read())
             {
-                weaponTypes.Add(new WeaponType(result.GetString("name"), result.GetInt32("id"), result.GetInt32("defaultHanded")));
+                weaponTypes.Add(new WeaponType(result.GetString("name"), result.GetInt32("id"), result.GetString("tooltipname")));
             }
 
             return weaponTypes;
@@ -55,7 +55,7 @@ namespace HSeditor.Classes.Other
                 if (weaponType.ID == id)
                     return weaponType;
 
-            return new WeaponType("Unknown Weapontype", id, 1);
+            return new WeaponType("Unknown Weapontype", id, "Unknown Weapontype");
         }
 
         public WeaponType GetWeaponTypeFromName(string name)

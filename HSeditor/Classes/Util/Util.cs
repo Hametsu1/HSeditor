@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,15 +34,17 @@ namespace HSeditor.Classes.Util
         public static string Clean(this string str)
         {
             StringBuilder sb = new StringBuilder();
+            str = str.Replace("ä", "ae").Replace("ö", "oe");
             foreach (char c in str)
             {
-                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
                 {
                     sb.Append(c);
                 }
             }
             return sb.ToString();
         }
+
 
         [StructLayout(LayoutKind.Sequential)]
         struct Win32Point

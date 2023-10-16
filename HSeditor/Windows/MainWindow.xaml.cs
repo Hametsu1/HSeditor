@@ -669,8 +669,7 @@ namespace HSeditor
         {
             this.SaveFileHandler.SelectedFile.Save();
             this.Refresh();
-            MessageBox mb = new MessageBox("Saving successful!", "Changes were successfully applied.", "OK");
-            mb.ShowDialog();
+            InfoBox mb = new InfoBox("Saving successful!", "Changes were successfully applied.");
         }
 
         private void gridItemFilter_Loaded(object sender, RoutedEventArgs e)
@@ -1047,24 +1046,39 @@ namespace HSeditor
             }*/
         }
 
-        private void ShowQuickActions()
+        public void ShowQuickActions(DragHandler.Origin type)
         {
             quickActions.Visibility = Visibility.Visible;
-            bool set = previewDrag.Item.Set != null && previewDrag.Item.Set.ID != -1;
-            bool stash = this.Stash != null && this.Stash.WindowState != WindowState.Minimized;
-            bool equipment = this.SaveFileHandler.SelectedFile.Inventory.Equipment.GetEquipmentSlotFromItem(previewDrag.Item) != null;
-            btnEquip.Opacity = equipment ? 1 : 0.5;
-            btnEquip.AllowDrop = equipment;
-            btnAddSet.Opacity = set ? 1 : 0.5;
-            btnAddSet.AllowDrop = set;
-            btnEquipSet.Opacity = set ? 1 : 0.5;
-            btnEquipSet.AllowDrop = set;
-            ((TextBlock)btnAddAllToInv.Child).Text = stash ? "Add all to Stash" : "Add all to Inventory";
-            ((TextBlock)btnAddToInv.Child).Text = stash ? "Add to Stash" : "Add to Inventory";
-            ((TextBlock)btnAddSet.Child).Text = stash ? "Add Set to Stash" : "Add Set to Inventory";
-            ((TextBlock)btnFillInv.Child).Text = stash ? "Fill Stash" : "Fill Inventory";
-            foreach (Border child in wpQuickActions.Children.OfType<Border>())
-                child.BorderBrush = Util.ColorFromString("#FF483D85");
+            switch (type)
+            {
+                case DragHandler.Origin.ItemList:
+                    wpQuickActionsItemlist.Visibility = Visibility.Visible;
+                    wpQuickActionsInv.Visibility = Visibility.Collapsed;
+                    bool set = previewDrag.Item.Set != null && previewDrag.Item.Set.ID != -1;
+                    bool stash = this.Stash != null && this.Stash.WindowState != WindowState.Minimized;
+                    bool equipment = this.SaveFileHandler.SelectedFile.Inventory.Equipment.GetEquipmentSlotFromItem(previewDrag.Item) != null;
+                    btnEquip.Opacity = equipment ? 1 : 0.5;
+                    btnEquip.AllowDrop = equipment;
+                    btnAddSet.Opacity = set ? 1 : 0.5;
+                    btnAddSet.AllowDrop = set;
+                    btnEquipSet.Opacity = set ? 1 : 0.5;
+                    btnEquipSet.AllowDrop = set;
+                    ((TextBlock)btnAddAllToInv.Child).Text = stash ? "Add all to Stash" : "Add all to Inventory";
+                    ((TextBlock)btnAddToInv.Child).Text = stash ? "Add to Stash" : "Add to Inventory";
+                    ((TextBlock)btnAddSet.Child).Text = stash ? "Add Set to Stash" : "Add Set to Inventory";
+                    ((TextBlock)btnFillInv.Child).Text = stash ? "Fill Stash" : "Fill Inventory";
+                    foreach (Border child in wpQuickActionsItemlist.Children.OfType<Border>())
+                        child.BorderBrush = Util.ColorFromString("#FF483D85");
+                    break;
+                case DragHandler.Origin.Inventory:
+                case DragHandler.Origin.Stash:
+                case DragHandler.Origin.Equip:
+                    wpQuickActionsInv.Visibility = Visibility.Visible;
+                    wpQuickActionsItemlist.Visibility = Visibility.Collapsed;
+                    btnDelete.BorderBrush = Util.ColorFromString("#FF483D85");
+                    break;
+            }
+
         }
 
         public void Window_MouseMove(object sender, MouseEventArgs e)
@@ -1076,9 +1090,11 @@ namespace HSeditor
                 customCursor = null;
                 previewDrag = null;
                 quickActions.Visibility = Visibility.Collapsed;
+                if (this.Stash != null) this.Stash.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
+                this.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
+                ((EquipmentView)gridEquipment.Children[0]).SetAllowDrop(null);
                 if (activeDrag)
                 {
-                    ((EquipmentView)gridEquipment.Children[0]).SetAllowDrop(null);
                     this.activeDrag = false;
                     this.UpdateInventory();
                     this.UpdateEquippedItems();
@@ -1118,9 +1134,8 @@ namespace HSeditor
                         controlSelectedInventory.SelectedItem = InvMain;
                     else if (previewDrag.Item.Slot.ID != 12 && SelectedInv == ItemHandler.InvType.Potion)
                         controlSelectedInventory.SelectedItem = InvMain;
-
-                    ShowQuickActions();
                 }
+                ShowQuickActions(previewDrag.Type);
 
                 DataObject dataObject = new DataObject(typeof(ItemDrag), previewDrag);
                 ((EquipmentView)gridEquipment.Children[0]).SetAllowDrop(previewDrag.Item);
@@ -1507,6 +1522,33 @@ namespace HSeditor
             }
             this.UpdateInventory();
             this.UpdateEquippedItems();
+        }
+
+        private void TextBlock_Drop(object sender, DragEventArgs e)
+        {
+            previewDrag = null;
+            activeDrag = false;
+            ItemDrag drag = e.Data.GetData(typeof(ItemDrag)) as ItemDrag;
+            if (drag == null || drag.Item == null) return;
+
+            switch (drag.Type)
+            {
+                case DragHandler.Origin.Equip:
+                    EquipmentSlot slot = drag.EquipmentSlot;
+                    if (slot == null) return;
+                    slot.ResetTempItem();
+                    slot.SetItem(null);
+                    this.UpdateEquippedItems();
+                    break;
+                case DragHandler.Origin.Inventory:
+                    this.SaveFileHandler.SelectedFile.Inventory.RemoveItem(drag.Item);
+                    this.UpdateInventory();
+                    break;
+                case DragHandler.Origin.Stash:
+                    this.SaveFileHandler.Shop.Stash.Remove(drag.Item);
+                    this.UpdateStash();
+                    break;
+            }
         }
     }
 }

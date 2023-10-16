@@ -108,8 +108,10 @@ namespace HSeditor.Windows
                 if (!item.SaveItem.ContainsKey(property.Key) || item.SaveItem[property.Key].ToString() != temp.SaveItem[property.Key].ToString()) properties.Add(property.Key);
             }
 
+            if (properties.Count == 0) return;
             items.ForEach(item2 =>
             {
+                if (item2 != item) item2.SaveItem = item2.GetItemObject();
                 properties.ForEach(property => item2.SaveItem[property] = temp.SaveItem[property]);
                 item2.UpdateData();
             });

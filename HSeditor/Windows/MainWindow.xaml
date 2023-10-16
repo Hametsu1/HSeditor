@@ -45,7 +45,7 @@
         <FontFamily x:Key="FontRegular">/Resources/Fonts/#Nunito Sans Regular</FontFamily>
     </Window.Resources>
 
-    <Viewbox x:Name="vbMain" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="vbMain_Loaded">
+    <Viewbox x:Name="vbMain" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Center" VerticalAlignment="Center" Loaded="vbMain_Loaded">
         <Grid Background="#282C34" x:Name="MainGrid" Loaded="MainGrid_Loaded">
             <TabControl x:Name="MenuControl" BorderBrush="{x:Null}" Height="680" Background="{x:Null}" Width="1024" SelectedIndex="0" Margin="220,0,0,0" SelectionChanged="MenuControl_SelectionChanged">
                 <!-- HERO INFO -->
@@ -1447,26 +1447,33 @@
                                 <Grid x:Name="gridInvMainImages" Margin="0,0,0,42" Height="240" Width="520"  VerticalAlignment="Bottom"  HorizontalAlignment="Left"/>
                             </Grid>
                             <Grid x:Name="quickActions"  Width="180" Margin="0,0,260,0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                                <WrapPanel Name="wpQuickActions" Orientation="Horizontal" VerticalAlignment="Bottom">
-                                    <Border  x:Name="btnAddToInv" Style="{StaticResource quickActionButton}" Drop="btnAddToInv_Drop">
-                                        <TextBlock Text="Add to Inventory" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                    <Border x:Name="btnEquip" Style="{StaticResource quickActionButton}" Drop="btnEquip_Drop">
-                                        <TextBlock Text="Equip" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                    <Border x:Name="btnFillInv" Style="{StaticResource quickActionButton}" Drop="btnFillInv_Drop">
-                                        <TextBlock Text="Fill Inventory" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                    <Border  x:Name="btnAddAllToInv" Style="{StaticResource quickActionButton}" Drop="btnAddAllToInv_Drop">
-                                        <TextBlock Text="Add all" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                    <Border x:Name="btnAddSet" Style="{StaticResource quickActionButton}" Drop="btnAddSet_Drop">
-                                        <TextBlock Text="Add Set" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                    <Border x:Name="btnEquipSet" Style="{StaticResource quickActionButton}" Drop="btnEquipSet_Drop">
-                                        <TextBlock Text="Equip Set" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
-                                    </Border>
-                                </WrapPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <WrapPanel Name="wpQuickActionsInv" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                        <Border  x:Name="btnDelete" Height="170" Width="170" Style="{StaticResource quickActionButton}" Drop="TextBlock_Drop">
+                                            <TextBlock Text="Delete" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
+                                        </Border>
+                                    </WrapPanel>
+                                    <WrapPanel Name="wpQuickActionsItemlist" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                        <Border  x:Name="btnAddToInv" Style="{StaticResource quickActionButton}" Drop="btnAddToInv_Drop">
+                                            <TextBlock Text="Add to Inventory" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                        <Border x:Name="btnEquip" Style="{StaticResource quickActionButton}" Drop="btnEquip_Drop">
+                                            <TextBlock Text="Equip" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                        <Border x:Name="btnFillInv" Style="{StaticResource quickActionButton}" Drop="btnFillInv_Drop">
+                                            <TextBlock Text="Fill Inventory" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                        <Border  x:Name="btnAddAllToInv" Style="{StaticResource quickActionButton}" Drop="btnAddAllToInv_Drop">
+                                            <TextBlock Text="Add all" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                        <Border x:Name="btnAddSet" Style="{StaticResource quickActionButton}" Drop="btnAddSet_Drop">
+                                            <TextBlock Text="Add Set" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                        <Border x:Name="btnEquipSet" Style="{StaticResource quickActionButton}" Drop="btnEquipSet_Drop">
+                                            <TextBlock Text="Equip Set" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
                             </Grid>
                             <Grid x:Name="gridItemlist" Width="250" Margin="0,0,0,0" Height="580" HorizontalAlignment="Right" VerticalAlignment="Top">
                                 <Grid Margin="0,135,0,10">
