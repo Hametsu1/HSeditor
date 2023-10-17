@@ -63,11 +63,10 @@ namespace HSeditor
 
         public void SetEquivalent(int rarity, Item equi = null)
         {
-            Item? equivalent = equi != null ? equi : rarity == 1
-                ? MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this) == null
-                    ? MainWindow.INSTANCE.ItemHandler.GetEquivalent(this)
-                    : MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this).DeepCopy()
-                : MainWindow.INSTANCE.ItemHandler.GetEquivalent(this);
+            Item? equivalent;
+            if (equi != null) equivalent = equi;
+            else if (rarity == 1 && MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this) != null) equivalent = MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this);
+            else equivalent = MainWindow.INSTANCE.ItemHandler.GetEquivalent(this);
 
 
             // Unknown item found
@@ -370,7 +369,7 @@ namespace HSeditor
             {
                 bool isgeneric = item.Slot.ID == 16 ? false : (item.Rarity.IngameID >= 1 && item.Rarity.IngameID <= 5);
                 List<Item> list = isgeneric ? new List<Item>() : this.AllItems;
-                return list.Find(o => o.Slot.ID == item.Slot.ID && o.WeaponType.ID == item.WeaponType.ID && o.ID == item.ID);
+                return list.Find(o => !o.isRuneword && o.Slot.ID == item.Slot.ID && o.WeaponType.ID == item.WeaponType.ID && o.ID == item.ID);
             }
             catch
             {

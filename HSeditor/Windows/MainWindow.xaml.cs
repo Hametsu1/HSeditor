@@ -109,6 +109,13 @@ namespace HSeditor
             this.SaveFileHandler = new SaveFileHandler();
             this.popupGrid.Visibility = Visibility.Visible;
             SplashScreen.Close(TimeSpan.FromSeconds(1));
+
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Hero_Siege\hseditor\first.txt"))
+            {
+                File.Create(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Hero_Siege\hseditor\first.txt");
+                InfoBox infoBox = new InfoBox("Attention", "*The HSeditor may overwrite your existing savefiles*. If you want to keep your local progress, make a backup before using.");
+                infoBox.textBlockDescription.Tag = "#a13932";
+            }
         }
 
 
@@ -480,6 +487,7 @@ namespace HSeditor
             this.UpdateHandler.CheckForUpdate();
             comboBoxItemFilterSlot.ItemsSource = this.SlotHandler.SlotsFiltered;
             comboBoxItemFilterWeaponType.ItemsSource = this.WeaponTypeHandler.WeaponTypesFiltered;
+            quickActions.Visibility = Visibility.Collapsed;
         }
 
         public void UpdateItemFilter()
@@ -1083,6 +1091,7 @@ namespace HSeditor
 
         public void Window_MouseMove(object sender, MouseEventArgs e)
         {
+            if (this.SaveFileHandler.SelectedFile == null) return;
             //Debug.WriteLine(e.GetPosition(MainGrid));
             // Reset inventory if no drag is in process
             if (e.LeftButton == MouseButtonState.Released)
