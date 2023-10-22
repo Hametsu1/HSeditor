@@ -1,6 +1,7 @@
 ﻿using HSeditor.Classes.Items;
 using HSeditor.Classes.Other;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,12 +12,13 @@ namespace HSeditor.Windows
     public partial class EquipmentView : UserControl
     {
         Equipment Equipment;
+        Dictionary<Image, int> Images = new Dictionary<Image, int>();
 
         public EquipmentView(Equipment equipment)
         {
             InitializeComponent();
             this.Equipment = equipment;
-            foreach (Border border in this.gridEquipment.Children)
+            foreach (FrameworkElement border in this.gridEquipment.Children)
             {
                 if (border.Tag == null) continue;
                 EquipmentSlot slot = MainWindow.INSTANCE.SaveFileHandler.SelectedFile.Inventory.Equipment.GetEquipmentSlot(Convert.ToInt32(border.Tag));
@@ -27,6 +29,7 @@ namespace HSeditor.Windows
 
         public void SetAllowDrop(Item? item)
         {
+            if (item != null && item.Slot.Name == "Socketable") return;
             foreach (Border border in gridEquipment.Children.OfType<Border>())
             {
                 EquipmentSlot slot = border.DataContext as EquipmentSlot;
@@ -38,8 +41,25 @@ namespace HSeditor.Windows
                 border.AllowDrop = enabled;
                 border.Opacity = enabled ? 1 : 0.5;
                 if (slot.Item == null)
-                    ((Image)border.Child).Opacity = 0.4;
+                    FindImage(Convert.ToInt32(border.Tag)).Opacity = 0.4;
             }
+        }
+
+        public Image FindImage(int tag)
+        {
+            if (Images.Count == 0)
+            {
+                gridEquipment.Children.OfType<Image>().ToList().ForEach(o => Images.Add(o, Convert.ToInt32(o.Tag)));
+            }
+            foreach (var img in Images)
+                if (img.Value == tag) return img.Key;
+
+            return null;
+        }
+
+        public Image FindImage(object tag)
+        {
+            return FindImage(Convert.ToInt32(tag));
         }
 
 
@@ -61,7 +81,7 @@ namespace HSeditor.Windows
         private void ShowTooltip(object sender, MouseEventArgs e)
         {
             Border border = sender as Border;
-            Image image = border.Child as Image;
+            Image image = FindImage(border.Tag);
             if (border.Tag == null) return;
             EquipmentSlot slot = MainWindow.INSTANCE.SaveFileHandler.SelectedFile.Inventory.Equipment.GetEquipmentSlot(Convert.ToInt32(border.Tag));
             if (slot == null || slot.Item == null) return;
@@ -79,8 +99,9 @@ namespace HSeditor.Windows
         {
             Border border = sender as Border;
             if (border.Tag == null) return;
-            Image image = border.Child as Image;
-            MainWindow.INSTANCE.toolTipGrid.Children.Remove((ItemTooltip)image.Tag);
+            Image image = FindImage(border.Tag);
+            if (image.Tag is ItemTooltip)
+                MainWindow.INSTANCE.toolTipGrid.Children.Remove((ItemTooltip)image.Tag);
         }
 
         private void equipmentSlotStartDrag(object sender, MouseButtonEventArgs e)
@@ -111,6 +132,13 @@ namespace HSeditor.Windows
         private void equipmentLoaded(object sender, RoutedEventArgs e)
         {
             MainWindow.INSTANCE.equipmentLoaded(sender, e);
+        }
+
+        private void Image_Loaded(object sender, RoutedEventArgs e)
+        {
+            Image img = sender as Image;
+            if (!this.Images.ContainsKey(img))
+                this.Images.Add(img, Convert.ToInt32(img.Tag));
         }
     }
 }

@@ -636,8 +636,8 @@
                                         <Image Style="{DynamicResource imageEquipment}"></Image>
                                     </Border>
                                 </Grid>-->
-                                <Grid x:Name="gridEquipment" Height="260" Width="520" VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center" Background="#FF1E1F22"/>
-                                <Border Background="#FF1A1B1C" BorderThickness="3" Height="8" VerticalAlignment="Top" Margin="0,290,0,0" BorderBrush="#FF1A1B1C" />
+                                <Grid x:Name="gridEquipment" Height="268" Width="520" VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center" Background="#FF1E1F22"/>
+                                <!--<Border Background="#FF1A1B1C" BorderThickness="3" Height="8" VerticalAlignment="Top" Margin="0,290,0,0" BorderBrush="#FF1A1B1C" /> -->
                                 <Border CornerRadius="0,0,3,3" BorderBrush="#FF483D85" Background="#FF483D85" BorderThickness="3" Height="10" VerticalAlignment="Bottom" />
                                 <Grid  Height="32"  VerticalAlignment="Bottom" Margin="0,0,0,10" Background="#FF1A1B1C" >
                                     <TabControl x:Name="controlSelectedInventory" HorizontalAlignment="Left" SelectedIndex="2" SelectionChanged="controlSelectedInventory_SelectionChanged">
@@ -1449,6 +1449,12 @@
                             <Grid x:Name="quickActions"  Width="180" Margin="0,0,260,0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                 <StackPanel Orientation="Vertical">
                                     <WrapPanel Name="wpQuickActionsInv" Orientation="Horizontal" VerticalAlignment="Bottom">
+                                        <Border  x:Name="btnClearSockets" Height="80" Width="80" Style="{StaticResource quickActionButton}" Drop="btnClearSockets_Drop">
+                                            <TextBlock Text="Clear Sockets" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
+                                        </Border>
+                                        <Border  x:Name="btnRandomSeed"  Height="80" Width="80" Style="{StaticResource quickActionButton}" Drop="btnRandomSeed_Drop">
+                                            <TextBlock Text="Randomize Seed" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
+                                        </Border>
                                         <Border  x:Name="btnDelete" Height="170" Width="170" Style="{StaticResource quickActionButton}" Drop="TextBlock_Drop">
                                             <TextBlock Text="Delete" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
                                         </Border>

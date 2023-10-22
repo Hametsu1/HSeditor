@@ -32,17 +32,15 @@
             </Style.Triggers>
         </Style>
         <Style x:Key="imageEquipment" TargetType="Image">
-            <Setter Property="Source" Value="{Binding Item.Sprite}"/>
+            <Setter Property="Source" Value="{Binding Sprite}"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
             <Setter Property="Opacity" Value="1"/>
             <Setter Property="Stretch" Value="Uniform"/>
             <Setter Property="StretchDirection" Value="DownOnly"/>
-            <Setter Property="Margin" Value="3"/>
+            <EventSetter Event="Loaded" Handler="Image_Loaded"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Item}" Value="{x:Null}">
-                    <Setter Property="Source" Value="{Binding Sprite}"/>
                     <Setter Property="Opacity" Value="0.4"/>
-                    <Setter Property="IsHitTestVisible" Value="False"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -57,47 +55,61 @@
         </Style>
     </UserControl.Resources>
     <Grid x:Name="gridEquipment" Height="278" Width="520" VerticalAlignment="Top" HorizontalAlignment="Center" Background="#FF1E1F22">
-        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotHelmet" Tag="0" VerticalAlignment="Top" Margin="0,15,0,0" Width="60" Height="60">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotAmulet" Tag="5" VerticalAlignment="Top" Margin="120,15,0,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotArmor" Tag="1" VerticalAlignment="Top" Margin="0,90,0,0" Width="60" Height="80">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotWeapon" Tag="3" VerticalAlignment="Top" Margin="0,60,220,0" Width="90" Height="110">
-            <Image Style="{DynamicResource imageEquipment}"/>
-        </Border>
-        <Border x:Name="slotShield" Style="{DynamicResource BorderEquipment}" Tag="6" VerticalAlignment="Top" Margin="220,60,0,0" Width="90" Height="110">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotBelt" Style="{DynamicResource BorderEquipment}" Tag="8" VerticalAlignment="Top" Margin="0,185,0,0" Width="60" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRing1" Style="{DynamicResource BorderEquipment}" Tag="7" VerticalAlignment="Top" Margin="0,185,120,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotGloves" Style="{DynamicResource BorderEquipment}" Tag="4" VerticalAlignment="Top" Margin="0,185,250,0" Width="60" Height="60">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRing2" Style="{DynamicResource BorderEquipment}" Tag="9" VerticalAlignment="Top" Margin="120,185,0,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotBoots" Style="{DynamicResource BorderEquipment}" Tag="2" VerticalAlignment="Top" Margin="250,185,0,0" Width="60" Height="60">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRelic2" Style="{DynamicResource BorderEquipment}" Tag="11" VerticalAlignment="Top" Margin="0,225,40,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRelic3" Style="{DynamicResource BorderEquipment}" Tag="12" VerticalAlignment="Top" Margin="40,225,0,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRelic1" Style="{DynamicResource BorderEquipment}" Tag="10" VerticalAlignment="Top" Margin="0,225,120,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
-        <Border x:Name="slotRelic4" Style="{DynamicResource BorderEquipment}" Tag="13" VerticalAlignment="Top" Margin="120,225,0,0" Width="30" Height="30">
-            <Image Style="{DynamicResource imageEquipment}"></Image>
-        </Border>
+        <!--Helmet-->
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotHelmet" Tag="0"  Margin="0,0,0,188" Width="60" Height="60"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="0"  Margin="0,0,0,188" MaxWidth="80" MaxHeight="80"></Image>
+
+        <!--Amulet-->
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotAmulet" Tag="5"  Margin="120,0,0,218" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="5" Margin="120,0,0,218" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Armor-->
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotArmor" Tag="1" VerticalAlignment="Top" Margin="0,90,0,0" Width="60" Height="80"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="1" Margin="0,0,0,18" MaxWidth="80" MaxHeight="100"></Image>
+
+        <!--Weapon-->
+        <Border Style="{DynamicResource BorderEquipment}" x:Name="slotWeapon" Tag="3"  Margin="0,0,220,48" Width="90" Height="110"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="3" Margin="0,0,220,48" MaxWidth="110" MaxHeight="130"/>
+
+        <!--Shield-->
+        <Border x:Name="slotShield" Style="{DynamicResource BorderEquipment}" Tag="6"  Margin="220,0,0,48" Width="90" Height="110"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="6" Margin="220,0,0,48" MaxWidth="110" MaxHeight="130"></Image>
+
+        <!--Belt-->
+        <Border x:Name="slotBelt" Style="{DynamicResource BorderEquipment}" Tag="8" Margin="0,122,0,0" Width="60" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="8" Margin="0,122,0,0" MaxWidth="80" MaxHeight="50"></Image>
+
+        <!--Ring Left-->
+        <Border x:Name="slotRing1" Style="{DynamicResource BorderEquipment}" Tag="7" Margin="0,122,120,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="7" Margin="0,122,120,0" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Gloves-->
+        <Border x:Name="slotGloves" Style="{DynamicResource BorderEquipment}" Tag="4"  Margin="0,152,250,0" Width="60" Height="60"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="4" Margin="0,152,250,0" MaxWidth="80" MaxHeight="80"></Image>
+
+        <!--Ring Right-->
+        <Border x:Name="slotRing2" Style="{DynamicResource BorderEquipment}" Tag="9"  Margin="120,122,0,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}" Tag="9" Margin="120,122,0,0" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Boots-->
+        <Border x:Name="slotBoots" Style="{DynamicResource BorderEquipment}" Tag="2" Margin="250,152,0,0" Width="60" Height="60"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="2" Margin="250,152,0,0" MaxWidth="80" MaxHeight="80"></Image>
+
+        <!--Relic Center Left-->
+        <Border x:Name="slotRelic2" Style="{DynamicResource BorderEquipment}" Tag="11" Margin="0,202,40,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="11" Margin="0,202,40,0" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Relic Center Right-->
+        <Border x:Name="slotRelic3" Style="{DynamicResource BorderEquipment}" Tag="12" Margin="40,202,0,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="12" Margin="40,202,0,0" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Relic Outer Left-->
+        <Border x:Name="slotRelic1" Style="{DynamicResource BorderEquipment}" Tag="10" Margin="0,202,120,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="10" Margin="0,202,120,0" MaxWidth="50" MaxHeight="50"></Image>
+
+        <!--Relic Outer Right-->
+        <Border x:Name="slotRelic4" Style="{DynamicResource BorderEquipment}" Tag="13" Margin="120,202,0,0" Width="30" Height="30"/>
+        <Image Style="{DynamicResource imageEquipment}"  Tag="13" Margin="120,202,0,0" MaxWidth="50" MaxHeight="50"></Image>
+
     </Grid>
 </UserControl>

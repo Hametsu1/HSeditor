@@ -7,6 +7,7 @@ using HSeditor.Classes.Util;
 using HSeditor.SaveFiles;
 using HSeditor.Windows;
 using Newtonsoft.Json.Linq;
+using Squirrel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -56,6 +58,7 @@ namespace HSeditor
         public EquipmentSlotHandler EquipmentSlotHandler { get; private set; }
         public InventoryBoxHandler InventoryBoxHandler { get; private set; }
         public DescriptionHandler DescriptionHandler { get; private set; }
+        public AugmentHandler AugmentHandler { get; private set; }
 
 
 
@@ -76,6 +79,7 @@ namespace HSeditor
 
         public MainWindow()
         {
+            this.UpdateHandler = new UpdateHandler();
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += new UnhandledExceptionEventHandler(Exception);
 
@@ -99,6 +103,7 @@ namespace HSeditor
             this.SlotHandler = new SlotHandler();
             this.EquipmentSlotHandler = new EquipmentSlotHandler();
             this.ClassHandler = new ClassHandler();
+            this.AugmentHandler = new AugmentHandler();
             this.SetHandler = new SetHandler();
             this.RarityHandler = new RarityHandler();
             this.ConfigHandler = new ConfigHandler();
@@ -117,6 +122,8 @@ namespace HSeditor
                 infoBox.textBlockDescription.Tag = "#a13932";
             }
         }
+
+
 
 
         static void Exception(object sender, UnhandledExceptionEventArgs args)
@@ -452,7 +459,7 @@ namespace HSeditor
         {
             if ((SaveFile)listBox_Slots.SelectedItem == null) return;
             this.SaveFileHandler.ReadSaveFile((SaveFile)listBox_Slots.SelectedItem);
-            this.Title = new string($"HSeditor - Name: {this.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {this.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {this.SaveFileHandler.SelectedFile.ID} | Version: {this.UpdateHandler.Version}");
+            this.Title = new string($"HSeditor - Name: {this.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {this.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {this.SaveFileHandler.SelectedFile.ID} | Version: {UpdateHandler.Version}");
             this.SaveFileHandler.Shop.Refresh();
             this.UpdateHeroInfo();
             RefreshListboxes();
@@ -484,7 +491,6 @@ namespace HSeditor
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.UpdateHandler.CheckForUpdate();
             comboBoxItemFilterSlot.ItemsSource = this.SlotHandler.SlotsFiltered;
             comboBoxItemFilterWeaponType.ItemsSource = this.WeaponTypeHandler.WeaponTypesFiltered;
             quickActions.Visibility = Visibility.Collapsed;
@@ -876,7 +882,7 @@ namespace HSeditor
 
         public void Grid_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.LeftShift))
+            /*if (Keyboard.IsKeyDown(Key.LeftShift))
             {
                 if (previewDrag == null) return;
                 InventoryBox box = this.InventoryBoxHandler.FindSpace(previewDrag.Item);
@@ -885,7 +891,7 @@ namespace HSeditor
                     Point pos = box.Grid.PointToScreen(new Point(0, 0));
                     SetCursor((int)pos.X + 20, (int)pos.Y + 20);
                 }
-            }
+            }*/
 
             double sizeFactor = previewDrag.Type == DragHandler.Origin.Stash ? this.Stash.SizeFactor : this.SizeFactor;
 
@@ -1084,6 +1090,8 @@ namespace HSeditor
                     wpQuickActionsInv.Visibility = Visibility.Visible;
                     wpQuickActionsItemlist.Visibility = Visibility.Collapsed;
                     btnDelete.BorderBrush = Util.ColorFromString("#FF483D85");
+                    foreach (Border child in wpQuickActionsInv.Children.OfType<Border>())
+                        child.BorderBrush = Util.ColorFromString("#FF483D85");
                     break;
             }
 
@@ -1168,7 +1176,7 @@ namespace HSeditor
         public void ResetEquipmentSlot(Border border, EquipmentSlot slot)
         {
             if (slot == null) return;
-            Image img = border.Child as Image;
+            Image img = ((EquipmentView)gridEquipment.Children[0]).FindImage(border.Tag);
             img.Source = new BitmapImage(new Uri(slot.Sprite));
             img.Opacity = slot.Item == null ? 0.6 : 1;
             border.Background = Util.ColorFromString(slot.Background);
@@ -1194,10 +1202,30 @@ namespace HSeditor
 
         public void equipmentSlotDragDrop(object sender, DragEventArgs e)
         {
+            this.previewDrag = null;
+            this.activeDrag = false;
             Border border = sender as Border;
             EquipmentSlot newSlot = border.DataContext as EquipmentSlot;
             ItemDrag drag = e.Data.GetData(typeof(ItemDrag)) as ItemDrag;
             if (newSlot == null) return;
+
+            if (drag.Item.Slot.Name == "Socketable")
+            {
+                if (newSlot.Item != null)
+                {
+                    List<Rune> runes = new List<Rune>();
+                    if (Keyboard.IsKeyDown(Key.LeftShift)) runes = newSlot.Item.Sockets.Runes;
+                    else if (newSlot.Item.Sockets.Runes.Find(o => o.ID == 0) != null) runes.Add(newSlot.Item.Sockets.Runes.Find(o => o.ID == 0));
+                    runes.ForEach(rune => newSlot.Item.Sockets.SetRune(newSlot.Item.Sockets.Runes.IndexOf(rune), this.RuneHandler.GetRuneFromID(drag.Item.ID)));
+                    newSlot.Item.SetEquivalent(newSlot.Item.Rarity.IngameID, this.ItemHandler.ParseJSONObject(newSlot.Item.GetItemObject()));
+                }
+
+                if (drag.Type == DragHandler.Origin.Stash) this.UpdateStash();
+                else if (drag.Type == DragHandler.Origin.Inventory) this.UpdateInventory();
+
+                UpdateEquippedItems();
+                return;
+            }
 
             switch (drag.Type)
             {
@@ -1231,8 +1259,6 @@ namespace HSeditor
                     break;
             }
             this.UpdateEquippedItems();
-            this.previewDrag = null;
-            this.activeDrag = false;
         }
 
         private void TabItem_DragOver(object sender, DragEventArgs e)
@@ -1555,6 +1581,62 @@ namespace HSeditor
                     break;
                 case DragHandler.Origin.Stash:
                     this.SaveFileHandler.Shop.Stash.Remove(drag.Item);
+                    this.UpdateStash();
+                    break;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string s = "";
+            for (int i = 1; i <= 95; i++)
+            {
+                s += $"INSERT INTO TooltipInfo VALUES ({i},15,0,'',0);\r\n";
+            }
+            Clipboard.SetText(s);
+        }
+
+        private void btnClearSockets_Drop(object sender, DragEventArgs e)
+        {
+            previewDrag = null;
+            activeDrag = false;
+            ItemDrag drag = e.Data.GetData(typeof(ItemDrag)) as ItemDrag;
+            if (drag == null || drag.Item == null) return;
+
+            drag.Item.Sockets = new Sockets(new List<Rune>());
+            switch (drag.Type)
+            {
+                case DragHandler.Origin.Equip:
+                    this.UpdateEquippedItems();
+                    break;
+                case DragHandler.Origin.Inventory:
+                    this.UpdateInventory();
+                    break;
+                case DragHandler.Origin.Stash:
+                    this.UpdateStash();
+                    break;
+            }
+        }
+
+        private void btnRandomSeed_Drop(object sender, DragEventArgs e)
+        {
+            previewDrag = null;
+            activeDrag = false;
+            ItemDrag drag = e.Data.GetData(typeof(ItemDrag)) as ItemDrag;
+            if (drag == null || drag.Item == null) return;
+
+            drag.Item.RollID = -1;
+            if (!drag.Item.SaveItem.ContainsKey("seed")) drag.Item.SaveItem.Add("seed", -1);
+            else drag.Item.SaveItem["seed"] = -1;
+            switch (drag.Type)
+            {
+                case DragHandler.Origin.Equip:
+                    this.UpdateEquippedItems();
+                    break;
+                case DragHandler.Origin.Inventory:
+                    this.UpdateInventory();
+                    break;
+                case DragHandler.Origin.Stash:
                     this.UpdateStash();
                     break;
             }

@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using HSeditor.Classes.Other;
+using System;
+using System.Windows.Controls;
 
 namespace HSeditor.Windows
 {
@@ -14,6 +16,20 @@ namespace HSeditor.Windows
             item2.BindingProp1 = item.Name.ToUpper() + (item.Slot.ID == 16 && (int)item.SaveItem["amount"] > 1 ? $" [{item.SaveItem["amount"]}]" : "");
             item2.BindingProp2 = !item.Rarity.ShowInTooltip ? item.Slot.UniqueName : item.Rarity == null ? "Unknown Rarity" : item.Rarity.Name + " " + (item.Slot.ID == 3 ? item.WeaponType.TooltipName : item.Slot.UniqueName);
             item2.BindingProp3 = item.Slot.ShowRunes ? $"({item.Sockets.GetRuneString()})" : "";
+            item2.BindingProp4 = "None";
+            if (item2.Slot.ShowAugment && item.SaveItem.ContainsKey("token") && item.SaveItem.ContainsKey("token_level"))
+            {
+                int id;
+                bool valid = Int32.TryParse(Convert.ToString(item.SaveItem["token"]), out id);
+                if (valid && id != 0)
+                {
+                    Augment augment = MainWindow.INSTANCE.AugmentHandler.GetAugmentFromID(id);
+
+                    valid = Int32.TryParse(Convert.ToString(item.SaveItem["token_level"]), out id);
+                    if (valid)
+                        item2.BindingProp4 = $"Augment: {augment.Name} [{id}]";
+                }
+            }
             this.mainBorder.DataContext = item2;
         }
     }

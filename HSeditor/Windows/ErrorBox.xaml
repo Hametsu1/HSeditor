@@ -14,9 +14,15 @@
             <Border Padding="10,10,10,30">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                     <Grid Margin="0,0,0,5">
-                        <TextBlock Text="Unknown Error" HorizontalAlignment="Left" FontSize="18" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
+                        <TextBlock x:Name="tbTitle" Tag="#5151B1" Text="Unknown Error" HorizontalAlignment="Left" FontSize="18" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Foreground="#F6F6F6"></TextBlock>
                     </Grid>
-                    <TextBlock Tag="#a13932 #6451cf" Margin="0,5,0,10" Text="An *unhandled exception* forced the application to shut down. The crash report was *automatically added* to your clipboard. Please report the error on the official *HSeditor Discord*." MaxWidth="355"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#99AAB5" Initialized="textBlockDescription_Initialized"></TextBlock>
+                    <TextBlock Tag="#a13932 #6451cf" Margin="0,5,0,10" Text="An *unhandled exception* forced the application to shut down. The crash report was added to your clipboard. Please report the error on the official *HSeditor Discord*." MaxWidth="355"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#99AAB5" Initialized="textBlockDescription_Initialized"></TextBlock>
+                    <Border Background="#FF2B2D33" Margin="0,5,0,10" IsHitTestVisible="True" HorizontalAlignment="Left" Cursor="Hand" MouseDown="StackPanel_MouseDown">
+                        <TextBlock Margin="3" Name="showError" Text="Show Error Message" MaxWidth="355"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#5151B1"></TextBlock>
+                    </Border>
+                    <Border Padding="7" x:Name="borderError" CornerRadius="4" Background="#FF2B2D33" Visibility="Collapsed">
+                        <TextBlock x:Name="tbError" MaxWidth="330"  TextWrapping="Wrap" HorizontalAlignment="Left" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" Foreground="#99AAB5"></TextBlock>
+                    </Border>
                 </StackPanel>
             </Border>
             <Button x:Name="buttonOK" HorizontalAlignment="Right" Style="{DynamicResource ButtonMain}" VerticalAlignment="Bottom"  Content="OK"  Width="80" Height="24" Click="buttonOK_Click" Cursor="Hand"></Button>

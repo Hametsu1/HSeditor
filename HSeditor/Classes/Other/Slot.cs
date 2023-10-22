@@ -14,8 +14,9 @@ namespace HSeditor.Classes.Other
         public string Sprite { get; private set; }
         public bool ShowAmount { get; private set; }
         public bool ShowRunes { get; private set; }
+        public bool ShowAugment { get; private set; }
 
-        public Slot(string Name, int ID, int? editorID = null, string uniqueName = null, bool showAmount = false, bool showRunes = true)
+        public Slot(string Name, int ID, int? editorID = null, string uniqueName = null, bool showAmount = false, bool showRunes = true, bool showAugment = false)
         {
             if (editorID == null) editorID = ID;
             if (uniqueName == null) uniqueName = Name;
@@ -26,6 +27,7 @@ namespace HSeditor.Classes.Other
             this.Sprite = @"pack://application:,,,/HSeditor;component/Resources/" + Name + ".png";
             this.ShowAmount = showAmount;
             this.ShowRunes = showRunes;
+            this.ShowAugment = showAugment;
         }
     }
 
@@ -56,7 +58,7 @@ namespace HSeditor.Classes.Other
 
             while (result.Read())
             {
-                slots.Add(new Slot(result.GetString("name"), result.GetInt32("id"), result.GetInt32("editorid"), result.GetString("uniqueName"), result.GetBoolean("showamount"), result.GetBoolean("showrunes")));
+                slots.Add(new Slot(result.GetString("name"), result.GetInt32("id"), result.GetInt32("editorid"), result.GetString("uniqueName"), result.GetBoolean("showamount"), result.GetBoolean("showrunes"), result.GetBoolean("showaugment")));
             }
 
             return slots;

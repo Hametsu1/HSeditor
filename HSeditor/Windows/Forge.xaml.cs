@@ -1,4 +1,5 @@
 ﻿using HSeditor.Classes.Items;
+using HSeditor.Classes.Other;
 using HSeditor.Classes.Util;
 using Newtonsoft.Json.Linq;
 using System;
@@ -160,6 +161,7 @@ namespace HSeditor.Windows
         {
             ComboBox cb = sender as ComboBox;
             Rune rune = cb.SelectedItem as Rune;
+            if (rune == null) return;
             if (rune.ID == temp.Sockets.GetRuneList()[Convert.ToInt32(cb.Tag)].ID) return;
             temp.SaveItem[$"socket_{Convert.ToInt32(cb.Tag) + 1}"] = rune.ID;
             temp.Sockets.SetRune(Convert.ToInt32(cb.Tag), rune);
@@ -196,6 +198,7 @@ namespace HSeditor.Windows
             this.UpdateRunes();
             textBoxSeed.Text = temp.SaveItem.ContainsKey("seed") ? temp.SaveItem["seed"].ToString() : temp.RollID.ToString();
             textBoxAmount.Text = temp.SaveItem.ContainsKey("amount") ? temp.SaveItem["amount"].ToString() : "1";
+            textBoxAugmentLevel.Text = temp.SaveItem.ContainsKey("token_level") ? temp.SaveItem["token_level"].ToString() : "0";
             SetTooltip();
         }
 
@@ -237,6 +240,29 @@ namespace HSeditor.Windows
             Border border = vb.Child as Border;
             vb.Width = border.ActualWidth * MainWindow.INSTANCE.SizeFactor;
             vb.Height = border.ActualHeight * MainWindow.INSTANCE.SizeFactor;
+        }
+
+        private void textBoxAugmentLevel_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!temp.SaveItem.ContainsKey("token_level")) temp.SaveItem.Add("token_level", textBoxAugmentLevel.Text);
+            else temp.SaveItem["token_level"] = Convert.ToInt32(textBoxAugmentLevel.Text);
+            this.SetTooltip();
+        }
+
+        private void cbAugment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbAugment.SelectedItem == null) return;
+            if (!temp.SaveItem.ContainsKey("token")) temp.SaveItem.Add("token", ((Augment)cbAugment.SelectedItem).ID);
+            else temp.SaveItem["token"] = ((Augment)cbAugment.SelectedItem).ID;
+            this.SetTooltip();
+        }
+
+        private void cbAugment_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbAugment.ItemsSource = MainWindow.INSTANCE.AugmentHandler.Augments;
+            if (!temp.SaveItem.ContainsKey("token")) temp.SaveItem.Add("token", 0);
+            Augment augment = MainWindow.INSTANCE.AugmentHandler.GetAugmentFromID((int)temp.SaveItem["token"]);
+            cbAugment.SelectedItem = augment;
         }
     }
 }

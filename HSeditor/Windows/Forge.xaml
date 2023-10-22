@@ -57,8 +57,8 @@
             <Border x:Name="gridSettings" HorizontalAlignment="Right" Background="#FF141416" CornerRadius="0" Width="330" BorderThickness="2,0,0,0" BorderBrush="{StaticResource Main}">
                 <TabControl VerticalAlignment="Top" BorderThickness="0" Background="Transparent" SelectedIndex="0">
                     <TabItem x:Name="Ingame" AllowDrop="True" Style="{DynamicResource TabItemStyle1}" Width="162" FontFamily="{StaticResource FontBold}" Header="Basic"  BorderBrush="{x:Null}" Background="#282C34" Height="30" FontSize="15">
-                        <Grid Height="360">
-                            <StackPanel Orientation="Vertical">
+                        <Grid Height="410">
+                            <StackPanel Orientation="Vertical" Height="410">
                                 <Grid  Height="26"  Background="#FF1F2126" VerticalAlignment="Top">
                                     <Label Content="Runes:" FontSize="14" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                                 </Grid>
@@ -172,7 +172,7 @@
                                 <Grid  Height="26"  Background="#FF1F2126" VerticalAlignment="Top">
                                     <Label Content="Misc:" FontSize="14" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                                 </Grid>
-                                <WrapPanel Orientation="Horizontal" Margin="10,5,10,10" Width="300">
+                                <WrapPanel Orientation="Horizontal" Margin="10,5,10,5" Width="300">
                                     <StackPanel Orientation="Vertical" Width="145">
                                         <Grid>
                                             <Label FontSize="13" HorizontalAlignment="Left" Content="Seed"  Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Height="24"/>
@@ -208,6 +208,27 @@
                                             </Image>
                                         </Grid>
                                         <TextBox x:Name="textBoxAmount"  MaxLength="30" Padding="5,0,0,0" Style="{DynamicResource TextBoxMain}"  Text="" Height="30" TextChanged="textBoxAmount_TextChanged"/>
+                                    </StackPanel>
+                                </WrapPanel>
+                                <WrapPanel Orientation="Horizontal" Margin="10,-2,10,10" Width="300">
+                                    <StackPanel Orientation="Vertical" Width="145">
+                                        <Label Content="Augment" FontSize="13" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Height="26"/>
+                                        <ComboBox x:Name="cbAugment" VerticalAlignment="Top" Tag="0" HorizontalAlignment="Left" Width="145" Height="28" Loaded="cbAugment_Loaded"  ScrollViewer.VerticalScrollBarVisibility="Hidden" SelectionChanged="cbAugment_SelectionChanged" Cursor="Hand">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Grid Width="24" Height="24" VerticalAlignment="Center" Margin="1,0,0,0">
+                                                            <Image Source="{Binding Class.Sprite}" Height="20" Width="20" Stretch="Uniform" HorizontalAlignment="Center"/>
+                                                        </Grid>
+                                                        <TextBlock Text="{Binding Name}" Width="130" Padding="5,0,5,0" VerticalAlignment="Center" FontSize="12" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans "/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical" Margin="10,0,0,0" Width="145">
+                                        <Label Content="Augment Level" FontSize="13" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Height="26"/>
+                                        <TextBox x:Name="textBoxAugmentLevel"  MaxLength="30" Padding="5,0,0,0" Style="{DynamicResource TextBoxMain}"  Text="" Height="30" TextChanged="textBoxAugmentLevel_TextChanged"/>
                                     </StackPanel>
                                 </WrapPanel>
                             </StackPanel>

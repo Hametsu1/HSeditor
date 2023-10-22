@@ -82,6 +82,11 @@ namespace HSeditor.Classes.Util
                  : ex.Message + " --> " + ex.InnerException.GetBaseException();
         }
 
+        public static string GetSprite(string filename)
+        {
+            return $@"pack://application:,,,/HSeditor;component/Resources/{filename}";
+        }
+
         public static string GetEmbeddedResource(string filename)
         {
             var assembly = Assembly.GetExecutingAssembly();

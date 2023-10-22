@@ -13,7 +13,7 @@ namespace HSeditor.Classes.Util
     public static class TooltipHandler
     {
         private static readonly char highlightChar = '*';
-        static List<TextBlock> tooltips = new List<TextBlock>();
+        public static List<TextBlock> tooltips = new List<TextBlock>();
         public static void SetToolTip(TextBlock tb)
         {
             if (tooltips.Contains(tb)) return; else tooltips.Add(tb);

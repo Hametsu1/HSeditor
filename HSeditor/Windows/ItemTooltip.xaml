@@ -18,7 +18,7 @@
         <FontFamily x:Key="FontRegular">/Resources/Fonts/#Nunito Sans Regular</FontFamily>
     </UserControl.Resources>
     <Grid>
-        <Border x:Name="mainBorder" Padding="10,5" BorderBrush="{Binding Rarity.TooltipBorderColor}" Background="Black" Opacity="0.95" CornerRadius="1" BorderThickness="2" MinWidth="120">
+        <Border x:Name="mainBorder" Padding="10,5,10,10" BorderBrush="{Binding Rarity.TooltipBorderColor}" Background="Black" Opacity="0.95" CornerRadius="1" BorderThickness="2" MinWidth="120">
             <StackPanel Orientation="Vertical" VerticalAlignment="Top">
                 <Label Content="{Binding BindingProp1}" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="13" Foreground="{Binding Rarity.TooltipNameColor}"></Label>
                 <Label Content="{Binding BindingProp2}" Margin="0,-5,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="11" Foreground="White"></Label>
@@ -30,6 +30,17 @@
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Slot.ShowRunes}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Text="{Binding BindingProp4}" TextAlignment="Center" Margin="0,3,0,0" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold" FontFamily="{StaticResource SemiBold}" FontSize="9" Foreground="#FF4800">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BindingProp4}" Value="None">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                 </DataTrigger>
                             </Style.Triggers>

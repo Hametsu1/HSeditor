@@ -66,7 +66,8 @@ namespace HSeditor
 
         public Rune GetRuneFromID(int id)
         {
-            return this.Runes.Find(o => o.ID == id);
+            Rune rune = this.Runes.Find(o => o.ID == id);
+            return rune == null ? new Rune(id, "Unknown Rune", Util.GetSprite("Socketable.png")) : rune;
         }
     }
 }
