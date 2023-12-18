@@ -11,6 +11,7 @@ namespace HSeditor.Classes.Other
         public int ID { get; private set; }
         public string Sprite { get; private set; }
         public string TooltipName { get; private set; }
+        public string FormattedName { get { return $"[{this.Name}]"; } }
 
         public WeaponType(string Name, int ID, string TooltipName)
         {

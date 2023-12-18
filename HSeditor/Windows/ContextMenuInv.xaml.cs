@@ -32,7 +32,6 @@ namespace HSeditor.Windows
             InitializeComponent();
             this.bindStruct = new BindStruct(item, origin, slot);
             this.DataContext = this.bindStruct;
-
         }
 
         private void ContextMenu_CopyString_Click(object sender, RoutedEventArgs e)
@@ -90,6 +89,17 @@ namespace HSeditor.Windows
                     MainWindow.INSTANCE.UpdateStash();
                     break;
             }
+        }
+
+        private void ContextMenu_EditBase_Loaded(object sender, RoutedEventArgs e)
+        {
+            (sender as Button).Visibility = bindStruct.Item.isRuneword ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void ContextMenu_EditBase_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsOpen = false;
+            RunewordBaseSelection runewordBaseSelection = new RunewordBaseSelection(bindStruct.Item, bindStruct.Origin);
         }
     }
 }

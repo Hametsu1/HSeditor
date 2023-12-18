@@ -48,6 +48,7 @@
 		<None Remove="Resources\Dislike.png" />
 		<None Remove="Resources\DislikeHover.png" />
 		<None Remove="Resources\Elemental.png" />
+		<None Remove="Resources\EmptySocket.png" />
 		<None Remove="Resources\Fire.png" />
 		<None Remove="Resources\Flask.png" />
 		<None Remove="Resources\Fonts\BebasNeue-Regular.ttf" />
@@ -199,6 +200,9 @@
 		</Resource>
 		<Resource Include="Resources\Elemental.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\EmptySocket.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Resources\Fire.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -362,7 +366,7 @@
 		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
-		<Version>3.0.5</Version>
+		<Version>3.1.0</Version>
 
 		<NuspecFile>$(SolutionDir)HSeditor\ReleaseSpec.nuspec</NuspecFile>
 	</PropertyGroup>

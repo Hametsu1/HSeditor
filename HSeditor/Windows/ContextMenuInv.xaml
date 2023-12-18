@@ -19,6 +19,7 @@
                     <Border BorderThickness="2" BorderBrush="{StaticResource Main}" Background="Black" Opacity="0.95" CornerRadius="2" UseLayoutRounding="True" Width="100">
                         <StackPanel Orientation="Vertical">
                             <Button x:Name="ContextMenu_CopyString" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Edit" Height="22" Margin="5,5,5,0" Cursor="Hand" Click="ContextMenu_CopyString_Click" />
+                            <Button x:Name="ContextMenu_EditBase" Style="{DynamicResource ButtonMain}" FontSize="12" Content="Select Base" Height="22" Margin="5,5,5,0" Cursor="Hand" Click="ContextMenu_EditBase_Click" Loaded="ContextMenu_EditBase_Loaded"/>
                             <Button x:Name="ContextMenu_DeleteItem" Style="{DynamicResource ButtonRed}" FontSize="12" Content="Delete" Height="22" Margin="5,5,5,0" Cursor="Hand" Click="ContextMenu_DeleteItem_Click" />
                             <Button x:Name="ContextMenu_ClearItems" Style="{DynamicResource ButtonRed}" FontSize="12" Content="Clear" Height="22" Margin="5,5,5,5" Cursor="Hand" Click="ContextMenu_ClearItems_Click" />
                             <!--<Button x:Name="ContextMenu_EquipItem" Style="{DynamicResource ButtonMain}" FontSize="14" Content="Equip" Height="25" Margin="5,5,5,0" Cursor="Hand" />

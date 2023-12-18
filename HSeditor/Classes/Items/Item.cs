@@ -32,15 +32,20 @@ namespace HSeditor
         public List<InventoryBox> Fields { get; set; }
         public ItemHandler.InvType? Inv { get; set; }
         public Border InvImage { get; set; }
-        public Point Size { get; private set; }
+        public Point Size { get; set; }
         public string BindingProp1 { get; set; }
         public string BindingProp2 { get; set; }
         public string BindingProp3 { get; set; }
         public string BindingProp4 { get; set; }
+        public string Hands { get; set; }
+        public string HandsFormatted { get { return this.Hands == null ? "-1" : $"[{this.Hands}-Handed]"; } }
+        public string Tier { get; set; }
         public Grid SizeGrid { get { return this.GetSizeGrid(); } }
         public JObject SaveItem { get; set; }
         public ItemDescription ItemDescription { get; set; }
         public bool isRuneword { get { return MainWindow.INSTANCE.ItemHandler.Runewords.Find(o => o.Name == this.Name) != null; } set { } }
+        public int RunewordID { get; set; }
+        public int MaxSockets { get; set; }
 
 
         // Reading from SaveFile
@@ -63,10 +68,13 @@ namespace HSeditor
 
         public void SetEquivalent(int rarity, Item equi = null)
         {
-            Item? equivalent;
+            Item? equivalent = null;
+            Item? baseItem = null;
             if (equi != null) equivalent = equi;
             else if (rarity == 1 && MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this) != null) equivalent = MainWindow.INSTANCE.ItemHandler.CheckForRuneword(this);
-            else equivalent = MainWindow.INSTANCE.ItemHandler.GetEquivalent(this);
+
+            if (equivalent == null) equivalent = MainWindow.INSTANCE.ItemHandler.GetEquivalent(this);
+            else if (equivalent.isRuneword) baseItem = MainWindow.INSTANCE.ItemHandler.GetEquivalent(this);
 
 
             // Unknown item found
@@ -76,6 +84,8 @@ namespace HSeditor
                 this.Set = MainWindow.INSTANCE.SetHandler.None;
                 this.SetSprite();
                 this.Size = new Point(1, 1);
+                this.Hands = "-1";
+                this.Tier = "-1";
                 return;
             }
 
@@ -83,14 +93,17 @@ namespace HSeditor
             this.Name = equivalent.Name;
             this.Rarity = this.Rarity.IngameID == equivalent.Rarity.IngameID ? equivalent.Rarity : this.Rarity;
             this.Set = equivalent.Set == null ? MainWindow.INSTANCE.SetHandler.None : equivalent.Set;
-            this.Sprite = equivalent.Sprite;
-            this.Size = equivalent.Size;
+            this.Sprite = equivalent.isRuneword ? baseItem.Sprite : equivalent.Sprite;
+            this.Size = equivalent.isRuneword ? baseItem.Size : equivalent.Size;
+            this.Hands = equivalent.isRuneword ? baseItem.Hands : equivalent.Hands;
+            this.Tier = equivalent.isRuneword ? baseItem.Tier : equivalent.Tier;
             this.Slot = equivalent.Slot;
+            this.RunewordID = equivalent.RunewordID;
             this.ItemDescription = equivalent.ItemDescription;
         }
 
         // Reading from Database
-        public Item(string Name, int ID, Rarity Rarity, Slot Slot, WeaponType WeaponType, Set Set, Point size, List<Rune> Runes = null)
+        public Item(string Name, int ID, Rarity Rarity, Slot Slot, WeaponType WeaponType, Set Set, Point size, string hands = "-1", string tier = "-1", List<Rune> Runes = null)
         {
             this.Name = Name;
             this.ID = ID;
@@ -100,6 +113,8 @@ namespace HSeditor
             this.Sockets = new Sockets(Runes);
             this.Set = Set;
             this.Size = size;
+            this.Hands = hands;
+            this.Tier = tier;
             this.SaveItem = this.GetItemObject();
             this.SetSprite();
 
@@ -225,7 +240,7 @@ namespace HSeditor
         {
             Item temp = (Item)this.MemberwiseClone();
             temp.Sockets = new Sockets(this.Sockets.GetRuneList());
-            temp.SaveItem = JObject.Parse(this.SaveItem.ToString());
+            if (this.SaveItem != null) temp.SaveItem = JObject.Parse(this.SaveItem.ToString());
             return temp;
         }
     }
@@ -235,6 +250,7 @@ namespace HSeditor
         public List<Item> AllItems { get; private set; }
         public List<Item> Generics { get; private set; }
         public List<Item> Runewords { get; private set; }
+        public List<Item> Unique { get; private set; }
         public ItemFilter Filter { get; set; }
         public static Dictionary<string, List<string>> SpriteList = new Dictionary<string, List<string>>();
         public readonly int StashIndex = 6;
@@ -259,48 +275,53 @@ namespace HSeditor
         {
             this.Generics = this.GetGenerics();
             this.Runewords = this.GetAllRunewords();
-            this.AllItems = this.GetAllItems().Concat(this.Runewords).OrderBy(o => o.Slot.ID).ThenBy(o => o.WeaponType.ID).ThenBy(o => o.ID).ThenBy(o => o.Rarity.EditorID).ToList();
+            this.Unique = this.GetAllItems();
+            this.AllItems = this.Unique.Concat(this.Runewords).OrderBy(o => o.Slot.ID).ThenBy(o => o.WeaponType.ID).ThenBy(o => o.ID).ThenBy(o => o.Rarity.EditorID).ToList();
         }
 
         private List<Item> GetAllRunewords()
         {
             List<Item> runewords = new List<Item>();
-            var result = MainWindow.INSTANCE.iniDB.Read("SELECT * FROM RunewordSeeds");
-            Dictionary<int, int> seeds = new Dictionary<int, int>();
-            while (result.Read())
-            {
-                seeds.Add(result.GetInt32("runeamount"), result.GetInt32("seed"));
-            }
-            result.Close();
 
-            result = MainWindow.INSTANCE.iniDB.Read("SELECT * FROM Runewords");
+            var result = MainWindow.INSTANCE.iniDB.Read("SELECT * FROM Runewords");
             while (result.Read())
             {
                 Item item = new Item(
                     result.GetString("name"),
-                    0,
+                    -1,
                     MainWindow.INSTANCE.RarityHandler.GetRarityFromEditorID(9),
                     MainWindow.INSTANCE.SlotHandler.GetSlotFromID(result.GetInt32("slotid")),
-                    MainWindow.INSTANCE.WeaponTypeHandler.GetWeaponTypeFromID(Convert.ToInt32(result.GetString("weapontypeid").Split('|')[0])),
+                    MainWindow.INSTANCE.WeaponTypeHandler.GetWeaponTypeFromID(result.GetInt32("weapontypeid")),
                     MainWindow.INSTANCE.SetHandler.GetSetFromID(-1),
-                    new Point(result.GetInt32("x"), result.GetInt32("y")));
+                    new Point(2, 2)
+                );
+
                 List<Rune> runes = new List<Rune>();
-                if (result.GetString("name") == "Rainbow")
-                    Console.WriteLine();
-                result.GetString("runes").Split(',').ToList().ForEach(o => runes.Add(MainWindow.INSTANCE.RuneHandler.GetRuneFromName(o)));
+                result.GetString("runes").Split('|').ToList().ForEach(o => runes.Add(MainWindow.INSTANCE.RuneHandler.GetRuneFromID(Convert.ToInt32(o))));
                 item.Sockets = new Sockets(runes);
-                item.RollID = seeds[result.GetString("runes").Split(',').Length];
+                item.RollID = 5068;
+                item.SaveItem = item.GetItemObject();
+                item.SaveItem["drop_quality"] = result.GetInt32("dropquality");
+                item.RunewordID = result.GetInt32("tooltipid");
+
+                Item baseItem = this.Generics.Find(o => o.Slot.ID == item.Slot.ID && o.WeaponType.ID == item.WeaponType.ID && o.MaxSockets == runes.Count);
+                if (baseItem == null) baseItem = this.Generics.Find(o => o.Slot.ID == item.Slot.ID && o.WeaponType.ID == item.WeaponType.ID && o.MaxSockets >= runes.Count);
+                if (baseItem == null) continue;
+
+                item.Size = baseItem.Size;
+                item.Sprite = baseItem.Sprite;
+                item.ID = baseItem.ID;
+                item.Hands = baseItem.Hands;
+                item.Tier = baseItem.Tier;
+
                 runewords.Add(item);
             }
-            result.Close();
             return runewords;
         }
 
         public List<Item> GetFilteredList()
         {
             List<Item> joined = new List<Item>(this.AllItems);
-            if (MainWindow.INSTANCE.ConfigHandler.Favorites != null)
-                joined.AddRange(MainWindow.INSTANCE.ConfigHandler.Favorites);
 
             List<Item> returns = new List<Item>();
             foreach (Item item in joined)
@@ -320,6 +341,15 @@ namespace HSeditor
                 if (!Filter.ContainsRarity(item.Rarity) && Filter.GetFilteredRarities().Count != 0)
                     continue;
 
+                if (Filter.GetFilteredStats().Count != 0)
+                {
+                    if (item.ItemDescription == null || item.ItemDescription.Stats == null) continue;
+                    bool contains = true;
+                    foreach (Stat stat in Filter.GetFilteredStats())
+                        if (item.ItemDescription.Stats.Find(o => o.Name == stat.Name) == null) { contains = false; break; }
+
+                    if (!contains) continue;
+                }
                 returns.Add(item);
             }
 
@@ -341,7 +371,9 @@ namespace HSeditor
                     MainWindow.INSTANCE.SlotHandler.GetSlotFromEditorID(result.GetInt32("slotid")),
                     MainWindow.INSTANCE.WeaponTypeHandler.GetWeaponTypeFromID(result.GetInt32("weapontypeid")),
                     MainWindow.INSTANCE.SetHandler.GetSetFromID(result.GetInt32("setid")),
-                    new Point(result.GetInt32("size_x"), result.GetInt32("size_y")));
+                    new Point(result.GetInt32("size_x"), result.GetInt32("size_y")),
+                    result.GetString("hands"),
+                    result.GetString("tier"));
                 items.Add(item);
             }
             result.Close();
@@ -356,7 +388,18 @@ namespace HSeditor
 
             while (result.Read())
             {
-                items.Add(new Item(result.GetString("name"), result.GetInt32("id"), MainWindow.INSTANCE.SlotHandler.GetSlotFromID(result.GetInt32("slotid")), MainWindow.INSTANCE.WeaponTypeHandler.GetWeaponTypeFromID(result.GetInt32("weapontypeid"))));
+                Item item = new Item(result.GetString("name"), result.GetInt32("ingameid"), MainWindow.INSTANCE.SlotHandler.GetSlotFromID(result.GetInt32("slotid")), MainWindow.INSTANCE.WeaponTypeHandler.GetWeaponTypeFromID(result.GetInt32("weapontypeid")));
+                item.MaxSockets = result.GetInt32("max_sockets");
+                item.Size = new Point(result.GetInt32("size_x"), result.GetInt32("size_y"));
+                item.Rarity = MainWindow.INSTANCE.RarityHandler.GetRarityFromID(0);
+                item.Hands = result.GetString("handed");
+                item.Tier = result.GetString("tier");
+                item.SaveItem = item.GetItemObject();
+
+                if (File.Exists(Environment.CurrentDirectory + $@"\Sprites\Items\Generics\{item.Name}.png"))
+                    item.Sprite = Environment.CurrentDirectory + $@"\Sprites\Items\Generics\{item.Name}.png";
+
+                items.Add(item);
             }
             result.Close();
 
@@ -368,7 +411,7 @@ namespace HSeditor
             try
             {
                 bool isgeneric = item.Slot.ID == 16 ? false : (item.Rarity.IngameID >= 1 && item.Rarity.IngameID <= 5);
-                List<Item> list = isgeneric ? new List<Item>() : this.AllItems;
+                List<Item> list = isgeneric ? this.Generics : this.AllItems;
                 return list.Find(o => !o.isRuneword && o.Slot.ID == item.Slot.ID && o.WeaponType.ID == item.WeaponType.ID && o.ID == item.ID);
             }
             catch

@@ -70,6 +70,29 @@
         <!--Weapon-->
         <Border Style="{DynamicResource BorderEquipment}" x:Name="slotWeapon" Tag="3"  Margin="0,0,220,48" Width="90" Height="110"/>
         <Image Style="{DynamicResource imageEquipment}"  Tag="3" Margin="0,0,220,48" MaxWidth="110" MaxHeight="130"/>
+        <ItemsControl Visibility="Collapsed" Tag="3" Width="70" Height="105" Margin="0,0,220,48" HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <ItemContainerTemplate>
+                    <Image  AllowDrop="True" Stretch="Uniform" Width="25" Height="25" Margin="5" DragOver="Image_DragOver" DragLeave="Image_DragLeave" Drop="Image_Drop">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="{Binding Sprite}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ID}" Value="0">
+                                        <Setter Property="Source" Value="\Resources\EmptySocket.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ItemContainerTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <!--Shield-->
         <Border x:Name="slotShield" Style="{DynamicResource BorderEquipment}" Tag="6"  Margin="220,0,0,48" Width="90" Height="110"/>

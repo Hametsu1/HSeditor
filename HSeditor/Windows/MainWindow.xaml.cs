@@ -59,6 +59,7 @@ namespace HSeditor
         public InventoryBoxHandler InventoryBoxHandler { get; private set; }
         public DescriptionHandler DescriptionHandler { get; private set; }
         public AugmentHandler AugmentHandler { get; private set; }
+        public StatHandler StatHandler { get; private set; }
 
 
 
@@ -98,6 +99,7 @@ namespace HSeditor
             IsTabStopProperty.OverrideMetadata(typeof(Control), new FrameworkPropertyMetadata(false));
 
             // Classes
+            this.StatHandler = new StatHandler();
             this.RuneHandler = new RuneHandler();
             this.WeaponTypeHandler = new WeaponTypeHandler();
             this.SlotHandler = new SlotHandler();
@@ -182,9 +184,11 @@ namespace HSeditor
         }
 
 
-        public void ShowPopup(UIElement element)
+        public void ShowPopup(FrameworkElement element)
         {
             controlGrid.Children.Clear();
+            element.HorizontalAlignment = HorizontalAlignment.Center;
+            element.VerticalAlignment = VerticalAlignment.Center;
             controlGrid.Children.Add(element);
             popupGrid.Opacity = 0.5;
             popupGrid.IsHitTestVisible = true;
@@ -203,6 +207,7 @@ namespace HSeditor
             {
                 if (o.temp != null) o.ResetTempItem();
                 o.SetItem(o.Item);
+                //if (o.Item != null) { o.Item.GetItemObject(); o.Item.UpdateData(); };
             });
             this.EquipmentView = new EquipmentView(this.SaveFileHandler.SelectedFile.Inventory.Equipment);
             gridEquipment.Children.Clear();
@@ -322,7 +327,15 @@ namespace HSeditor
             double x = (thickness.Left + (border.ActualWidth / 2)) - (toolTip.ActualWidth / 2);
             double y = thickness.Top - toolTip.ActualHeight - 5;
             if (y < 0)
+            {
+                double diffTop = Math.Abs(y);
                 y = thickness.Top + border.ActualHeight + 5;
+                if (y + toolTip.ActualHeight > toolTipGrid.ActualHeight)
+                {
+                    double diffBottom = Math.Abs(y + toolTip.ActualHeight - toolTipGrid.ActualHeight);
+                    y = diffBottom < diffTop ? toolTipGrid.ActualHeight - toolTip.ActualHeight : 0;
+                }
+            }
 
             return new Thickness(x, y, 0, 0);
         }
@@ -451,15 +464,13 @@ namespace HSeditor
 
             List<Grid> grids = new List<Grid> { mainGrid1, mainGrid3 };
             grids.ForEach(o => o.IsEnabled = listBox_Slots.SelectedItem != null);
-
-            this.ContextMenuSlots.DataContext = this.listBox_Slots.SelectedItem;
         }
 
         private void SwitchSaveSlot()
         {
             if ((SaveFile)listBox_Slots.SelectedItem == null) return;
             this.SaveFileHandler.ReadSaveFile((SaveFile)listBox_Slots.SelectedItem);
-            this.Title = new string($"HSeditor - Name: {this.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {this.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {this.SaveFileHandler.SelectedFile.ID} | Version: {UpdateHandler.Version}");
+            this.Title = new string($"HSeditor - Name: {this.SaveFileHandler.SelectedFile.HeroInfo.Name} | Class: {this.SaveFileHandler.SelectedFile.HeroInfo.Class.Name} | ID: {this.SaveFileHandler.SelectedFile.ID} | Version: {this.UpdateHandler.Version}");
             this.SaveFileHandler.Shop.Refresh();
             this.UpdateHeroInfo();
             RefreshListboxes();
@@ -491,6 +502,7 @@ namespace HSeditor
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.UpdateHandler.CheckForUpdate();
             comboBoxItemFilterSlot.ItemsSource = this.SlotHandler.SlotsFiltered;
             comboBoxItemFilterWeaponType.ItemsSource = this.WeaponTypeHandler.WeaponTypesFiltered;
             quickActions.Visibility = Visibility.Collapsed;
@@ -701,7 +713,10 @@ namespace HSeditor
             foreach (RarityFilter item in this.ItemHandler.Filter.RarityFilter)
                 item.Selected = false;
 
+            this.ItemHandler.Filter.StatFilter.ForEach(o => o.Selected = false);
+
             listBoxItemFilterRarity.Items.Refresh();
+            listBoxItemFilterStats.Items.Refresh();
             this.UpdateItemFilter();
         }
 
@@ -758,43 +773,7 @@ namespace HSeditor
             textBoxItemlistSearch.Focus();
         }
 
-        private void ContextMenu_Delete_Click(object sender, RoutedEventArgs e)
-        {
-            ContextMenuSlots.IsOpen = false;
-            try
-            {
-                SaveFile sf = (SaveFile)ContextMenuSlots.DataContext;
-                sf.Delete();
-                this.Refresh();
-            }
-            catch { }
-        }
 
-        private void ContextMenu_Paste_Loaded(object sender, RoutedEventArgs e)
-        {
-            ((Button)sender).Visibility = this.SaveFileHandler.Copy == null ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        private void ContextMenu_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            ContextMenuSlots.IsOpen = false;
-            try
-            {
-                this.SaveFileHandler.Copy = (SaveFile)ContextMenuSlots.DataContext;
-            }
-            catch { }
-        }
-
-        private void ContextMenu_Paste_Click(object sender, RoutedEventArgs e)
-        {
-            ContextMenuSlots.IsOpen = false;
-            try
-            {
-                File.Copy(this.SaveFileHandler.Copy.Path, ((SaveFile)ContextMenuSlots.DataContext).Path);
-                this.Refresh();
-            }
-            catch { }
-        }
 
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
@@ -910,16 +889,14 @@ namespace HSeditor
                 Item item = datacontext is EquipmentSlot ? ((EquipmentSlot)datacontext).temp : datacontext is Item ? (Item)datacontext : null;
                 if (item == null) return;
 
-
+                Point size = EquipmentView.GetSize(item.Slot.ID);
                 BitmapImage bmi = new BitmapImage(new Uri(item.Sprite));
+                BitmapSource source = Util.ConvertBitmapTo96DPI(bmi);
+                int width = (int)(source.PixelWidth * sizeFactor);
+                int height = (int)(source.PixelHeight * sizeFactor);
+                Image img = new Image { Source = bmi, Stretch = Stretch.UniformToFill, Width = width, Height = height, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
 
-                double width = bmi.Width > item.Size.X * this.InventoryBoxHandler.BoxSize.X ? item.Size.X * this.InventoryBoxHandler.BoxSize.X : bmi.Width;
-                double height = bmi.Height > item.Size.Y * this.InventoryBoxHandler.BoxSize.Y ? item.Size.Y * this.InventoryBoxHandler.BoxSize.Y : bmi.Height;
-
-                Border b = new Border { Width = width * sizeFactor, Height = height * sizeFactor, Background = null, BorderThickness = new Thickness(0), BorderBrush = Util.ColorFromString(item.Rarity.Color), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
-                b.Child = new Image { Source = bmi, Stretch = Stretch.Uniform };
-
-                customCursor = CursorHelper.CreateCursor(b as UIElement);
+                customCursor = CursorHelper.CreateCursor(img as UIElement);
             }
 
             if (customCursor != null)
@@ -946,7 +923,6 @@ namespace HSeditor
 
         private void listBox_Slots_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ContextMenuSlots.DataContext = ((Border)e.OriginalSource).DataContext;
             e.Handled = true;
         }
 
@@ -1214,8 +1190,11 @@ namespace HSeditor
                 if (newSlot.Item != null)
                 {
                     List<Rune> runes = new List<Rune>();
-                    if (Keyboard.IsKeyDown(Key.LeftShift)) runes = newSlot.Item.Sockets.Runes;
-                    else if (newSlot.Item.Sockets.Runes.Find(o => o.ID == 0) != null) runes.Add(newSlot.Item.Sockets.Runes.Find(o => o.ID == 0));
+                    if (Keyboard.IsKeyDown(Key.LeftShift))
+                        runes = newSlot.Item.Sockets.GetRuneList().FindAll(o => o.ID == 0).Count == 0 ? newSlot.Item.Sockets.GetRuneList() : newSlot.Item.Sockets.GetRuneList().FindAll(o => o.ID == 0);
+                    else
+                        runes.Add(newSlot.Item.Sockets.GetRuneList().Find(o => o.ID == 0) == null ? newSlot.Item.Sockets.GetRuneList().Find(o => o.ID != drag.Item.ID) : newSlot.Item.Sockets.GetRuneList().Find(o => o.ID == 0));
+
                     runes.ForEach(rune => newSlot.Item.Sockets.SetRune(newSlot.Item.Sockets.Runes.IndexOf(rune), this.RuneHandler.GetRuneFromID(drag.Item.ID)));
                     newSlot.Item.SetEquivalent(newSlot.Item.Rarity.IngameID, this.ItemHandler.ParseJSONObject(newSlot.Item.GetItemObject()));
                 }
@@ -1586,15 +1565,6 @@ namespace HSeditor
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string s = "";
-            for (int i = 1; i <= 95; i++)
-            {
-                s += $"INSERT INTO TooltipInfo VALUES ({i},15,0,'',0);\r\n";
-            }
-            Clipboard.SetText(s);
-        }
 
         private void btnClearSockets_Drop(object sender, DragEventArgs e)
         {
@@ -1640,6 +1610,102 @@ namespace HSeditor
                     this.UpdateStash();
                     break;
             }
+        }
+
+        private void popupGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.ClosePopup();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string s = "";
+            List<string> entries = File.ReadAllLines(Environment.CurrentDirectory + @"\stats.tsv").ToList();
+            entries.ForEach(entry =>
+            {
+                string[] parts = entry.Split("\t");
+
+                Item item = ItemHandler.AllItems.Find(o => o.Name.Clean().ToLower() == parts[0].Clean().ToLower());
+                if (item == null || !item.isRuneword) return;
+                string defense = parts[1];
+                string block = parts[2];
+                string damage = parts[3];
+                string aps = parts[4];
+                string hand = parts[5];
+                string tier = parts[6];
+                string stats = parts[7];
+                string passive = parts[8];
+                string ability = parts[9];
+                string lore = parts[10];
+
+                string basestring = $"{(item == null ? parts[0] : item.isRuneword ? item.RunewordID : item.ID)},{(item == null ? 0 : item.isRuneword ? -1 : item.Slot.ID)},{(item == null ? 0 : item.isRuneword ? -1 : item.WeaponType.ID)}";
+
+                if (defense != null && defense != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{defense}\",0);\r\n";
+
+                if (damage != null && damage != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{damage}\",1);\r\n";
+
+                if (aps != null && aps != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{aps}\",2);\r\n";
+
+                if (block != null && block != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{block}\",3);\r\n";
+
+                if (stats != null && stats != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{stats}\",4);\r\n";
+
+                if (passive != null && passive != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{passive}\",5);\r\n";
+
+                if (ability != null && ability != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{ability}\",6);\r\n";
+
+                if (lore != null && lore != "")
+                    s += $"INSERT INTO TooltipInfo VALUES ({basestring},\"{lore}\",7);\r\n";
+
+                if (tier != null && tier != "")
+                    s += $"UPDATE Items SET tier = \"{tier}\" WHERE name = \"{item.Name}\";\r\n";
+
+                if (hand != null && hand != "")
+                    s += $"UPDATE Items SET hands = \"{hand}\" WHERE name = \"{item.Name}\";\r\n";
+            });
+
+            /* string name = tbRwName.Text;
+             string[] slotids = tbRwSlot.Text.Split('|');
+             List<Slot> slotlist = slotids.ToList().Select(o => this.SlotHandler.GetSlotFromName(o)).ToList();
+             string[] weapons = tbRwWeapon.Text.Split('|');
+             List<WeaponType> weaponlist = weapons.ToList().Select(o => this.WeaponTypeHandler.GetWeaponTypeFromName(o)).ToList();
+             string[] runes = tbRwRunes.Text.Split('|');
+             string runeids = "";
+             runes.ToList().Select(o => this.RuneHandler.GetRuneFromName(o)).ToList().ForEach(o => runeids += o.ID + "|");
+             runeids = runeids.TrimEnd('|');
+
+             weaponlist.ForEach(weapon =>
+             {
+                 if (weapon == null) return;
+                 s += $"INSERT INTO Runewords (name,slotid,weapontypeid,runes) VALUES (\"{name}\",3,{weapon.ID},\"{runeids}\");";
+             });
+             slotlist.ForEach(slot =>
+             {
+                 if (slot == null || slot.ID == 3) return;
+                 s += $"INSERT INTO Runewords (name,slotid,weapontypeid,runes) VALUES (\"{name}\",{slot.ID},0,\"{runeids}\");";
+             });*/
+
+            Clipboard.SetText(s);
+        }
+
+        private void listBoxItemFilterStats_Loaded(object sender, RoutedEventArgs e)
+        {
+            (sender as ItemsControl).ItemsSource = this.StatHandler.Stats.OrderBy(o => o.Description).ToList();
+        }
+
+        private void buttonResetFilterStats_Click(object sender, RoutedEventArgs e)
+        {
+            this.ItemHandler.Filter.StatFilter.ForEach(o => o.Selected = false);
+
+            listBoxItemFilterStats.Items.Refresh();
+            this.UpdateItemFilter();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace HSeditor.Windows
 {
@@ -13,6 +14,26 @@ namespace HSeditor.Windows
     {
         Equipment Equipment;
         Dictionary<Image, int> Images = new Dictionary<Image, int>();
+
+        public static Point WeaponSize = new Point(110, 130);
+        public static Point ArmorSize = new Point(80, 100);
+        public static Point ShieldSize = new Point(110, 130);
+        public static Point GloveSize = new Point(80, 80);
+        public static Point BootSize = new Point(80, 80);
+        public static Point HelmetSize = new Point(80, 80);
+        public static Point RingSize = new Point(50, 50);
+        public static Point BeltSize = new Point(80, 50);
+        public static Point RelicSize = new Point(50, 50);
+        public static Point AmuletSize = new Point(50, 50);
+        public static Point CharmSize = new Point(80, 80);
+        public static Point Default = new Point(80, 80);
+
+        public static Point GetSize(int slotid)
+        {
+            List<Point> points = new List<Point> { HelmetSize, ArmorSize, BootSize, WeaponSize, GloveSize, AmuletSize, ShieldSize, RingSize, BeltSize, CharmSize, Default, Default, Default, Default, Default, RelicSize };
+            if (slotid >= points.Count) return points.Last();
+            else return points[slotid];
+        }
 
         public EquipmentView(Equipment equipment)
         {
@@ -27,19 +48,60 @@ namespace HSeditor.Windows
             }
         }
 
+
+        private void HideRunes()
+        {
+            foreach (ItemsControl sp in gridEquipment.Children.OfType<ItemsControl>()) sp.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowRunes()
+        {
+            foreach (EquipmentSlot slot in Equipment.GetEquipment().FindAll(o => o.Item != null))
+            {
+                ItemsControl panel = gridEquipment.Children.OfType<ItemsControl>().ToList().Find(o => o.Tag.ToString() == slot.ID.ToString());
+                if (panel == null) continue;
+
+                panel.ItemsSource = null;
+                panel.ItemsSource = slot.Item.Sockets.Runes;
+                panel.Visibility = Visibility.Visible;
+            }
+        }
+
         public void SetAllowDrop(Item? item)
         {
-            if (item != null && item.Slot.Name == "Socketable") return;
+            HideRunes();
             foreach (Border border in gridEquipment.Children.OfType<Border>())
             {
                 EquipmentSlot slot = border.DataContext as EquipmentSlot;
-                bool enabled;
 
-                enabled = item == null || item.Slot.ID == slot.Slot.ID;
-                if (item != null && item.Slot.Name == "Weapon" && slot.Slot.Name == "Shield") enabled = true;
+                bool allowDrop = false;
+                bool reduceOpacity = true;
 
-                border.AllowDrop = enabled;
-                border.Opacity = enabled ? 1 : 0.5;
+                if (item == null || item.Slot.ID == slot.Slot.ID)
+                {
+                    allowDrop = true;
+                    reduceOpacity = false;
+                }
+
+                // Allow weapons in shield slot
+                if (item != null && item.Slot.Name == "Weapon" && slot.Slot.Name == "Shield")
+                {
+                    allowDrop = true;
+                    reduceOpacity = false;
+                }
+
+                // Allow socketables in a slots if an item is equipped
+                // Enable rune preview
+                if (item != null && item.Slot.Name == "Socketable" && slot.Item != null)
+                {
+                    allowDrop = true;
+                    reduceOpacity = true;
+                    this.ShowRunes();
+                }
+
+                border.AllowDrop = allowDrop;
+                FindImage(slot.ID).Opacity = reduceOpacity ? 0.3 : 1;
+                border.Opacity = reduceOpacity ? 0.3 : 1;
                 if (slot.Item == null)
                     FindImage(Convert.ToInt32(border.Tag)).Opacity = 0.4;
             }
@@ -71,8 +133,19 @@ namespace HSeditor.Windows
             Thickness thickness = new Thickness(pos.X, pos.Y, 0, 0);
             double x = (thickness.Left + (border.ActualWidth / 2)) - (toolTip.ActualWidth / 2);
             double y = thickness.Top - toolTip.ActualHeight - 5;
+            //if (y < 0)
+            //   y = thickness.Top + border.ActualHeight + 5;
+
             if (y < 0)
+            {
+                double diffTop = Math.Abs(y);
                 y = thickness.Top + border.ActualHeight + 5;
+                if (y + toolTip.ActualHeight > MainWindow.INSTANCE.toolTipGrid.ActualHeight)
+                {
+                    double diffBottom = Math.Abs(y + toolTip.ActualHeight - MainWindow.INSTANCE.toolTipGrid.ActualHeight);
+                    y = diffBottom < diffTop ? MainWindow.INSTANCE.toolTipGrid.ActualHeight - toolTip.ActualHeight : 0;
+                }
+            }
 
 
             return new Thickness(x, y, 0, 0);
@@ -139,6 +212,39 @@ namespace HSeditor.Windows
             Image img = sender as Image;
             if (!this.Images.ContainsKey(img))
                 this.Images.Add(img, Convert.ToInt32(img.Tag));
+        }
+
+        private void Image_DragOver(object sender, DragEventArgs e)
+        {
+            Image image = sender as Image;
+            image.Height = 28;
+            image.Width = 28;
+            image.Margin = new Thickness(3.5);
+        }
+
+        private void Image_DragLeave(object sender, DragEventArgs e)
+        {
+            Image image = sender as Image;
+            image.Height = 25;
+            image.Width = 25;
+            image.Margin = new Thickness(5);
+        }
+
+        private void Image_Drop(object sender, DragEventArgs e)
+        {
+            Image image = sender as Image;
+            if (image == null) return;
+
+            ItemDrag drag = e.Data.GetData(typeof(ItemDrag)) as ItemDrag;
+            if (drag == null) return;
+
+            Rune rune = image.DataContext as Rune;
+            if (rune == null) return;
+
+            rune.ID = drag.Item.ID;
+            rune.Name = drag.Item.Name;
+            rune.Sprite = drag.Item.Sprite;
+            MainWindow.INSTANCE.UpdateEquippedItems();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace HSeditor.Windows
 
             foreach (Item item in MainWindow.INSTANCE.SaveFileHandler.SelectedFile.Inventory.StashItems.Concat(MainWindow.INSTANCE.SaveFileHandler.Shop.Stash))
             {
-                bool matchesFilter = textBoxStashSearch.Text.StartsWith("@") ? item.Slot.Name.ToLower().Replace(" ", String.Empty).Contains(searchText) : item.Name.ToLower().Replace(" ", String.Empty).Contains(searchText);
+                bool matchesFilter = searchText == "" || item.Name.ToLower().Replace(" ", String.Empty).Contains(searchText);
                 if (item.Inv != MainWindow.INSTANCE.SelectedStash || (MainWindow.INSTANCE.activeDrag && MainWindow.INSTANCE.previewDrag != null && item == MainWindow.INSTANCE.previewDrag.Item)) continue;
                 Point end = new Point(item.InvPos.Value.X + (item.Size.X - 1), item.InvPos.Value.Y + (item.Size.Y - 1));
                 List<InventoryBox> boxes = MainWindow.INSTANCE.InventoryBoxHandler.GetInventoryBoxesInMatrix(item.InvPos.Value, end, MainWindow.INSTANCE.InventoryBoxHandler.StashBoxes);
@@ -84,7 +84,15 @@ namespace HSeditor.Windows
             double x = (border.Margin.Left + (border.ActualWidth / 2)) - (toolTip.ActualWidth / 2);
             double y = border.Margin.Top - (toolTip.ActualHeight + 5);
             if (y < 0)
+            {
+                double diffTop = Math.Abs(y);
                 y = border.Margin.Top + border.ActualHeight + 5;
+                if (y + toolTip.ActualHeight > gridInvMain.ActualHeight)
+                {
+                    double diffBottom = Math.Abs(y + toolTip.ActualHeight - gridInvMain.ActualHeight);
+                    y = diffBottom < diffTop ? gridInvMain.ActualHeight - toolTip.ActualHeight : 0;
+                }
+            }
 
             if ((x + toolTip.ActualWidth) > gridInvMain.ActualWidth)
             {
@@ -332,7 +340,7 @@ namespace HSeditor.Windows
                 MainWindow.INSTANCE.customCursor = null;
                 MainWindow.INSTANCE.previewDrag = null;
                 MainWindow.INSTANCE.quickActions.Visibility = Visibility.Collapsed;
-                this.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
+                //this.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
                 MainWindow.INSTANCE.gridInvMainImages.Children.OfType<Border>().ToList().ForEach(o => { o.Opacity = 1; o.IsHitTestVisible = true; });
                 ((EquipmentView)MainWindow.INSTANCE.gridEquipment.Children[0]).SetAllowDrop(null);
                 if (MainWindow.INSTANCE.activeDrag)

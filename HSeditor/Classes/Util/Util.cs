@@ -31,6 +31,19 @@ namespace HSeditor.Classes.Util
             }
         }
 
+        public static BitmapSource ConvertBitmapTo96DPI(BitmapImage bitmapImage)
+        {
+            double dpi = 96;
+            int width = bitmapImage.PixelWidth;
+            int height = bitmapImage.PixelHeight;
+
+            int stride = width * bitmapImage.Format.BitsPerPixel;
+            byte[] pixelData = new byte[stride * height];
+            bitmapImage.CopyPixels(pixelData, stride, 0);
+
+            return BitmapSource.Create(width, height, dpi, dpi, bitmapImage.Format, bitmapImage.Palette, pixelData, stride);
+        }
+
         public static string Clean(this string str)
         {
             StringBuilder sb = new StringBuilder();

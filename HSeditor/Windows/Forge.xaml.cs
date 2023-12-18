@@ -37,7 +37,7 @@ namespace HSeditor.Windows
             this.temp = item.DeepCopy();
             InitializeComponent();
             MainWindow.INSTANCE.ShowPopup(this);
-            before = new ItemTooltip(temp);
+            before = new ItemTooltip(temp, false);
             before.VerticalAlignment = VerticalAlignment.Center;
             before.HorizontalAlignment = HorizontalAlignment.Center;
             SetTooltip();
@@ -55,7 +55,7 @@ namespace HSeditor.Windows
             spTooltip.Children.Clear();
             spTooltip.Children.Add(before);
             spTooltip.Children.Add(new Image { Source = new BitmapImage(new Uri(@"pack://application:,,,/HSeditor;component/Resources/arrowDown.png")), Height = 18, Width = 18, Margin = new Thickness(0, 8, 0, 8) });
-            spTooltip.Children.Add(temp == null ? before : new ItemTooltip(temp));
+            spTooltip.Children.Add(temp == null ? before : new ItemTooltip(temp, false));
         }
 
         private void Close()

@@ -1489,9 +1489,10 @@
                                     </Grid.RowDefinitions>
                                     <ScrollViewer Grid.Row="0" Background="#FF24262D" Visibility="Collapsed" Height="435" x:Name="gridItemFilter">
                                         <StackPanel Orientation="Vertical" Loaded="gridItemFilter_Loaded">
-                                            <Grid>
+                                            <StackPanel Orientation="Horizontal">
                                                 <Button x:Name="buttonResetFilterAll" Style="{DynamicResource ButtonRed}" Content="Reset all" Height="25" Width="70" HorizontalAlignment="Left" Margin="5,5,0,5" VerticalAlignment="Center" Cursor="Hand" Click="buttonResetFilterAll_Click"/>
-                                            </Grid>
+                                                <Button x:Name="buttonResetFilterStats" Style="{DynamicResource ButtonRed}" Content="Reset stats" Height="25" Width="80" HorizontalAlignment="Left" Margin="5,5,0,5" VerticalAlignment="Center" Cursor="Hand" Click="buttonResetFilterStats_Click"/>
+                                            </StackPanel>
                                             <Grid  Height="30"  Background="#FF1F2126">
                                                 <Label Margin="5,0,0,0" Content="Rarities:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
                                             </Grid>
@@ -1509,6 +1510,21 @@
                                                             </DataTrigger>
                                                         </DataTemplate.Triggers>
                                                         <CheckBox Content="{Binding Rarity.Name}" VerticalContentAlignment="Center" Style="{DynamicResource CheckBoxMain}" Margin="3,3,8,3" Width="95"  Foreground="{Binding Rarity.Color}" FontSize="14" FontFamily="/Resources/Fonts/#Nunito Sans" IsChecked="{Binding Selected}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"></CheckBox>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                            <Grid  Height="30"  Background="#FF1F2126">
+                                                <Label Margin="5,0,0,0" Content="Stats:" FontSize="16" Foreground="{StaticResource White}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Left"/>
+                                            </Grid>
+                                            <ItemsControl x:Name="listBoxItemFilterStats" ItemsSource="{Binding StatFilter}" Margin="10,5,10,5">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <CheckBox Content="{Binding Stat.FilteredDescription}" VerticalContentAlignment="Center" Style="{DynamicResource CheckBoxMain}" IsChecked="{Binding Selected}" Margin="3,3,8,3"   Foreground="{StaticResource Gray}" FontSize="13" FontFamily="/Resources/Fonts/#Nunito Sans"  Checked="CheckBox_Checked" Unchecked="CheckBox_Checked"></CheckBox>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
@@ -1570,11 +1586,9 @@
                                                 <Border Padding="2,1,2,1" Margin="3,0,0,0" Height="27.18" DataContext="{Binding}" MouseLeftButtonDown="listBox_Items_PreviewMouseLeftButtonDown" GiveFeedback="Grid_GiveFeedback" MouseEnter="ItemList_ShowTooltip" MouseLeave="ItemList_HideTooltip" Loaded="Border_Loaded">
                                                     <Grid Loaded="StackPanel_Loaded">
                                                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal"  GiveFeedback="Grid_GiveFeedback">
-                                                            <Grid Width="10" Height="25" Background="{Binding Rarity.Color}"></Grid>
-                                                            <Image Source="{Binding Sprite}" Margin="5,0,0,0" Height="24" Width="24"></Image>
-                                                            <TextBlock Text="{Binding Name}" Width="160" VerticalAlignment="Center" FontSize="11" Foreground="{Binding Rarity.Color}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"></TextBlock>
-
-                                                            <!--<Image Height="16" Margin="5,0,0,0" Width="16" Source="/Resources/info.ico"/>-->
+                                                            <Grid Width="10" Height="25" Background="{Binding Rarity.TooltipBorderColor}"></Grid>
+                                                            <Image Source="{Binding Sprite}" StretchDirection="DownOnly" Stretch="Uniform" Margin="5,0,0,0" Height="24" Width="24"></Image>
+                                                            <TextBlock Text="{Binding Name}" Width="160" VerticalAlignment="Center" FontSize="11" Foreground="{Binding Rarity.TooltipNameColor}" FontFamily="/Resources/Fonts/#Nunito Sans Bold" Padding="5,0,0,0"></TextBlock>
                                                         </StackPanel>
                                                     </Grid>
 
@@ -4391,45 +4405,6 @@
                 <StackPanel Margin="0,99,0,40" Height="541">
                     <ScrollViewer MaxHeight="500"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox x:Name="listBox_Slots" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="220"  Background="#25282e" Loaded="listBox_Slots_Loaded" SelectionChanged="listBox_Slots_SelectionChanged" BorderBrush="#1f2126" ContextMenuOpening="listBox_Slots_ContextMenuOpening" PreviewMouseRightButtonDown="listBox_Slots_PreviewMouseRightButtonDown">
-                            <ListBox.ContextMenu>
-                                <ContextMenu x:Name="ContextMenuSlots"  Background="#FF25282E">
-                                    <ContextMenu.Template>
-                                        <ControlTemplate>
-                                            <Grid>
-                                                <Border BorderThickness="3" BorderBrush="{StaticResource Main}" CornerRadius="3" Width="125">
-                                                    <StackPanel Orientation="Vertical" Background="#FF25282E">
-                                                        <Grid Margin="5,5,5,0">
-                                                            <Grid.Style>
-                                                                <Style TargetType="Grid">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding NewChar}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Grid.Style>
-                                                            <Button x:Name="ContextMenu_Copy" Style="{DynamicResource ButtonMain}" FontSize="14" Content="Copy" Height="25"  Cursor="Hand" Click="ContextMenu_Copy_Click"/>
-                                                        </Grid>
-                                                        <Button x:Name="ContextMenu_Paste" Style="{DynamicResource ButtonMain}" FontSize="14" Content="Paste" Height="25" Margin="5,5,5,5" Cursor="Hand" Click="ContextMenu_Paste_Click" Loaded="ContextMenu_Paste_Loaded"/>
-                                                        <Grid Margin="5">
-                                                            <Grid.Style>
-                                                                <Style TargetType="Grid">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding NewChar}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Grid.Style>
-                                                            <Button x:Name="ContextMenu_Delete" Style="{DynamicResource ButtonRed}" FontSize="14" Content="Delete" Height="25" Cursor="Hand" Click="ContextMenu_Delete_Click"/>
-                                                        </Grid>
-                                                    </StackPanel>
-                                                </Border>
-                                            </Grid>
-                                        </ControlTemplate>
-                                    </ContextMenu.Template>
-                                </ContextMenu>
-                            </ListBox.ContextMenu>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid IsHitTestVisible="True" Width="210">
@@ -4471,9 +4446,9 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Grid x:Name="toolTipGrid" IsHitTestVisible="False"/>
-            <Grid x:Name="popupGrid" Background="Black" Opacity="0" Visibility="Collapsed" IsHitTestVisible="False"/>
+            <Grid x:Name="popupGrid" Background="Black" Opacity="0" Visibility="Collapsed" IsHitTestVisible="False" MouseDown="popupGrid_MouseDown"/>
             <Grid x:Name="controlGrid" IsHitTestVisible="True"/>
+            <Grid x:Name="toolTipGrid" IsHitTestVisible="False"/>
         </Grid>
     </Viewbox>
 </Window>
