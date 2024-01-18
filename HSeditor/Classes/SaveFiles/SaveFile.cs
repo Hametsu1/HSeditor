@@ -124,7 +124,7 @@ namespace HSeditor.SaveFiles
                 foreach (Item item in saveFile.Inventory.InventoryItems)
                 {
                     JObject itemObj = item.GetItemObject();
-                    itemObj["seed"] = (int)itemObj["seed"] == -1 ? rnd.Next(0, 1001) : itemObj["seed"];
+                    itemObj["seed"] = (int)itemObj["seed"] == -1 ? rnd.Next(0, 10000000) : itemObj["seed"];
                     itemObj["timestamp"] = rnd.Next(0, 100000000);
                     switch (item.Inv)
                     {
@@ -149,55 +149,58 @@ namespace HSeditor.SaveFiles
                     }
 
                 }
-                SaveInventory saveInventory = new SaveInventory(list1.ToArray(), list2.ToArray(), list3.ToArray(), list4.ToArray(), list5.ToArray(), list6.ToArray());
-                string s = JsonConvert.SerializeObject(saveInventory, Formatting.Indented);
 
-                using (StreamWriter sw2 = new StreamWriter(_savePath1 + $"inventory_order_{saveFile.ID}.hss"))
+                    SaveInventory saveInventory = new SaveInventory(list1.ToArray(), list2.ToArray(), list3.ToArray(), list4.ToArray(), list5.ToArray(), list6.ToArray());
+                    string s = JsonConvert.SerializeObject(saveInventory, Formatting.Indented);
+                if (MainWindow.INSTANCE.checkbox_savechar.IsChecked == true)
                 {
-                    sw2.Write(s);
-                }
-                File.Copy(_savePath1 + $"inventory_order_{saveFile.ID}.hss", _savePath2 + $"inventory_order_{saveFile.ID}.hss", true);
-
-                // Equipment
-                data.Sections.RemoveSection("inventory");
-                data.Sections.AddSection("inventory");
-                foreach (EquipmentSlot slot in saveFile.Inventory.Equipment.GetEquipmentList())
-                {
-                    slot.Item.RollID = slot.Item.RollID == -1 ? rnd.Next(0, 1001) : slot.Item.RollID;
-                    slot.Item.SaveItem["timestamp"] = rnd.Next(0, 100000000);
-                    data["inventory"].AddKey($"inventory{slot.ID}", slot.Item.GetItemString());
-                }
-
-                IniData parsedINIDataToBeSaved = data;
-                parser.WriteFile(savePath1, parsedINIDataToBeSaved);
-                File.Copy(savePath1, savePath2, true);
-
-                // Shop
-                try
-                {
-                    Shop shop = MainWindow.INSTANCE.SaveFileHandler.Shop;
-                    data = parser.ReadFile(_shopPath);
-
-                    data["shop"]["currency"] = $"\"{shop.Rubies}.000000\"";
-
-                    if (saveFile.HeroInfo.Hardcore)
+                    using (StreamWriter sw2 = new StreamWriter(_savePath1 + $"inventory_order_{saveFile.ID}.hss"))
                     {
-                        data["gold"]["gold_hc"] = $"\"{shop.Gold_HC}.000000\"";
-                        data["mining"]["mining_hc"] = $"\"{shop.MiningLevel_HC}.000000\"";
+                        sw2.Write(s);
                     }
-                    else
+                    File.Copy(_savePath1 + $"inventory_order_{saveFile.ID}.hss", _savePath2 + $"inventory_order_{saveFile.ID}.hss", true);
+
+                    // Equipment
+                    data.Sections.RemoveSection("inventory");
+                    data.Sections.AddSection("inventory");
+                    foreach (EquipmentSlot slot in saveFile.Inventory.Equipment.GetEquipmentList())
                     {
-                        data["gold"]["gold"] = $"\"{shop.Gold}.000000\"";
-                        data["mining"]["mining"] = $"\"{shop.MiningLevel}.000000\"";
+                        slot.Item.RollID = slot.Item.RollID == -1 ? rnd.Next(0, 1001) : slot.Item.RollID;
+                        slot.Item.SaveItem["timestamp"] = rnd.Next(0, 100000000);
+                        data["inventory"].AddKey($"inventory{slot.ID}", slot.Item.GetItemString());
                     }
 
-                    parsedINIDataToBeSaved = data;
-                    parser.WriteFile(_shopPath, parsedINIDataToBeSaved);
-                }
-                catch { }
+                    IniData parsedINIDataToBeSaved = data;
 
+                    parser.WriteFile(savePath1, parsedINIDataToBeSaved);
+                    File.Copy(savePath1, savePath2, true);
+
+                    try
+                    {
+                        Shop shop = MainWindow.INSTANCE.SaveFileHandler.Shop;
+                        data = parser.ReadFile(_shopPath);
+
+                        data["shop"]["currency"] = $"\"{shop.Rubies}.000000\"";
+
+                        if (saveFile.HeroInfo.Hardcore)
+                        {
+                            data["gold"]["gold_hc"] = $"\"{shop.Gold_HC}.000000\"";
+                            data["mining"]["mining_hc"] = $"\"{shop.MiningLevel_HC}.000000\"";
+                        }
+                        else
+                        {
+                            data["gold"]["gold"] = $"\"{shop.Gold}.000000\"";
+                            data["mining"]["mining"] = $"\"{shop.MiningLevel}.000000\"";
+                        }
+
+                        parsedINIDataToBeSaved = data;
+                        parser.WriteFile(_shopPath, parsedINIDataToBeSaved);
+                    }
+                    catch { }
+                }
 
                 // Stash
+                if(MainWindow.INSTANCE.checkbox_savestash.IsChecked==true)
                 try
                 {
                     list1 = new List<JObject>();
@@ -244,7 +247,7 @@ namespace HSeditor.SaveFiles
 
             }
             catch { }
-        }
+        }               
 
         public void Delete(SaveFile saveFile)
         {

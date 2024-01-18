@@ -19,8 +19,8 @@
             <Setter Property="Background" Value="{StaticResource quickActionButtonColor}"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="2" />
-            <Setter Property="Width" Value="80"/>
-            <Setter Property="Height" Value="80"/>
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="BorderBrush" Value="#FF483D85"/>
             <Setter Property="AllowDrop" Value="True"/>
@@ -553,7 +553,7 @@
                 <TabItem Style="{DynamicResource TabItemStyle1}"  FontFamily="{StaticResource FontBold}" Header="Equipment"  BorderBrush="{x:Null}" Background="#282C34" Height="40" FontSize="15">
                     <Grid Background="#2E323A"  Name="mainGrid3" IsEnabled="False">
                         <Grid Margin="20,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="970">
-                            <Grid x:Name="gridLoadout" Height="580" Width="520" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Grid x:Name="gridLoadout" Height="580" Width="600" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 <Border CornerRadius="6,6,0,0" Height="30" BorderThickness="6" BorderBrush="#483d85" Background="#483d85" VerticalAlignment="Top">
                                     <TextBlock Text="Equipment" FontSize="16" FontFamily="/Resources/Fonts/#Nunito Sans Bold" HorizontalAlignment="Center"></TextBlock>
                                 </Border>
@@ -636,7 +636,7 @@
                                         <Image Style="{DynamicResource imageEquipment}"></Image>
                                     </Border>
                                 </Grid>-->
-                                <Grid x:Name="gridEquipment" Height="268" Width="520" VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center" Background="#FF1E1F22"/>
+                                <Grid x:Name="gridEquipment" Height="268" Width="600" VerticalAlignment="Top" Margin="0,30,0,0" HorizontalAlignment="Center" Background="#FF1E1F22"/>
                                 <!--<Border Background="#FF1A1B1C" BorderThickness="3" Height="8" VerticalAlignment="Top" Margin="0,290,0,0" BorderBrush="#FF1A1B1C" /> -->
                                 <Border CornerRadius="0,0,3,3" BorderBrush="#FF483D85" Background="#FF483D85" BorderThickness="3" Height="10" VerticalAlignment="Bottom" />
                                 <Grid  Height="32"  VerticalAlignment="Bottom" Margin="0,0,0,10" Background="#FF1A1B1C" >
@@ -1443,19 +1443,19 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 -->
-                                <WrapPanel x:Name="gridInvMain" Margin="0,0,0,42" Height="240" Width="520"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FF292929" FlowDirection="LeftToRight" Loaded="gridInvMain_Loaded"/>
-                                <Grid x:Name="gridInvMainImages" Margin="0,0,0,42" Height="240" Width="520"  VerticalAlignment="Bottom"  HorizontalAlignment="Left"/>
+                                <WrapPanel x:Name="gridInvMain" Margin="0,0,0,42" Height="240" Width="600"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="#FF292929" FlowDirection="LeftToRight" Loaded="gridInvMain_Loaded"/>
+                                <Grid x:Name="gridInvMainImages" Margin="0,0,0,42" Height="240" Width="600"  VerticalAlignment="Bottom"  HorizontalAlignment="Left"/>
                             </Grid>
-                            <Grid x:Name="quickActions"  Width="180" Margin="0,0,260,0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                            <Grid x:Name="quickActions"  Width="120" Margin="0,0,250,0" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                                 <StackPanel Orientation="Vertical">
                                     <WrapPanel Name="wpQuickActionsInv" Orientation="Horizontal" VerticalAlignment="Bottom">
-                                        <Border  x:Name="btnClearSockets" Height="80" Width="80" Style="{StaticResource quickActionButton}" Drop="btnClearSockets_Drop">
+                                        <Border  x:Name="btnClearSockets" Height="50" Width="110" Style="{StaticResource quickActionButton}" Drop="btnClearSockets_Drop">
                                             <TextBlock Text="Clear Sockets" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
                                         </Border>
-                                        <Border  x:Name="btnRandomSeed"  Height="80" Width="80" Style="{StaticResource quickActionButton}" Drop="btnRandomSeed_Drop">
+                                        <Border  x:Name="btnRandomSeed"  Height="50" Width="110" Style="{StaticResource quickActionButton}" Drop="btnRandomSeed_Drop">
                                             <TextBlock Text="Randomize Seed" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
                                         </Border>
-                                        <Border  x:Name="btnDelete" Height="170" Width="170" Style="{StaticResource quickActionButton}" Drop="TextBlock_Drop">
+                                        <Border  x:Name="btnDelete" Height="110" Width="110" Style="{StaticResource quickActionButton}" Drop="TextBlock_Drop">
                                             <TextBlock Text="Delete" TextWrapping="WrapWithOverflow" Foreground="#99AAB5" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" FontFamily="{StaticResource FontBold}" />
                                         </Border>
                                     </WrapPanel>
@@ -4402,7 +4402,7 @@
             </Image>
             <Grid Width="220" HorizontalAlignment="Left" Background="#1f2126">
                 <Label Style="{StaticResource BoldFont}" Content="Save Slots" HorizontalContentAlignment="Center" Foreground="{StaticResource White}" FontSize="20" VerticalAlignment="Top" Height="40" VerticalContentAlignment="Center" Margin="0,59,0,0"/>
-                <StackPanel Margin="0,99,0,40" Height="541">
+                <StackPanel Margin="0,99,0,40" Height="510" VerticalAlignment="Top">
                     <ScrollViewer MaxHeight="500"  ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox x:Name="listBox_Slots" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="220"  Background="#25282e" Loaded="listBox_Slots_Loaded" SelectionChanged="listBox_Slots_SelectionChanged" BorderBrush="#1f2126" ContextMenuOpening="listBox_Slots_ContextMenuOpening" PreviewMouseRightButtonDown="listBox_Slots_PreviewMouseRightButtonDown">
                             <ListBox.ItemTemplate>
@@ -4445,6 +4445,8 @@
                         </StackPanel>
                     </StackPanel>
                 </Grid>
+                <CheckBox Style="{DynamicResource CheckBoxMain}" VerticalContentAlignment="Center" x:Name="checkbox_savechar" Content="Save Char" HorizontalAlignment="Left" Margin="4,623,0,0" VerticalAlignment="Top" Width="105" Foreground="#FFF6F6F6" FontFamily="Nunito Sans" FontWeight="Bold" IsChecked="True"/>
+                <CheckBox Style="{DynamicResource CheckBoxMain}" VerticalContentAlignment="Center" x:Name="checkbox_savestash" Content="Save Stash" HorizontalAlignment="Left" Margin="110,623,0,0" VerticalAlignment="Top" Width="105" Foreground="#FFF6F6F6" FontFamily="Nunito Sans" FontWeight="Bold" IsChecked="True"/>
             </Grid>
             <Grid x:Name="popupGrid" Background="Black" Opacity="0" Visibility="Collapsed" IsHitTestVisible="False" MouseDown="popupGrid_MouseDown"/>
             <Grid x:Name="controlGrid" IsHitTestVisible="True"/>

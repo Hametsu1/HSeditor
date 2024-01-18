@@ -329,8 +329,8 @@ namespace HSeditor
                 if (!item.Name.ToLower().Contains(this.Filter.Name.ToLower()) && this.Filter.Name != "Search..." && this.Filter.Name != "")
                     continue;
 
-                if (item.Rarity.EditorID == 11 && !this.Filter.ContainsRarity(MainWindow.INSTANCE.RarityHandler.GetRarityFromEditorID(11)))
-                    continue;
+                //if (item.Rarity.EditorID == 11 && !this.Filter.ContainsRarity(MainWindow.INSTANCE.RarityHandler.GetRarityFromEditorID(11)))
+                //    continue;
 
 
                 if (item.WeaponType.ID != this.Filter.WeaponType.ID && this.Filter.WeaponType.ID != -1)

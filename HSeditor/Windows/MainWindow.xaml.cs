@@ -694,7 +694,8 @@ namespace HSeditor
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             this.SaveFileHandler.SelectedFile.Save();
-            this.Refresh();
+
+           //this.Refresh();
             InfoBox mb = new InfoBox("Saving successful!", "Changes were successfully applied.");
         }
 
@@ -1706,6 +1707,6 @@ namespace HSeditor
 
             listBoxItemFilterStats.Items.Refresh();
             this.UpdateItemFilter();
-        }
+        }        
     }
 }

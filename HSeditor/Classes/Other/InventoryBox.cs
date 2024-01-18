@@ -42,7 +42,7 @@ namespace HSeditor.Classes.Other
         public Brush HighlightColor { get; set; }
         public Brush ErrorColor { get; set; }
 
-        public readonly Point InventorySize = new Point(13, 6);
+        public readonly Point InventorySize = new Point(15, 6);
         public readonly Point StashSize = new Point(17, 18);
         public readonly int CharmWidth = 4;
         public readonly Point BoxSize = new Point(40, 40);
