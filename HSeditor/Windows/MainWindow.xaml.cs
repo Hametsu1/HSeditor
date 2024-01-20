@@ -695,7 +695,7 @@ namespace HSeditor
         {
             this.SaveFileHandler.SelectedFile.Save();
 
-           //this.Refresh();
+            this.Refresh();
             InfoBox mb = new InfoBox("Saving successful!", "Changes were successfully applied.");
         }
 
