@@ -165,7 +165,7 @@ namespace HSeditor.SaveFiles
                     data.Sections.AddSection("inventory");
                     foreach (EquipmentSlot slot in saveFile.Inventory.Equipment.GetEquipmentList())
                     {
-                        slot.Item.RollID = slot.Item.RollID == -1 ? rnd.Next(0, 1001) : slot.Item.RollID;
+                        slot.Item.RollID = slot.Item.RollID == -1 ? rnd.Next(0, 10000000) : slot.Item.RollID;
                         slot.Item.SaveItem["timestamp"] = rnd.Next(0, 100000000);
                         data["inventory"].AddKey($"inventory{slot.ID}", slot.Item.GetItemString());
                     }
@@ -211,7 +211,7 @@ namespace HSeditor.SaveFiles
                     foreach (Item item in MainWindow.INSTANCE.SaveFileHandler.Shop.Stash)
                     {
                         JObject itemObj = item.GetItemObject();
-                        itemObj["seed"] = (int)itemObj["seed"] == -1 ? rnd.Next(0, 10000) : itemObj["seed"];
+                        itemObj["seed"] = (int)itemObj["seed"] == -1 ? rnd.Next(0, 10000000) : itemObj["seed"];
                         itemObj["timestamp"] = rnd.Next(0, 100000000);
                         switch (item.Inv)
                         {
