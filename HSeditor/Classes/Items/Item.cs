@@ -121,6 +121,13 @@ namespace HSeditor
             this.RollID = -1;
             if (Runes == null && Rarity.Name != "Runeword")
                 this.Sockets = new Sockets(new List<Rune>());
+
+            if (this.Slot.ID == 17)
+                this.SaveItem["token_level"] = 6;
+            else if (this.Slot.ID == 16)
+                this.SaveItem["amount"] = 5;
+
+
         }
 
         // Generic

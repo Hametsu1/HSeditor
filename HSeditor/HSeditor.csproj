@@ -55,6 +55,7 @@
 		<None Remove="Resources\Fonts\NunitoSans-Bold.ttf" />
 		<None Remove="Resources\Fonts\NunitoSans-Regular.ttf" />
 		<None Remove="Resources\Gloves.png" />
+		<None Remove="Resources\Glyph.png" />
 		<None Remove="Resources\Gun.png" />
 		<None Remove="Resources\Helmet.png" />
 		<None Remove="Resources\herosiegeX.pas" />
@@ -220,6 +221,9 @@
 		<Resource Include="Resources\Gloves.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Resources\Glyph.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Resources\Gun.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
@@ -305,7 +309,6 @@
 		<Resource Include="Resources\Spell.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
-		<EmbeddedResource Include="Resources\Auth.txt" />
 		<EmbeddedResource Include="Resources\herosiegeX.pas" />
 		<Resource Include="Resources\import.ico">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -366,7 +369,7 @@
 		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
-		<Version>3.3.0</Version>
+		<Version>3.3.1</Version>
 
 		<NuspecFile>$(SolutionDir)HSeditor\ReleaseSpec.nuspec</NuspecFile>
 	</PropertyGroup>

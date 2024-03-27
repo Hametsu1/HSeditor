@@ -231,7 +231,30 @@ namespace HSeditor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {&quot;type&quot;: 4,&quot;id&quot;: 1,&quot;account&quot;: &quot;1-0&quot;,&quot;market_id&quot;: 0,&quot;token_level&quot;: 0,&quot;weapon_type&quot;: 0,&quot;drop_quality&quot;: 0,&quot;timestamp&quot;: &quot;123456&quot;,&quot;socket_1&quot;: 0,&quot;socket_2&quot;: 0,&quot;socket_3&quot;: 0,&quot;socket_4&quot;: 0,&quot;socket_5&quot;: 0,&quot;socket_6&quot;: 0,&quot;seed&quot;: -1,&quot;mf_drop&quot;: 0,&quot;amount&quot;: 1,&quot;rarity&quot;: 7,&quot;token&quot;: 0,&quot;tier&quot;: 4,&quot;x&quot;: 0.0,&quot;y&quot;: 0.0}
+        ///   Sucht eine lokalisierte Zeichenfolge, die {
+        ///	&quot;id&quot;: 0,
+        ///	&quot;type&quot;: 0,
+        ///	&quot;weapon_type&quot;: 0,
+        ///	&quot;rarity&quot;: 6,
+        ///	&quot;token&quot;: 0,
+        ///	&quot;token_level&quot;: 0,
+        ///	&quot;socket_1&quot;: 0,
+        ///	&quot;socket_2&quot;: 0,
+        ///	&quot;socket_3&quot;: 0,
+        ///	&quot;socket_4&quot;: 0,
+        ///	&quot;socket_5&quot;: 0,
+        ///	&quot;socket_6&quot;: 0,
+        ///	&quot;seed&quot;: -1,
+        ///	&quot;amount&quot;: 1,
+        ///	&quot;tier&quot;: 4,
+        ///	&quot;account&quot;: &quot;1-0&quot;,
+        ///	&quot;market_id&quot;: 0,
+        ///	&quot;drop_quality&quot;: 0,
+        ///	&quot;timestamp&quot;: &quot;123456&quot;,
+        ///	&quot;mf_drop&quot;: 0,
+        ///	&quot;x&quot;: 0.0,
+        ///	&quot;y&quot;: 0.0
+        ///}
         /// ähnelt.
         /// </summary>
         internal static string DefaultItem {
@@ -317,6 +340,16 @@ namespace HSeditor.Properties {
             get {
                 object obj = ResourceManager.GetObject("Gloves", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph {
+            get {
+                object obj = ResourceManager.GetObject("Glyph", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

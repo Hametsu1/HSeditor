@@ -219,8 +219,15 @@ namespace HSeditor.Windows
 
         private void textBoxAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!temp.SaveItem.ContainsKey("amount")) temp.SaveItem.Add("amount", textBoxAmount.Text);
-            else temp.SaveItem["amount"] = textBoxAmount.Text;
+            try
+            {
+                if (!temp.SaveItem.ContainsKey("amount")) temp.SaveItem.Add("amount", Convert.ToInt32(textBoxAmount.Text));
+                else temp.SaveItem["amount"] = Convert.ToInt32(textBoxAmount.Text);
+            }
+            catch
+            {
+               // temp.SaveItem["amount"] = 1;
+            }
             this.SetTooltip();
         }
 
